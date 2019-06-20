@@ -1,0 +1,5 @@
+package megatravel.agentservice.controller;
+
+public class AccommodationUnitController {
+
+}

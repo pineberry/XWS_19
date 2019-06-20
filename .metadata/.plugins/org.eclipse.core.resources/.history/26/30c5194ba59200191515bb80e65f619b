@@ -1,0 +1,10 @@
+package megatravel.model;
+
+public class AccommodationUnit {
+
+	private Long id;
+	private String description;
+	private String type;
+	private String category;
+		
+}

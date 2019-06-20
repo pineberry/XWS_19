@@ -1,0 +1,42 @@
+package megatravel.agentservice.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import megatravel.agentservice.model.AccommodationUnit;
+import megatravel.agentservice.service.AccommodationUnitService;
+
+@RestController
+@RequestMapping("/accommodations")
+public class AccommodationUnitController {
+
+	@Autowired
+	private AccommodationUnitService accommodationUnitService;
+	
+	//post Accommodation
+	@RequestMapping(value = "/postAccommodation", method = RequestMethod.POST)
+	public ResponseEntity<AccommodationUnit> postAccommodationUnit(@RequestBody AccommodationUnit accommodationUnit) {
+		return new ResponseEntity<AccommodationUnit>(accommodationUnitService.create(accommodationUnit), HttpStatus.CREATED);
+	}
+	//get Accommodation by ID
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Optional<AccommodationUnit>> getAccommodationUnitById(@PathVariable("id") Long id) {
+		return new ResponseEntity<Optional<AccommodationUnit>>(accommodationUnitService.readById(id), HttpStatus.OK)
+	}
+	//get all Accommodations
+	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	public ResponseEntity<List<AccommodationUnit>> getAllAccommodationUnits() {
+		return new ResponseEntity<List<AccommodationUnit>>(accommodationUnitService.readAll(), HttpStatus.OK);
+	}
+	//remove Accommodation
+	
+}

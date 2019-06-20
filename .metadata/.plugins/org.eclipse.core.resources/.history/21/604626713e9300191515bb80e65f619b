@@ -1,0 +1,5 @@
+package megatravel.agentservice.dto;
+
+public class AccommodationUnitListDTO {
+
+}

@@ -1,0 +1,5 @@
+package megatravel.agentservice.model;
+
+public class Chat {
+
+}

@@ -1,0 +1,5 @@
+package megatravel.model;
+
+public class AccommodationUnit {
+
+}

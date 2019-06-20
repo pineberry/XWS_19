@@ -1,0 +1,42 @@
+package megatravel.agentservice.resources;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import megatravel.agentservice.model.AccommodationUnit;
+import megatravel.agentservice.repository.AccommodationUnitRepository;
+
+@RestController
+@RequestMapping("/accommodations")
+public class AccommodationUnitResource {
+
+	@Autowired
+	private AccommodationUnitRepository accommodationUnitRepository;
+	
+	@RequestMapping("/{auId}")
+	public Optional<AccommodationUnit> getAccommodationUnits(@PathVariable("auId") Long auId) {
+		return accommodationUnitRepository.findById(auId);
+	}
+	//create
+	public AccommodationUnit save(AccommodationUnit accommodationUnit) {
+		return accommodationUnitRepository.save(accommodationUnit);
+	}
+	
+	//read one
+	public Optional<AccommodationUnit> findOne(Long id) {
+		return accommodationUnitRepository.findById(id);
+	}
+	//read all
+	public List<AccommodationUnit> findAll() {
+		return accommodationUnitRepository.findAll();
+	}
+	//update - by ID
+	//delete - by ID
+	
+	
+}
