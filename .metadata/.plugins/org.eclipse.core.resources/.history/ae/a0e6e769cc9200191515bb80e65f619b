@@ -1,5 +1,0 @@
-package megatravel.agentservice.resources;
-
-public interface Repository {
-
-}

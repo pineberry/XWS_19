@@ -1,9 +1,0 @@
-package megatravel.agentservice.resources;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import megatravel.agentservice.model.AccommodationUnit;
-
-public interface Repository extends JpaRepository<AccommodationUnit, Long>{
-
-}
