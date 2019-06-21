@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -26,7 +26,7 @@ public class Chat {
 	@GeneratedValue
     private long id;
     @XmlElement(required = true)
-    @ManyToOne(targetEntity = Message.class)
+    @OneToMany(targetEntity = Message.class)
     private List<Message> messages;
 
 }
