@@ -23,7 +23,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	RestTemplate restTemplate = new RestTemplate();
+	@Autowired
+	private RestTemplate restTemplate;
 	
 	//register new user
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
