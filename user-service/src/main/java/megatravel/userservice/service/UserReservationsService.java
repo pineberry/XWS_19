@@ -1,5 +1,6 @@
 package megatravel.userservice.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import megatravel.userservice.model.Reservation;
+import megatravel.userservice.model.User;
 import megatravel.userservice.repository.ReservationRepository;
+import megatravel.userservice.repository.UserRepository;
 
 /* this service is for retrieving information about existing users' reservations - reservation preview
  * also for cancellation of already booked accommodation - cancel reservation */
@@ -16,6 +19,8 @@ public class UserReservationsService {
 
 	@Autowired
 	private ReservationRepository reservationRepository;
+	@Autowired
+	private UserRepository userRepository;
 	
 	//read by id
 	public Optional<Reservation> readById(Long id) 
@@ -23,10 +28,18 @@ public class UserReservationsService {
 		return reservationRepository.findById(id);
 	}
 	
-	//read all
-	public List<Reservation> readAll() 
+	//read all reservations from an user
+	public List<Reservation> readAll(Long userId) 
 	{
-		return reservationRepository.findAll();
+		Optional<User> user = userRepository.findById(userId);
+		List<Reservation> reservations = new ArrayList<Reservation>();
+		for (Reservation reservation : reservationRepository.findAll()) {
+			if(reservation.getUser().getId() == user.get().getId())
+			{
+				reservations.add(reservation);
+			}	
+		}
+		return reservations;
 	}
 	
 	//cancel reservation

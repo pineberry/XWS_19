@@ -18,12 +18,17 @@ public class UserService {
 	//create
 	public User create(User user) 
 	{
-		if(!userAlreadyRegistered(user))
-		{
-			return userRepository.save(user);
+		if(!userAlreadyRegistered(user)){
+			if (user.getTypeOfUser().equals("user") && !user.getAddress().isEmpty() && user.getPib() != null){
+				return userRepository.save(user); 
+			} else if (user.getTypeOfUser().equals("agent") && (user.getAddress() != null && !user.getAddress().isEmpty()) && user.getPib() != null) {
+				return userRepository.save(user); 
+			} else {
+			System.out.println("*******Exception, look up in UserService create(User user) method!*******");
+			user = null;
+			}
 		}
-		System.out.println("*******Exception, look up in UserService create(User user) method!*******");
-		return null;
+		return user;
 	}
 	
 	//read by ID

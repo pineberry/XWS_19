@@ -6,7 +6,8 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -56,10 +57,10 @@ public class AccommodationUnit {
 	@XmlElement(name = "unit_capacity")
 	private int unitCapacity;
 	@XmlElement(required = true)
-	@ManyToOne(targetEntity = Image.class)
+	@OneToMany(targetEntity = Image.class)
 	private List<Image> images;
 	@XmlElement(required = true)
-	@ManyToOne(targetEntity = Amenity.class)
+	@ManyToMany(targetEntity = Amenity.class)
 	private List<Amenity> amenities;	
 	@XmlElement(name = "cancelation_period")
 	@XmlSchemaType(name = "unsignedInt")
@@ -67,7 +68,7 @@ public class AccommodationUnit {
 	@XmlElement(required = true)
     private BigDecimal price;
     @XmlElement(required = true)
-    @ManyToOne(targetEntity = Review.class)
+    @OneToMany(targetEntity = Review.class)
     private List<Review> reviews;
 
 	public AccommodationUnit() {

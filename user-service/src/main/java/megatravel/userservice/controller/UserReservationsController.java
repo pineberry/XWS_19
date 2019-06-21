@@ -18,15 +18,15 @@ public class UserReservationsController {
 	@Autowired
 	private UserReservationsService userReservationsService;
 	
-	@RequestMapping("/all")
-	public ResponseEntity<ReservationListDTO> getAllReservations()
+	@RequestMapping("/{id}/all") // for user with provided id return all reservations ---- localhost:port/reservation/id/all
+	public ResponseEntity<ReservationListDTO> getAllReservations(@PathVariable(name = "id") Long id)
 	{
 		ReservationListDTO temp = new ReservationListDTO();
-		temp.setReservations(userReservationsService.readAll());
+		temp.setReservations(userReservationsService.readAll(id));
 		return new ResponseEntity<ReservationListDTO>(temp, HttpStatus.OK);
 	}
 	
-	@RequestMapping("/{id}")
+	@RequestMapping("/{id}") 
 	public ResponseEntity<ReservationDTO> getReservationById(@PathVariable("id") Long id)
 	{
 		ReservationDTO temp = new ReservationDTO();

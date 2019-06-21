@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -49,7 +49,8 @@ public class User {
     private String address;
     @XmlElement(required = true)
     private Long pib;
-    @ManyToOne(targetEntity = Reservation.class)
+    
+    @OneToMany(targetEntity = Reservation.class)
     private List<Reservation> reservations;
 	
     public User() {

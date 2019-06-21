@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
+import megatravel.backend.dto.ReservationListDTO;
 import megatravel.backend.dto.UserDTO;
 import megatravel.backend.dto.UserListDTO;
 import megatravel.backend.model.User;
@@ -21,6 +23,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	RestTemplate restTemplate = new RestTemplate();
+	
 	//register new user
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public ResponseEntity<User> registerUser(@RequestBody User user)
@@ -31,13 +35,19 @@ public class UserController {
 		return new ResponseEntity<User>(userService.create(user), HttpStatus.OK);
 	}
 	
-	//read all
+	//read all ---- localhost:8083/user/all
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<UserListDTO> getAllUsers()
 	{
 		UserListDTO temp = new UserListDTO();
 		temp.setUsers(userService.readAll());
 		return new ResponseEntity<UserListDTO>(temp, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/{id}/reservations", method = RequestMethod.GET)
+	public ResponseEntity<ReservationListDTO> getAllUsersReservation(@PathVariable(name = "id") Long id) 
+	{
+		return new ResponseEntity<ReservationListDTO>(restTemplate.getForObject("http://localhost:8082/reservation/" + id.toString() + "/all", ReservationListDTO.class), HttpStatus.OK);
 	}
 	
 	//read by ID
