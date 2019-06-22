@@ -1,9 +1,9 @@
-package megatravel.backend.dto;
+package megatravel.agentservice.dto;
 
 import java.util.Optional;
 
 import lombok.Data;
-import megatravel.backend.model.Location;
+import megatravel.agentservice.model.Location;
 
 @Data
 public class LocationDTO {

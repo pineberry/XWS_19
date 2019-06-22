@@ -1,4 +1,4 @@
-package megatravel.backend.service;
+package megatravel.agentservice.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import megatravel.backend.model.Location;
-import megatravel.backend.repository.LocationRepository;
+import megatravel.agentservice.repository.LocationRepository;
+import megatravel.agentservice.model.Location;
 
 @Service
 public class LocationService {

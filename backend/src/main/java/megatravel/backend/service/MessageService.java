@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import megatravel.backend.model.Chat;
 import megatravel.backend.model.Message;
+import megatravel.backend.repository.ChatRepository;
 import megatravel.backend.repository.MessageRepository;
 
 @Service
@@ -15,6 +17,9 @@ public class MessageService {
 	@Autowired
 	private MessageRepository messageRepository;
 	
+	@Autowired
+	private ChatRepository chatRepository;
+	
 	//create
 	public Message create(Message message)
 	{
@@ -22,9 +27,10 @@ public class MessageService {
 	}
 	
 	//read all
-	public List<Message> readAll()
+	public List<Message> readAll(Long chatId)
 	{
-		return messageRepository.findAll();
+		Optional<Chat> chat = chatRepository.findById(chatId);
+		return chat.get().getMessages();
 	}
 	
 	//read by id

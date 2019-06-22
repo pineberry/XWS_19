@@ -26,6 +26,7 @@ public class UserController {
 	@Autowired
 	private RestTemplate restTemplate;
 	
+	
 	//register new user
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public ResponseEntity<User> registerUser(@RequestBody User user)
