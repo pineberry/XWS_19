@@ -57,4 +57,5 @@ public class AccommodationUnitController {
 		accommodationUnitService.delete(accommodationUnit);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+
 }

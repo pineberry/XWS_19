@@ -41,4 +41,13 @@ public class LocationController {
 		location.setLocation(locationService.readById(id));
 		return new ResponseEntity<LocationDTO>(location, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
+	public ResponseEntity<LocationDTO> update(@RequestBody Location location, @PathVariable("id")Long id)
+	{
+		LocationDTO temp = new LocationDTO();
+		locationService.create(location);
+		temp.setLocation(locationService.readById(id));
+		return new ResponseEntity<LocationDTO>(temp, HttpStatus.OK);
+	}
 }

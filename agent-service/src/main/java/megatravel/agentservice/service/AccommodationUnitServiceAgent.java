@@ -50,4 +50,12 @@ public class AccommodationUnitServiceAgent {
 		accommodationUnitRepository.delete(accommodationUnit);
 	}
 	
+	public void confirmReservation(AccommodationUnit accommodationUnit)
+	{
+		AccommodationUnit temp = accommodationUnit;
+		temp.setReserved(true);
+		accommodationUnitRepository.deleteById(accommodationUnit.getId());
+		accommodationUnitRepository.save(temp);
+	}
+	
 }

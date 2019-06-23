@@ -1,7 +1,6 @@
 package megatravel.agentservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,11 +30,9 @@ public class AccommodationUnitControllerAgent {
 	@RequestMapping(value = "/postAccommodation", method = RequestMethod.POST)
 	public ResponseEntity<AccommodationUnit> postAccommodationUnitAgent(@RequestBody AccommodationUnit accommodationUnit) 
 	{
-		HttpEntity<AccommodationUnit> request = new HttpEntity<>(accommodationUnit);
-		System.out.println("\n\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+request.toString()+"\n\n");
-		System.out.println("\n\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+accommodationUnit.toString()+"\n\n");
+		accommodationUnitService.create(accommodationUnit);
 		restTemplate.postForObject("http://backend/accommodation/postAccommodation", accommodationUnit, AccommodationUnit.class);
-		return new ResponseEntity<AccommodationUnit>(accommodationUnitService.create(accommodationUnit), HttpStatus.CREATED);
+		return new ResponseEntity<AccommodationUnit>(accommodationUnit, HttpStatus.CREATED);
 	}
 
 	//get Accommodation by ID
@@ -66,4 +63,16 @@ public class AccommodationUnitControllerAgent {
 		accommodationUnitService.delete(accommodationUnit);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "/{id}/confirm", method = RequestMethod.GET)
+	public ResponseEntity confirm(@RequestBody AccommodationUnit accommodationUnit)
+	{
+		//accommodationUnitService.create(accommodationUnit);
+		accommodationUnit.setReserved(true);
+		accommodationUnitService.confirmReservation(accommodationUnit);
+		restTemplate.postForObject("http://backend/accommodation/postAccommodation", accommodationUnit, AccommodationUnit.class);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
 }

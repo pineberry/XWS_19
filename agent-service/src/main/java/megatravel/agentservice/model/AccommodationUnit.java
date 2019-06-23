@@ -33,7 +33,8 @@ import lombok.Data;
 	    "amenities",
 	    "cancelationPeriod",
 	    "price",
-	    "reviews"
+	    "reviews",
+	    "reserved"
 })
 @Entity
 @Table
@@ -71,25 +72,6 @@ public class AccommodationUnit {
     @XmlElement(required = true)
     @OneToMany(targetEntity = Review.class)
     private List<Review> reviews;
-
-	public AccommodationUnit() {
-	}
-
-	public AccommodationUnit(Long id, User hostId, Location location, String type, String category, String description,
-			int unitCapacity, List<Image> images, List<Amenity> amenities, long cancelationPeriod, BigDecimal price,
-			List<Review> reviews) {
-		super();
-		this.id = id;
-		this.hostId = hostId;
-		this.location = location;
-		this.type = type;
-		this.category = category;
-		this.description = description;
-		this.unitCapacity = unitCapacity;
-		this.images = images;
-		this.amenities = amenities;
-		this.cancelationPeriod = cancelationPeriod;
-		this.price = price;
-		this.reviews = reviews;
-	}
+    @XmlElement(required = true)
+    private boolean reserved; 
 }
