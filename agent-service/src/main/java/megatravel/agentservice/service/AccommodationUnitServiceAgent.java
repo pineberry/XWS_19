@@ -6,14 +6,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import megatravel.agentservice.model.AccommodationUnit;
-import megatravel.agentservice.repository.AccommodationUnitRepository;
+import megatravel.backend.model.AccommodationUnit;
+import megatravel.agentservice.repository.AccommodationUnitRepositoryAgent;
 
 @Service
-public class AccommodationUnitService {
+public class AccommodationUnitServiceAgent {
 
 	@Autowired
-	private AccommodationUnitRepository accommodationUnitRepository;
+	private AccommodationUnitRepositoryAgent accommodationUnitRepository;
 	
 	//create
 	public AccommodationUnit create(AccommodationUnit accommodationUnit) 

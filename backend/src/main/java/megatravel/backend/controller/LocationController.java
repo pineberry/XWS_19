@@ -1,4 +1,4 @@
-package megatravel.agentservice.controller;
+package megatravel.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import megatravel.agentservice.dto.LocationDTO;
-import megatravel.agentservice.dto.LocationListDTO;
-import megatravel.agentservice.service.LocationService;
-import megatravel.agentservice.model.Location;
+import megatravel.backend.dto.LocationDTO;
+import megatravel.backend.dto.LocationListDTO;
+import megatravel.backend.service.LocationService;
+import megatravel.backend.model.Location;
 
 @RestController
 @RequestMapping("/location")
@@ -20,7 +20,7 @@ public class LocationController {
 
 	@Autowired
 	private LocationService locationService;
-	
+			
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<Location> addNewLocation(@RequestBody Location location)
 	{

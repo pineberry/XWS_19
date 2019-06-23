@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import megatravel.agentservice.model.Amenity;
 
-public interface AmenityRepository extends JpaRepository<Amenity, Long>{
+public interface AmenityRepositoryAgent extends JpaRepository<Amenity, Long>{
 
 }

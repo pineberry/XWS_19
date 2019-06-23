@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -40,7 +41,7 @@ import lombok.Data;
 public class AccommodationUnit {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@XmlElement(required = true)
 	@OneToOne(targetEntity = User.class)
@@ -74,11 +75,21 @@ public class AccommodationUnit {
 	public AccommodationUnit() {
 	}
 
-	public AccommodationUnit(Long id, String description, String type, String category) {
+	public AccommodationUnit(Long id, User hostId, Location location, String type, String category, String description,
+			int unitCapacity, List<Image> images, List<Amenity> amenities, long cancelationPeriod, BigDecimal price,
+			List<Review> reviews) {
 		super();
 		this.id = id;
-		this.description = description;
+		this.hostId = hostId;
+		this.location = location;
 		this.type = type;
 		this.category = category;
+		this.description = description;
+		this.unitCapacity = unitCapacity;
+		this.images = images;
+		this.amenities = amenities;
+		this.cancelationPeriod = cancelationPeriod;
+		this.price = price;
+		this.reviews = reviews;
 	}
 }

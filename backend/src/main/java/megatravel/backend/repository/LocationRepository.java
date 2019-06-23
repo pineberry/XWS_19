@@ -1,8 +1,8 @@
-package megatravel.agentservice.repository;
+package megatravel.backend.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import megatravel.agentservice.model.Location;
+import megatravel.backend.model.Location;
 
 public interface LocationRepository extends JpaRepository<Location, Long> {
 

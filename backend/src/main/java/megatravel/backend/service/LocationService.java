@@ -1,4 +1,4 @@
-package megatravel.agentservice.service;
+package megatravel.backend.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import megatravel.agentservice.repository.LocationRepository;
-import megatravel.agentservice.model.Location;
+import megatravel.backend.repository.LocationRepository;
+import megatravel.backend.model.Location;
 
 @Service
 public class LocationService {
@@ -28,5 +28,10 @@ public class LocationService {
 	public Optional<Location> readById(Long id)
 	{
 		return locationRepository.findById(id);
-	}	
+	}
+	
+	public void deleteAll()
+	{
+		locationRepository.deleteAll();
+	}
 }

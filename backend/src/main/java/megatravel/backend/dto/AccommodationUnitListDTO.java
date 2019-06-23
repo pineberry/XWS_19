@@ -1,4 +1,4 @@
-package megatravel.agentservice.dto;
+package megatravel.backend.dto;
 
 import java.util.List;
 
