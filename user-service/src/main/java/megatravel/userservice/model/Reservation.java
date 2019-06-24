@@ -1,6 +1,5 @@
 package megatravel.userservice.model;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -56,7 +55,7 @@ public class Reservation {
     private Date checkOutDate;
     
 	@XmlElement(name = "total_price", required = true)
-    private BigDecimal totalPrice;
+    private double totalPrice;
     
 	@XmlElement(required = true)
     @OneToOne

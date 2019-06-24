@@ -1,6 +1,5 @@
 package megatravel.backend.model;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -56,11 +55,32 @@ public class Reservation {
     private Date checkOutDate;
     
 	@XmlElement(name = "total_price", required = true)
-    private BigDecimal totalPrice;
+    private double totalPrice;
     
 	@XmlElement(required = true)
     @OneToOne
     @JoinColumn(name = "chatId", nullable = true)
     private Chat chat;
+	
+	@XmlElement(required = true)
+	private String status;
+	
+	@XmlElement(required = true)
+	private boolean confirmed;
 
+	public Reservation(AccommodationUnit accommodationUnit, User user, Date checkInDate, Date checkOutDate,
+			double totalPrice, Chat chat, String status, boolean confirmed) {
+		super();
+		this.accommodationUnit = accommodationUnit;
+		this.user = user;
+		this.checkInDate = checkInDate;
+		this.checkOutDate = checkOutDate;
+		this.totalPrice = totalPrice;
+		this.chat = chat;
+		this.status = status;
+		this.confirmed = confirmed;
+	}
+
+	
+	
 }

@@ -29,6 +29,7 @@ public class LocationControllerAgent {
 	public ResponseEntity<Location> addNewLocation(@RequestBody Location location)
 	{
 		locationService.create(location);
+		//sync with main db ↓↓↓↓↓↓
 		restTemplate.postForObject("http://backend/location/add", location, Location.class);
 		return new ResponseEntity<Location>(location, HttpStatus.CREATED);
 	}

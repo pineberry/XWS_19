@@ -53,7 +53,7 @@ public class AccommodationUnitServiceAgent {
 	public void confirmReservation(AccommodationUnit accommodationUnit)
 	{
 		AccommodationUnit temp = accommodationUnit;
-		temp.setReserved(true);
+		//temp.setReserved(true);
 		accommodationUnitRepository.deleteById(accommodationUnit.getId());
 		accommodationUnitRepository.save(temp);
 	}

@@ -31,6 +31,7 @@ public class AccommodationUnitControllerAgent {
 	public ResponseEntity<AccommodationUnit> postAccommodationUnitAgent(@RequestBody AccommodationUnit accommodationUnit) 
 	{
 		accommodationUnitService.create(accommodationUnit);
+		//sync with main backend db ↓↓↓↓↓↓
 		restTemplate.postForObject("http://backend/accommodation/postAccommodation", accommodationUnit, AccommodationUnit.class);
 		return new ResponseEntity<AccommodationUnit>(accommodationUnit, HttpStatus.CREATED);
 	}
@@ -64,13 +65,15 @@ public class AccommodationUnitControllerAgent {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	
+	//when confirming updateing main db as well
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/{id}/confirm", method = RequestMethod.GET)
 	public ResponseEntity confirm(@RequestBody AccommodationUnit accommodationUnit)
 	{
-		//accommodationUnitService.create(accommodationUnit);
-		accommodationUnit.setReserved(true);
+		//accommodationUnit.setReserved(true);
 		accommodationUnitService.confirmReservation(accommodationUnit);
+		//database synchronisation ↓
 		restTemplate.postForObject("http://backend/accommodation/postAccommodation", accommodationUnit, AccommodationUnit.class);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

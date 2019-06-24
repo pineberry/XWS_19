@@ -1,12 +1,13 @@
 package megatravel.agentservice.model;
 
-import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -16,6 +17,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+
+import org.springframework.data.util.Pair;
 
 import lombok.Data;
 
@@ -34,7 +37,7 @@ import lombok.Data;
 	    "cancelationPeriod",
 	    "price",
 	    "reviews",
-	    "reserved"
+	    "reservedDates"
 })
 @Entity
 @Table
@@ -68,10 +71,12 @@ public class AccommodationUnit {
 	@XmlSchemaType(name = "unsignedInt")
 	private long cancelationPeriod;
 	@XmlElement(required = true)
-    private BigDecimal price;
+    private double price;
     @XmlElement(required = true)
     @OneToMany(targetEntity = Review.class)
     private List<Review> reviews;
     @XmlElement(required = true)
-    private boolean reserved; 
+    @OneToOne
+    @JoinColumn(name = "bookedDates", nullable = true)
+    private List<Pair<Date, Date>> bookedDates;
 }

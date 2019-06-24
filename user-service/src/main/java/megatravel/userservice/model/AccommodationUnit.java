@@ -1,6 +1,5 @@
 package megatravel.userservice.model;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -66,7 +65,7 @@ public class AccommodationUnit {
 	@XmlSchemaType(name = "unsignedInt")
 	private long cancelationPeriod;
 	@XmlElement(required = true)
-    private BigDecimal price;
+    private double price;
     @XmlElement(required = true)
     @OneToMany(targetEntity = Review.class)
     private List<Review> reviews;
