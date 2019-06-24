@@ -13,4 +13,12 @@ public class SearchParametersDTO {
 	private Date checkout;
 	private int numOfGuests;
 	
+	public SearchParametersDTO(Location location, Date checkin, Date checkout, int numOfGuests) {
+		super();
+		this.location = location;
+		this.checkin = checkin;
+		this.checkout = checkout;
+		this.numOfGuests = numOfGuests;
+	}
+	
 }
