@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import megatravel.backend.model.AccommodationUnit;
+import megatravel.userservice.dto.SearchParametersAddtDTO;
 import megatravel.userservice.dto.SearchParametersDTO;
 import megatravel.userservice.service.SearchService;
 
@@ -25,9 +26,9 @@ public class SearchController {
 		return new ResponseEntity<List<AccommodationUnit>>(searchService.available(parameter), HttpStatus.OK);
 	} 
 	
-	/*@RequestMapping("/more")
-	public ResponseEntity<List<AccommodationUnit>> getAvailableQuestAccommodation(@RequestBody SearchParametersDTO parameter)
+	@RequestMapping("/more")
+	public ResponseEntity<List<AccommodationUnit>> getAvailableQuestAccommodation(@RequestBody SearchParametersAddtDTO parameter)
 	{
-		return new ResponseEntity<List<AccommodationUnit>>(searchService.avblAddt(parameter), HttpStatus.OK);
-	} */
+		return new ResponseEntity<List<AccommodationUnit>>(searchService.availableAddt(parameter), HttpStatus.OK);
+	}
 }

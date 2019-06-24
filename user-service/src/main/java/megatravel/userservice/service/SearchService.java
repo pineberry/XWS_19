@@ -47,7 +47,7 @@ public class SearchService {
 	}
 	
 	//advanced search: regular search parameters + accommodation type & category, 0
-	public List<AccommodationUnit> avblAddt(SearchParametersAddtDTO parameter)
+	public List<AccommodationUnit> availableAddt(SearchParametersAddtDTO parameter)
 	{
 		SearchParametersDTO baseParameters = new SearchParametersDTO(parameter.getLocation(), parameter.getCheckin(), parameter.getCheckout(), parameter.getNumOfGuests());
 		List<AccommodationUnit> available = available(baseParameters); //returns list of available accommodation filtered by given parameters
