@@ -9,6 +9,8 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import megatravel.backend.model.AccommodationUnit;
+import megatravel.backend.model.Amenity;
+import megatravel.userservice.dto.SearchParametersAddtDTO;
 import megatravel.userservice.dto.SearchParametersDTO;
 import megatravel.userservice.repository.AccommodationRepository;
 
@@ -18,6 +20,8 @@ public class SearchService {
 	
 	@Autowired
 	private AccommodationRepository accommodationRepository;
+	
+	
 	
 	//regular search: location, check-in & check-out, number of guests
 	public List<AccommodationUnit> available(SearchParametersDTO parameter)
@@ -41,5 +45,39 @@ public class SearchService {
 		}
 		return available;
 	}
-	//advanced search: regular search parameters + accommodation type & category, amenities
+	
+	//advanced search: regular search parameters + accommodation type & category, 0
+	public List<AccommodationUnit> avblAddt(SearchParametersAddtDTO parameter)
+	{
+		SearchParametersDTO baseParameters = new SearchParametersDTO(parameter.getLocation(), parameter.getCheckin(), parameter.getCheckout(), parameter.getNumOfGuests());
+		List<AccommodationUnit> available = available(baseParameters); //returns list of available accommodation filtered by given parameters
+					
+		
+		for (AccommodationUnit accommodationUnit : available) {
+			//if user asks for specific category (isEmpty=false), than accommodation in the filtering loop of available accommodations needs to be of that specific category
+			//if it's not than we need to remove it from the list: line of code in the if block
+			if(!parameter.getCategory().isEmpty() && !parameter.getCategory().equals(accommodationUnit.getCategory()))
+			{
+				available.remove(accommodationUnit);
+				break;
+			}
+			if(!parameter.getType().isEmpty() && !parameter.getType().equals(accommodationUnit.getType()))
+			{
+				available.remove(accommodationUnit);
+				break;
+			}
+			if(!parameter.getAmenities().isEmpty())
+			{
+				for (Amenity amenity: parameter.getAmenities()) {
+					if(!accommodationUnit.getAmenities().contains(amenity))
+					{
+						available.remove(accommodationUnit);
+						break;
+					}
+				}
+			}
+		}
+		
+		return available;
+	}
 }
