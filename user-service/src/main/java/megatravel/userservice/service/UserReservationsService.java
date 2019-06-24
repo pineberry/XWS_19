@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import megatravel.userservice.model.Reservation;
+import megatravel.backend.model.Reservation;
 import megatravel.userservice.model.User;
 import megatravel.userservice.repository.ReservationRepository;
 import megatravel.userservice.repository.UserRepository;
