@@ -39,9 +39,6 @@ public class MainController {
 	@Autowired
 	private AuthorizationService authorizationService;
 	
-	@Resource(name = "userBean")
-	private User user;
-	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public ResponseEntity<AccommodationUnitListDTO> search(@PathVariable(name = "location") Long id, @PathVariable(name = "checkin") Date checkin,
 			@PathVariable(name = "checkout") Date checkout, @PathVariable(name = "guests") int numOfGuests) 

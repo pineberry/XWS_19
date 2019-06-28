@@ -11,8 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.client.RestTemplate;
 
-import megatravel.backend.model.User;
-
 @SpringBootApplication
 @EnableEurekaClient
 @EnableConfigurationProperties
@@ -26,12 +24,6 @@ public class BackendApplication {
 	public RestTemplate getRestTemplate()
 	{
 		return new RestTemplate();
-	}
-	
-	@Bean(name = "userBean")
-	public User user()
-	{
-		return new User();
 	}
 	
 	public static void main(String[] args) {

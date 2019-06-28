@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import megatravel.backend.service.ReservationService;
-import megatravel.userservice.dto.ReservationDTO;
-import megatravel.userservice.dto.ReservationListDTO;
+import megatravel.backend.dto.ReservationDTO;
+import megatravel.backend.dto.ReservationListDTO;
 import megatravel.userservice.service.UserReservationsService;
 
 @RestController

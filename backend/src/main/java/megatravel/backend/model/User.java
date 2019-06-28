@@ -33,7 +33,6 @@ import lombok.Data;
 @Entity
 @Table
 @Data
-@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class User {
 
 	@Id

@@ -1,9 +1,9 @@
-package megatravel.userservice.dto;
+package megatravel.backend.dto;
 
 import java.util.Optional;
 
 import lombok.Data;
-import megatravel.userservice.model.Reservation;
+import megatravel.backend.model.Reservation;
 
 @Data
 public class ReservationDTO {

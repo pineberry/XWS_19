@@ -14,16 +14,14 @@ import megatravel.backend.dto.SearchParametersAddtDTO;
 import megatravel.backend.dto.SearchParametersDTO;
 import megatravel.backend.model.AccommodationUnit;
 import megatravel.backend.model.Amenity;
-import megatravel.userservice.repository.AccommodationRepository;
+import megatravel.backend.repository.AccommodationUnitRepository;
 
 @Service
 public class SearchService {
 	//with provied searching parameters, method needs to return a list of available accommodation
 	
 	@Autowired
-	private AccommodationRepository accommodationRepository;
-	
-	
+	private AccommodationUnitRepository accommodationRepository;	
 	
 	//regular search: location, check-in & check-out, number of guests
 	public AccommodationUnitListDTO available(SearchParametersDTO parameter) throws ParseException

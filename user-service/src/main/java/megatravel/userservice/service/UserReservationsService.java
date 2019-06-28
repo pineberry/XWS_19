@@ -7,10 +7,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import megatravel.backend.repository.ReservationRepository;
+import megatravel.backend.repository.UserRepository;
 import megatravel.backend.model.Reservation;
-import megatravel.userservice.model.User;
-import megatravel.userservice.repository.ReservationRepository;
-import megatravel.userservice.repository.UserRepository;
+import megatravel.backend.model.User;
 
 /* this service is for retrieving information about existing users' reservations - reservation preview
  * also for cancellation of already booked accommodation - cancel reservation */

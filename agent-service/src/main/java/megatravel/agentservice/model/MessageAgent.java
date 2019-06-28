@@ -36,11 +36,7 @@ public class MessageAgent {
     private String messageContent;
     private Date date;
     @XmlElement(required = true)
-    @OneToOne
-    @JoinColumn(name = "sender", nullable = false)
     private Long senderId;
     @XmlElement(required = true)
-    @OneToOne
-    @JoinColumn(name = "reciever", nullable = false)
     private Long recieverId;
 }
