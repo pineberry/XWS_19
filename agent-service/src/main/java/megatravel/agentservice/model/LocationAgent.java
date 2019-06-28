@@ -44,6 +44,8 @@ public class LocationAgent {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
-    
+	public LocationAgent() {
+
+	}
     
 }

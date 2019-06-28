@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import megatravel.backend.model.Reservation;
-import megatravel.reservationservice.repository.ReservationRepository;
+import megatravel.backend.repository.ReservationRepository;
 
 @Service
-public class ReservationService {
+public class ReservationServiceReservation {
 
 	@Autowired
 	private ReservationRepository reservationRepository;

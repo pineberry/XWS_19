@@ -3,7 +3,6 @@ package megatravel.backend.controller;
 import java.util.Base64;
 import java.util.Date;
 import java.util.Optional;
-import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,7 +21,6 @@ import megatravel.backend.dto.AccommodationUnitListDTO;
 import megatravel.backend.dto.SearchParametersDTO;
 import megatravel.backend.dto.UserDTO;
 import megatravel.backend.model.Location;
-import megatravel.backend.model.User;
 import megatravel.backend.service.AuthorizationService;
 import megatravel.backend.service.LocationService;
 

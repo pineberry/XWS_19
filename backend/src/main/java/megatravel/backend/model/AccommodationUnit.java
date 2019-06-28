@@ -92,6 +92,10 @@ public class AccommodationUnit {
 		this.reviews = reviews;
 		this.bookedDates = bookedDates;
 	}
+
+	public AccommodationUnit() {
+		
+	}
     
     
 }

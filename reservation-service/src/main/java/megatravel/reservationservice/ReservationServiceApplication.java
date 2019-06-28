@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableEurekaClient
 @EntityScan(basePackages = {"megatravel.backend.model"})
-@ComponentScan(basePackages = {"megatravel.backend.service", "megatravel.backend"})
+@ComponentScan(basePackages = {"megatravel.backend.service", "megatravel.backend", "megatravel.reservationservice.service", "megatravel.reservationservice.controller"})
 @EnableJpaRepositories({"megatravel.backend.repository"})
 
 public class ReservationServiceApplication {

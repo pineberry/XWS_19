@@ -34,7 +34,11 @@ public class UserController {
 		if (userService.create(user) == null) {
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<User>(userService.create(user), HttpStatus.OK);
+		else 
+		{
+			restTemplate.postForObject("http://agent-service/user-agent/add", user, User.class);
+			return new ResponseEntity<User>(userService.create(user), HttpStatus.OK);
+		}
 	}
 	
 	//read all ---- localhost:8083/user/all

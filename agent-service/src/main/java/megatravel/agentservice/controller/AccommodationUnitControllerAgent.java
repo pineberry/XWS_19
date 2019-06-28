@@ -40,7 +40,8 @@ public class AccommodationUnitControllerAgent {
 	{
 		accommodationUnitService.create(accommodationUnit);
 				
-		Location location = new Location(accommodationUnit.getLocation().getState(), accommodationUnit.getLocation().getCity(), accommodationUnit.getLocation().getAddress(), accommodationUnit.getLocation().getLatitude(), accommodationUnit.getLocation().getLongitude());
+		Location location = new Location(accommodationUnit.getLocation().getId(), accommodationUnit.getLocation().getState(), accommodationUnit.getLocation().getCity(), accommodationUnit.getLocation().getAddress(), accommodationUnit.getLocation().getLatitude(), accommodationUnit.getLocation().getLongitude());
+		System.out.println(location);
 		List<Image> images = new ArrayList<Image>();
 		for (ImageAgent image : accommodationUnit.getImages()) {
 			images.add(new Image(image.getSrc()));
@@ -55,7 +56,7 @@ public class AccommodationUnitControllerAgent {
 			 */
 		
 		AccommodationUnit accommodation = new AccommodationUnit(accommodationUnit.getId(), location, accommodationUnit.getType(), accommodationUnit.getCategory(), accommodationUnit.getDescription(), accommodationUnit.getUnitCapacity(), images, amenities, accommodationUnit.getCancelationPeriod(), accommodationUnit.getPrice(), null, accommodationUnit.getBookedDates());
-		
+		System.out.println(accommodation);
 		//sync with main backend db ↓↓↓↓↓↓
 		restTemplate.postForObject("http://backend/accommodation/postAccommodation", accommodation, AccommodationUnit.class);
 		

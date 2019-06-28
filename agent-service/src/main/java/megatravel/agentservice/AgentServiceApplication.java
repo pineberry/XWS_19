@@ -20,14 +20,18 @@ import megatravel.agentservice.model.AmenityAgent;
 import megatravel.agentservice.model.ImageAgent;
 import megatravel.agentservice.model.LocationAgent;
 import megatravel.agentservice.model.ReviewAgent;
+import megatravel.agentservice.model.UserAgent;
 import megatravel.agentservice.service.AccommodationUnitServiceAgent;
 import megatravel.agentservice.service.AmenityServiceAgent;
 import megatravel.agentservice.service.ImageServiceAgent;
 import megatravel.agentservice.service.LocationServiceAgent;
+import megatravel.agentservice.service.UserServiceAgent;
 import megatravel.backend.dto.AccommodationUnitListDTO;
 import megatravel.backend.dto.AmenityListDTO;
 import megatravel.backend.dto.ImageListDTO;
 import megatravel.backend.dto.LocationListDTO;
+import megatravel.backend.dto.UserListDTO;
+import megatravel.backend.model.User;
 
 @SpringBootApplication
 @EnableEurekaClient
@@ -49,6 +53,9 @@ public class AgentServiceApplication {
 	
 	@Autowired
 	private ImageServiceAgent imageService;
+	
+	@Autowired
+	private UserServiceAgent userService;
 	
 	/*
 	 * @Autowired private ReviewServiceAgent reviewService;
@@ -126,6 +133,15 @@ public class AgentServiceApplication {
 			AccommodationUnitAgent accommodation = new AccommodationUnitAgent(a.getId(), location_, a.getType(), a.getCategory(), a.getDescription(), a.getUnitCapacity(), images_, amenities_, a.getCancelationPeriod(), a.getPrice(), a.getBookedDates());
 			
 			accommodationService.create(accommodation);
+		}
+		
+		
+		UserListDTO users = restTemplate.getForObject("http://backend/user/all", UserListDTO.class);
+		
+		for (User u: users.getUsers()) 
+		{
+			UserAgent user = new UserAgent(u.getTypeOfUser(), u.getFirstName(), u.getLastName(), u.getUsername(), u.getPassword(), u.getAddress(), u.getPib());
+			userService.create(user);
 		}
 
 	}

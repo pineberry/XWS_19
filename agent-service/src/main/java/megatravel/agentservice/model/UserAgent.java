@@ -1,20 +1,13 @@
-package megatravel.userservice.model;
-
-import java.util.List;
+package megatravel.agentservice.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.web.context.WebApplicationContext;
 
 import lombok.Data;
 
@@ -33,8 +26,7 @@ import lombok.Data;
 @Entity
 @Table
 @Data
-@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class User {
+public class UserAgent {
 
 	@Id
 	@GeneratedValue
@@ -54,18 +46,14 @@ public class User {
     private String address;
     @XmlElement(required = true)
     private Long pib;
-    
-    @OneToMany(targetEntity = Reservation.class)
-    private List<Reservation> reservations;
 	
-    public User() {
+    public UserAgent() {
 	
 	}
 
-	public User(long id, String typeOfUser, String firstName, String lastName, String username, String password,
-			String address, Long pib, List<Reservation> reservations) {
+	public UserAgent(String typeOfUser, String firstName, String lastName, String username, String password,
+			String address, Long pib) {
 		super();
-		this.id = id;
 		this.typeOfUser = typeOfUser;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -73,7 +61,6 @@ public class User {
 		this.password = password;
 		this.address = address;
 		this.pib = pib;
-		this.reservations = reservations;
 	}
 	
 }
