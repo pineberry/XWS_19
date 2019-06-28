@@ -26,4 +26,11 @@ public class Image {
     @XmlElement(required = true)
     @XmlSchemaType(name = "anyURI")
     protected String src;
+
+    public Image(String src) {
+		super();
+		this.src = src;
+	}
+
 }
+

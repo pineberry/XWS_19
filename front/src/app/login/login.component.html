@@ -1,0 +1,26 @@
+<div>
+	<div>
+		<p>Prijavite se:</p>
+		<form method="post">
+			<input type="text" name="username" [(ngModel)]="username" placeholder="Korisnicko ime">
+			<input type="password" name="password" [(ngModel)]="password" placeholder="Lozinka">
+			<input type="submit" (click)="encrypt(username, password)" value="Prijava">
+		</form>
+	</div>
+	<div>
+		<p>Registrujte se:</p>
+		<form action="www.youtube.com">
+			<input type="text" name="firstName" placeholder="Ime">
+			<input type="text" name="lastName" placeholder="Prezime">
+			<input type="text" name="username" placeholder="Korisnicko ime">
+			<input type="password" name="password" placeholder="Lozinka">
+			<input type="radio" name="typeOfUser" (change)="typeOfUser()">Agent<br>
+			<input type="radio" name="typeOfUser" (change)="typeOfUser()">Obicni korisnik<br>
+			<div *ngIf="isType">
+				<input type="text" name="address" placeholder="Adresa">
+				<input type="text" name="pib" placeholder="PIB">
+			</div>
+			<input type="submit" value="Registracija">
+		</form>
+	</div>
+</div>

@@ -49,6 +49,7 @@ public class UserController {
 	@RequestMapping(value = "/{id}/reservations", method = RequestMethod.GET)
 	public ResponseEntity<ReservationListDTO> getAllUsersReservation(@PathVariable(name = "id") Long id) 
 	{
+		System.out.println(">>>>>>>>>>>>>>>>>" + id);
 		return new ResponseEntity<ReservationListDTO>(restTemplate.getForObject("http://user-service/reservation/" + id.toString() + "/all", ReservationListDTO.class), HttpStatus.OK);
 	}
 	

@@ -12,7 +12,7 @@ import megatravel.userservice.dto.ReservationListDTO;
 import megatravel.userservice.service.UserReservationsService;
 
 @RestController
-@RequestMapping("/reservation")
+@RequestMapping("/reservation") //handles a reservation presentation
 public class UserReservationsController {
 
 	@Autowired
@@ -35,7 +35,7 @@ public class UserReservationsController {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	@RequestMapping("/cancel/{id}")
+	@RequestMapping("/cancel/{id}") // ○○ treba da se produzi do brisanja na agentu ili da se apdejtuje na agentu ○○
 	public ResponseEntity cancelReservation(@PathVariable("id") Long id)
 	{
 		userReservationsService.delete(id);

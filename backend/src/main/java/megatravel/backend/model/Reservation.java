@@ -21,11 +21,11 @@ import lombok.Data;
 @XmlType(name = "Reservation", propOrder = {
     "id",
     "accommodationUnit",
-    "guestId",
     "checkInDate",
     "checkOutDate",
     "totalPrice",
-    "chatId"
+    "chatId",
+    "guestId"
 })
 @Entity
 @Table
@@ -42,9 +42,7 @@ public class Reservation {
     private AccommodationUnit accommodationUnit;
     
 	@XmlElement(required = true)
-    @OneToOne
-    @JoinColumn(name = "guestId", nullable = false)
-    private User user; //user that booked a accommodation
+    private long guestId; //user that booked a accommodation
     
 	@XmlElement(name = "check_in_date", required = true)
     @XmlSchemaType(name = "date")
@@ -68,11 +66,11 @@ public class Reservation {
 	@XmlElement(required = true)
 	private boolean confirmed;
 
-	public Reservation(AccommodationUnit accommodationUnit, User user, Date checkInDate, Date checkOutDate,
+	public Reservation(AccommodationUnit accommodationUnit, long user, Date checkInDate, Date checkOutDate,
 			double totalPrice, Chat chat, String status, boolean confirmed) {
 		super();
 		this.accommodationUnit = accommodationUnit;
-		this.user = user;
+		this.guestId = user;
 		this.checkInDate = checkInDate;
 		this.checkOutDate = checkOutDate;
 		this.totalPrice = totalPrice;
@@ -81,6 +79,8 @@ public class Reservation {
 		this.confirmed = confirmed;
 	}
 
-	
+	public Reservation() {
+		
+	}
 	
 }

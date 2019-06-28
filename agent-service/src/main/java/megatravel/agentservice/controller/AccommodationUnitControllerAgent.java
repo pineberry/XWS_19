@@ -1,5 +1,8 @@
 package megatravel.agentservice.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +15,14 @@ import org.springframework.web.client.RestTemplate;
 
 import megatravel.agentservice.dto.AccommodationUnitDTO;
 import megatravel.agentservice.dto.AccommodationUnitListDTO;
-import megatravel.backend.model.AccommodationUnit;
+import megatravel.agentservice.model.AccommodationUnitAgent;
+import megatravel.agentservice.model.AmenityAgent;
+import megatravel.agentservice.model.ImageAgent;
 import megatravel.agentservice.service.AccommodationUnitServiceAgent;
+import megatravel.backend.model.AccommodationUnit;
+import megatravel.backend.model.Amenity;
+import megatravel.backend.model.Image;
+import megatravel.backend.model.Location;
 
 
 @RestController
@@ -26,14 +35,31 @@ public class AccommodationUnitControllerAgent {
 	@Autowired
 	private RestTemplate restTemplate;
 	
-	//post Accommodation
 	@RequestMapping(value = "/postAccommodation", method = RequestMethod.POST)
-	public ResponseEntity<AccommodationUnit> postAccommodationUnitAgent(@RequestBody AccommodationUnit accommodationUnit) 
+	public ResponseEntity<AccommodationUnitAgent> postAccommodationUnitAgent(@RequestBody AccommodationUnitAgent accommodationUnit) 
 	{
 		accommodationUnitService.create(accommodationUnit);
+				
+		Location location = new Location(accommodationUnit.getLocation().getState(), accommodationUnit.getLocation().getCity(), accommodationUnit.getLocation().getAddress(), accommodationUnit.getLocation().getLatitude(), accommodationUnit.getLocation().getLongitude());
+		List<Image> images = new ArrayList<Image>();
+		for (ImageAgent image : accommodationUnit.getImages()) {
+			images.add(new Image(image.getSrc()));
+		}
+		List<Amenity> amenities = new ArrayList<Amenity>();
+		for (AmenityAgent amenity : accommodationUnit.getAmenities()) {
+			amenities.add(new Amenity(amenity.getAmenity()));
+		} /*
+			 * List<Review> reviews = new ArrayList<Review>(); for (ReviewAgent review :
+			 * accommodationUnit.getReviews()) { reviews.add(new
+			 * Review(review.getReviewContent(), review.getMark())); }
+			 */
+		
+		AccommodationUnit accommodation = new AccommodationUnit(accommodationUnit.getId(), location, accommodationUnit.getType(), accommodationUnit.getCategory(), accommodationUnit.getDescription(), accommodationUnit.getUnitCapacity(), images, amenities, accommodationUnit.getCancelationPeriod(), accommodationUnit.getPrice(), null, accommodationUnit.getBookedDates());
+		
 		//sync with main backend db ↓↓↓↓↓↓
-		restTemplate.postForObject("http://backend/accommodation/postAccommodation", accommodationUnit, AccommodationUnit.class);
-		return new ResponseEntity<AccommodationUnit>(accommodationUnit, HttpStatus.CREATED);
+		restTemplate.postForObject("http://backend/accommodation/postAccommodation", accommodation, AccommodationUnit.class);
+		
+		return new ResponseEntity<AccommodationUnitAgent>(accommodationUnit, HttpStatus.CREATED);
 	}
 
 	//get Accommodation by ID
@@ -59,7 +85,7 @@ public class AccommodationUnitControllerAgent {
 	//remove Accommodation
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/remove", method = RequestMethod.GET)
-	public ResponseEntity removeAccommodationUnitAgent(@RequestBody AccommodationUnit accommodationUnit) 
+	public ResponseEntity removeAccommodationUnitAgent(@RequestBody AccommodationUnitAgent accommodationUnit) 
 	{
 		accommodationUnitService.delete(accommodationUnit);
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -69,7 +95,7 @@ public class AccommodationUnitControllerAgent {
 	//when confirming updateing main db as well
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/{id}/confirm", method = RequestMethod.GET)
-	public ResponseEntity confirm(@RequestBody AccommodationUnit accommodationUnit)
+	public ResponseEntity confirm(@RequestBody AccommodationUnitAgent accommodationUnit)
 	{
 		//accommodationUnit.setReserved(true);
 		accommodationUnitService.confirmReservation(accommodationUnit);

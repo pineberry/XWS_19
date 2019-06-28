@@ -34,7 +34,7 @@ public class UserReservationsService {
 		Optional<User> user = userRepository.findById(userId);
 		List<Reservation> reservations = new ArrayList<Reservation>();
 		for (Reservation reservation : reservationRepository.findAll()) {
-			if(reservation.getUser().getId() == user.get().getId())
+			if(reservation.getGuestId() == user.get().getId())
 			{
 				reservations.add(reservation);
 			}	

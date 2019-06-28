@@ -13,7 +13,8 @@ import org.springframework.web.client.RestTemplate;
 import megatravel.agentservice.dto.LocationDTO;
 import megatravel.agentservice.dto.LocationListDTO;
 import megatravel.agentservice.service.LocationServiceAgent;
-import megatravel.agentservice.model.Location;
+import megatravel.backend.model.Location;
+import megatravel.agentservice.model.LocationAgent;
 
 @RestController
 @RequestMapping("/location-agent")
@@ -26,12 +27,16 @@ public class LocationControllerAgent {
 	private RestTemplate restTemplate;
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public ResponseEntity<Location> addNewLocation(@RequestBody Location location)
+	public ResponseEntity<LocationAgent> addNewLocation(@RequestBody LocationAgent location)
 	{
 		locationService.create(location);
+		
+		Location location_ = new Location(location.getState(), location.getCity(), location.getAddress(), location.getLatitude(), location.getLongitude());
+		
 		//sync with main db ↓↓↓↓↓↓
-		restTemplate.postForObject("http://backend/location/add", location, Location.class);
-		return new ResponseEntity<Location>(location, HttpStatus.CREATED);
+		restTemplate.postForObject("http://backend/location/add", location_, LocationAgent.class);
+		
+		return new ResponseEntity<LocationAgent>(location, HttpStatus.CREATED);
 	}
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<LocationListDTO> getAllLocations()

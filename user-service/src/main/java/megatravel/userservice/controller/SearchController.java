@@ -7,11 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import megatravel.backend.dto.AccommodationUnitListDTO;
+import megatravel.backend.dto.SearchParametersAddtDTO;
+import megatravel.backend.dto.SearchParametersDTO;
 import megatravel.backend.model.AccommodationUnit;
-import megatravel.userservice.dto.SearchParametersAddtDTO;
-import megatravel.userservice.dto.SearchParametersDTO;
 import megatravel.userservice.service.SearchService;
 
 @RestController
@@ -21,9 +23,10 @@ public class SearchController {
 	@Autowired
 	private SearchService searchService;
 	
-	public ResponseEntity<List<AccommodationUnit>> getAvailableAccommodation(@RequestBody SearchParametersDTO parameter)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ResponseEntity<AccommodationUnitListDTO> getAvailableAccommodation(@RequestBody SearchParametersDTO parameter)
 	{
-		return new ResponseEntity<List<AccommodationUnit>>(searchService.available(parameter), HttpStatus.OK);
+		return new ResponseEntity<AccommodationUnitListDTO>(searchService.available(parameter), HttpStatus.OK);
 	} 
 	
 	@RequestMapping("/more")

@@ -2,8 +2,10 @@ package megatravel.userservice.model;
 
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -31,7 +33,8 @@ import lombok.Data;
 	    "amenities",
 	    "cancelationPeriod",
 	    "price",
-	    "reviews"
+	    "reviews",
+	    "bookedDates"
 })
 @Entity
 @Table
@@ -39,11 +42,10 @@ import lombok.Data;
 public class AccommodationUnit {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@XmlElement(required = true)
-	@OneToOne(targetEntity = User.class)
-	private User hostId;
+	private long hostId;
 	@XmlElement(required = true)
 	@OneToOne(targetEntity = Location.class)
 	private Location location;
@@ -69,15 +71,7 @@ public class AccommodationUnit {
     @XmlElement(required = true)
     @OneToMany(targetEntity = Review.class)
     private List<Review> reviews;
-
-	public AccommodationUnit() {
-	}
-
-	public AccommodationUnit(Long id, String description, String type, String category) {
-		super();
-		this.id = id;
-		this.description = description;
-		this.type = type;
-		this.category = category;
-	}
+    @XmlElement(required = true)
+    @ElementCollection
+    private List<String> bookedDates;
 }

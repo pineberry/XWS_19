@@ -1,0 +1,14 @@
+<div>
+	<form>
+		<input type="text" name="amenity" [(ngModel)]="amenity" placeholder="Dodatna usluga">
+		<input type="submit" (click)="createAmenity(amenity)" name="Dodaj">
+	</form>
+</div>
+<div>
+	<fieldset>
+		<legend>Dodatne usluge</legend> 
+		<div *ngFor="let amenity of amenities">
+			→ {{amenity.amenity}}
+		</div>
+	</fieldset>
+</div>

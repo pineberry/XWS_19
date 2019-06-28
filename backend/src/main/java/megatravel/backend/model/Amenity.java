@@ -29,9 +29,8 @@ public class Amenity {
     	
 	}
 
-    public Amenity(long id, String amenity) {
+    public Amenity(String amenity) {
 		super();
-		this.id = id;
 		this.amenity = amenity;
     } 
 }

@@ -1,0 +1,47 @@
+<div class="content">
+	<div *ngIf="isAdvanced">
+		<form action="megatravel/search" method="get">
+			<select name="location">
+				<option *ngFor="let location of (getCities())" [value]="location">{{location}}</option>
+			</select>
+			<input type="date" name="checkin">
+			<input type="date" name="checkout">
+			<input type="number" min="1" name="guests">
+			<input type="submit" value="Pretrazi">
+		</form>
+		<button (click)="advanced()">Napredna pretraga</button>
+	</div>
+	<div *ngIf="!isAdvanced">
+		<form action="megatravel/search/more" method="get">
+			<select name="location">
+				<option *ngFor="let location of (getCities())" [value]="location">{{location}}</option>
+			</select>
+			<select name="type">
+				<option hidden="hidden" value="" disabled="">Tip</option>
+				<option value="hotel">Hotel</option>
+				<option value="pansion">Pansion</option>
+				<option value="apartman">Apartman</option>
+			</select>
+			<select name="category">
+				<option hidden="hidden" value="" disabled="">Kategorija</option>
+				<option value="1*">★</option>
+				<option value="2*">★★</option>
+				<option value="3*">★★★</option>
+				<option value="4*">★★★★</option>
+				<option value="5*">★★★★★</option>
+			</select>
+			<fieldset>
+				 <legend>Dodatne usluge</legend> 
+				 <div *ngFor="let amenity of amenities">
+				 	<input type="checkbox" name="amenities" [value]="amenity.amenity">{{amenity.amenity}}<br>
+				 </div>
+			</fieldset>
+			<input type="date" name="checkin">
+			<input type="date" name="checkout">
+			<input type="number" min="1" name="guests">
+			<input type="submit" value="Pretrazi">
+		</form>
+		<button (click)="advanced()">Nazadna pretraga</button>
+	</div>
+	
+</div>

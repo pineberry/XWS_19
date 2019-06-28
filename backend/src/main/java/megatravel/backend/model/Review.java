@@ -26,5 +26,11 @@ public class Review {
     @XmlElement(name = "review_content", required = true)
     protected String reviewContent;
     protected long mark;
+    
+	public Review(String reviewContent, long mark) {
+		super();
+		this.reviewContent = reviewContent;
+		this.mark = mark;
+	}
 
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import megatravel.backend.model.AccommodationUnit;
 import megatravel.backend.model.Reservation;
 import megatravel.backend.model.User;
+import megatravel.backend.service.UserService;
 import megatravel.reservationservice.service.ReservationService;
 
 @RestController
@@ -22,21 +23,30 @@ public class ReservationController {
 
 	@Autowired
 	private ReservationService reservationService;
+	
+	@Autowired
+	private UserService userService;
 
 	// /accommodation-reservation/book → create(Reservation reservation)
 	@RequestMapping(value = "/book/{checkin}-{checkout}")
 	public ResponseEntity<Reservation> bookAccomodation(@RequestBody AccommodationUnit accommodationUnit, 
 			@RequestBody User user, @PathVariable("checkin") Date checkin, @PathVariable("checkout") Date checkout)
 	{
-		double numOfDays = getDateDiff(checkin,checkout,TimeUnit.MINUTES);
-		double totalPrice = accommodationUnit.getPrice() * numOfDays;
-		Reservation reservation = new Reservation(accommodationUnit, user, checkin, checkout, totalPrice, null, "waiting-for-response", false);
-		return new ResponseEntity<Reservation>(reservationService.create(reservation), HttpStatus.CREATED);
+		/*
+		 * Reservation reservation; if (userService.readById(user.getId()) != null) {
+		 * //registrated user premition double numOfDays = getDateDiff(checkin,
+		 * checkout, TimeUnit.DAYS); double totalPrice = accommodationUnit.getPrice() *
+		 * numOfDays; reservation = new Reservation(accommodationUnit, user, checkin,
+		 * checkout, totalPrice, null, "waiting-for-response", false); return new
+		 * ResponseEntity<Reservation>(reservationService.create(reservation),
+		 * HttpStatus.CREATED); }else
+		 */
+			return new ResponseEntity<Reservation>(HttpStatus.CREATED);		
 	}
 	
 	// /accommodation-reservation/cancel
 
-	public static double getDateDiff(Date checkin, Date checkout, TimeUnit timeUnit) {
+	static double getDateDiff(Date checkin, Date checkout, TimeUnit timeUnit) {
 	    long diffInMillies = checkout.getTime() - checkin.getTime();
 	    return (double)timeUnit.convert(diffInMillies,TimeUnit.DAYS);
 	}

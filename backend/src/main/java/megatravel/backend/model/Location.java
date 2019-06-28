@@ -35,4 +35,15 @@ public class Location {
     private String address;
     private double latitude;
     private double longitude;
+    
+	public Location(String state, String city, String address, double latitude, double longitude) {
+		super();
+		this.state = state;
+		this.city = city;
+		this.address = address;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+    
+    
 }

@@ -1,13 +1,12 @@
 package megatravel.backend.model;
 
-import java.util.Date;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -17,8 +16,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-
-import org.springframework.data.util.Pair;
 
 import lombok.Data;
 
@@ -37,7 +34,7 @@ import lombok.Data;
 	    "cancelationPeriod",
 	    "price",
 	    "reviews",
-	    "reservedDates"
+	    "bookedDates"
 })
 @Entity
 @Table
@@ -48,8 +45,7 @@ public class AccommodationUnit {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@XmlElement(required = true)
-	@OneToOne(targetEntity = User.class)
-	private User hostId;
+	private long hostId;
 	@XmlElement(required = true)
 	@OneToOne(targetEntity = Location.class)
 	private Location location;
@@ -76,7 +72,26 @@ public class AccommodationUnit {
     @OneToMany(targetEntity = Review.class)
     private List<Review> reviews;
     @XmlElement(required = true)
-    @OneToOne
-    @JoinColumn(name = "bookedDates", nullable = true)
-    private List<Pair<Date, Date>> bookedDates;
+    @ElementCollection
+    private List<String> bookedDates;
+	
+    public AccommodationUnit(long hostId, Location location, String type, String category, String description,
+			int unitCapacity, List<Image> images, List<Amenity> amenities, long cancelationPeriod, double price,
+			List<Review> reviews, List<String> bookedDates) {
+		super();
+		this.hostId = hostId;
+		this.location = location;
+		this.type = type;
+		this.category = category;
+		this.description = description;
+		this.unitCapacity = unitCapacity;
+		this.images = images;
+		this.amenities = amenities;
+		this.cancelationPeriod = cancelationPeriod;
+		this.price = price;
+		this.reviews = reviews;
+		this.bookedDates = bookedDates;
+	}
+    
+    
 }
