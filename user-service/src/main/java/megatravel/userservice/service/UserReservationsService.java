@@ -19,6 +19,7 @@ public class UserReservationsService {
 
 	@Autowired
 	private ReservationRepository reservationRepository;
+	
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -40,11 +41,5 @@ public class UserReservationsService {
 			}	
 		}
 		return reservations;
-	}
-	
-	//cancel reservation
-	public void delete(Long id) 
-	{
-		reservationRepository.deleteById(id);
 	}
 }

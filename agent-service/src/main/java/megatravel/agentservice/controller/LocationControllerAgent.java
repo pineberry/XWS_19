@@ -34,7 +34,7 @@ public class LocationControllerAgent {
 		Location location_ = new Location(location.getState(), location.getCity(), location.getAddress(), location.getLatitude(), location.getLongitude());
 		
 		//sync with main db ↓↓↓↓↓↓
-		restTemplate.postForObject("http://backend/location/add", location_, LocationAgent.class);
+		restTemplate.postForObject("http://backend/location/add", location_, Location.class);
 		
 		return new ResponseEntity<LocationAgent>(location, HttpStatus.CREATED);
 	}

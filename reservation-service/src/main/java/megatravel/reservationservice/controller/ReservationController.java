@@ -1,6 +1,8 @@
 package megatravel.reservationservice.controller;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,41 +15,54 @@ import org.springframework.web.bind.annotation.RestController;
 
 import megatravel.backend.model.AccommodationUnit;
 import megatravel.backend.model.Reservation;
-import megatravel.backend.model.User;
+import megatravel.backend.service.AccommodationUnitService;
+import megatravel.backend.service.ReservationService;
 import megatravel.backend.service.UserService;
-import megatravel.reservationservice.service.ReservationService;
 
 @RestController
-@RequestMapping("/accommodation-reservation")
+@RequestMapping("/book-accommodation")
 public class ReservationController {
 
 	@Autowired
 	private ReservationService reservationService;
 	
 	@Autowired
+	private AccommodationUnitService accommodationUnitService;
+	
+	@Autowired
 	private UserService userService;
 
-	// /accommodation-reservation/book → create(Reservation reservation)
+	// rezervisi smestaj za od do
 	@RequestMapping(value = "/book/{checkin}-{checkout}")
 	public ResponseEntity<Reservation> bookAccomodation(@RequestBody AccommodationUnit accommodationUnit, 
-			@RequestBody User user, @PathVariable("checkin") Date checkin, @PathVariable("checkout") Date checkout)
+			@RequestBody Long userID, @PathVariable("checkin") Date checkin, @PathVariable("checkout") Date checkout)
 	{
-		/*
-		 * Reservation reservation; if (userService.readById(user.getId()) != null) {
-		 * //registrated user premition double numOfDays = getDateDiff(checkin,
-		 * checkout, TimeUnit.DAYS); double totalPrice = accommodationUnit.getPrice() *
-		 * numOfDays; reservation = new Reservation(accommodationUnit, user, checkin,
-		 * checkout, totalPrice, null, "waiting-for-response", false); return new
-		 * ResponseEntity<Reservation>(reservationService.create(reservation),
-		 * HttpStatus.CREATED); }else
-		 */
-			return new ResponseEntity<Reservation>(HttpStatus.CREATED);		
+		if (userService.readById(userID) != null) 
+		  	{
+				//registrated user premition 
+				double numOfDays = getDateDiff(checkin, checkout, TimeUnit.DAYS); 
+				double totalPrice = accommodationUnit.getPrice() * numOfDays; 
+				
+				Reservation reservation = new Reservation(accommodationUnit, userID, checkin, checkout, totalPrice, null, "waiting-for-response", false);
+				
+				Optional<AccommodationUnit> accommodation = accommodationUnitService.readById(accommodationUnit.getId());
+				
+				List<String> dates = accommodation.get().getBookedDates();
+				dates.add(checkin + "-" + checkout);
+				
+				accommodation.get().setBookedDates(dates); // datum-datum,datum-datum
+				accommodationUnitService.update(accommodation.get(), accommodation.get().getId());
+				
+				return new ResponseEntity<Reservation>(reservationService.create(reservation), HttpStatus.CREATED);
+		  	}
+			else
+				return new ResponseEntity<Reservation>(HttpStatus.INTERNAL_SERVER_ERROR);		
 	}
-	
-	// /accommodation-reservation/cancel
 
-	static double getDateDiff(Date checkin, Date checkout, TimeUnit timeUnit) {
+	static double getDateDiff(Date checkin, Date checkout, TimeUnit timeUnit) 
+	{
 	    long diffInMillies = checkout.getTime() - checkin.getTime();
+	    
 	    return (double)timeUnit.convert(diffInMillies,TimeUnit.DAYS);
 	}
 }

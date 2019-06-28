@@ -1,6 +1,9 @@
 package megatravel.userservice.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,33 +26,39 @@ public class SearchService {
 	
 	
 	//regular search: location, check-in & check-out, number of guests
-	public AccommodationUnitListDTO available(SearchParametersDTO parameter)
+	public AccommodationUnitListDTO available(SearchParametersDTO parameter) throws ParseException
 	{
 		List<AccommodationUnit> temp = new ArrayList<AccommodationUnit>();
+		AccommodationUnitListDTO available = new AccommodationUnitListDTO();
 		//parameter.getLocation().getCity().equals(accommodationUnit.getLocation().getCity()) &&
 		for (AccommodationUnit accommodationUnit : accommodationRepository.findAll()) {
 			if (parameter.getLocation().get().getCity().equals(accommodationUnit.getLocation().getCity()))
 			{
-				for (String datePairs : accommodationUnit.getBookedDates()) {
-					/*
-					 * if(parameter.getCheckin().compareTo(datePairs.getFirst()) != 0) { //different
-					 * checkin dates, if dates are the same, then its not available
-					 * if(parameter.getCheckin().compareTo(datePairs.getSecond()) >= 0) //if
-					 * requested checkin is the same day or after a checkout of some other
-					 * reservation { if (parameter.getNumOfGuests() <=
-					 * accommodationUnit.getUnitCapacity()) { //if unit is for the requested number
-					 * of people or more available.add(accommodationUnit); } } }
-					 */
+				for (String datePairs : accommodationUnit.getBookedDates()) { // datum-datum, datum-datum
+					
+					String[] date = datePairs.split("-");
+					Date checkin = new SimpleDateFormat("dd/MM/yyyy").parse(date[0]);
+					Date checkout = new SimpleDateFormat("dd/MM/yyyy").parse(date[1]);
+					if(parameter.getCheckin().compareTo(checkin) != 0) 
+					{ //different  checkin dates, if dates are the same, then its not available
+						if(parameter.getCheckin().compareTo(checkout) >= 0) //if requested checkin is the same day or after a checkout of some other reservation 
+						{ 
+							if (parameter.getNumOfGuests() <= accommodationUnit.getUnitCapacity()) { //if unit is for the requested number  of people or more 
+								temp.add(accommodationUnit); 
+							}
+						}
+					}
 				}
+					 
 			}
 		}
-		AccommodationUnitListDTO available = new AccommodationUnitListDTO();
+		
 		available.setAccommodationUnits(temp);
 		return available;
 	}
 	
 	//advanced search: regular search parameters + accommodation type & category, 0
-	public List<AccommodationUnit> availableAddt(SearchParametersAddtDTO parameter)
+	public List<AccommodationUnit> availableAddt(SearchParametersAddtDTO parameter) throws ParseException
 	{
 		SearchParametersDTO baseParameters = new SearchParametersDTO(parameter.getLocation(), parameter.getCheckin(), parameter.getCheckout(), parameter.getNumOfGuests());
 		AccommodationUnitListDTO available = available(baseParameters); //returns list of available accommodation filtered by given parameters

@@ -24,12 +24,10 @@ import megatravel.agentservice.service.AccommodationUnitServiceAgent;
 import megatravel.agentservice.service.AmenityServiceAgent;
 import megatravel.agentservice.service.ImageServiceAgent;
 import megatravel.agentservice.service.LocationServiceAgent;
-import megatravel.agentservice.service.ReviewServiceAgent;
 import megatravel.backend.dto.AccommodationUnitListDTO;
 import megatravel.backend.dto.AmenityListDTO;
 import megatravel.backend.dto.ImageListDTO;
 import megatravel.backend.dto.LocationListDTO;
-import megatravel.backend.dto.ReviewListDTO;
 
 @SpringBootApplication
 @EnableEurekaClient

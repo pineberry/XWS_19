@@ -1,5 +1,6 @@
 package megatravel.userservice.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,13 @@ public class SearchController {
 	private SearchService searchService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ResponseEntity<AccommodationUnitListDTO> getAvailableAccommodation(@RequestBody SearchParametersDTO parameter)
+	public ResponseEntity<AccommodationUnitListDTO> getAvailableAccommodation(@RequestBody SearchParametersDTO parameter) throws ParseException
 	{
 		return new ResponseEntity<AccommodationUnitListDTO>(searchService.available(parameter), HttpStatus.OK);
 	} 
 	
 	@RequestMapping("/more")
-	public ResponseEntity<List<AccommodationUnit>> getAvailableQuestAccommodation(@RequestBody SearchParametersAddtDTO parameter)
+	public ResponseEntity<List<AccommodationUnit>> getAvailableQuestAccommodation(@RequestBody SearchParametersAddtDTO parameter) throws ParseException
 	{
 		return new ResponseEntity<List<AccommodationUnit>>(searchService.availableAddt(parameter), HttpStatus.OK);
 	}
