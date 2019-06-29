@@ -20,8 +20,9 @@ public class UserService {
 	//create
 	public User create(User user) 
 	{
+		System.out.println(user);
 		if(!userAlreadyRegistered(user)){
-			if (user.getTypeOfUser().equals("user") && user.getAddress().isEmpty() && user.getPib() == null){
+			if (user.getTypeOfUser().equals("user") && user.getAddress() == null && user.getPib() == null){
 				return userRepository.save(user); 
 			} else if (user.getTypeOfUser().equals("agent") && (user.getAddress() != null && !user.getAddress().isEmpty()) && user.getPib() != null) {
 				return userRepository.save(user); 
@@ -72,7 +73,9 @@ public class UserService {
 		return false;
 	}
 
-	public void update(User user) {
+	public void update(User user, Long userID) {
+		
+		userRepository.deleteById(userID);
 		userRepository.save(user);		
 	}
 
@@ -83,7 +86,8 @@ public class UserService {
 		reservations = user.getReservations();
 		reservations.add(reservation);
 		user.setReservations(reservations);
-		update(user);
+		user.setId(0);
+		update(user,userID);
 	}
 	
 }

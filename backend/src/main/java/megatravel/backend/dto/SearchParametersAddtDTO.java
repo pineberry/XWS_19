@@ -2,16 +2,13 @@ package megatravel.backend.dto;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-
 import lombok.Data;
 import megatravel.backend.model.Amenity;
-import megatravel.backend.model.Location;
 
 @Data
 public class SearchParametersAddtDTO{
 
-	private Optional<Location> location;
+	private String city;
 	private Date checkin;
 	private Date checkout;
 	private int numOfGuests;
@@ -19,10 +16,10 @@ public class SearchParametersAddtDTO{
 	private String category;
 	private List<Amenity> amenities;
 	
-	public SearchParametersAddtDTO(Optional<Location> location, Date checkin, Date checkout, int numOfGuests, String type,
+	public SearchParametersAddtDTO(String city, Date checkin, Date checkout, int numOfGuests, String type,
 			String category, List<Amenity> amenities) {
 		super();
-		this.location = location;
+		this.city = city;
 		this.checkin = checkin;
 		this.checkout = checkout;
 		this.numOfGuests = numOfGuests;

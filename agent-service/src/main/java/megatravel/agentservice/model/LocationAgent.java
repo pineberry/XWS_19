@@ -47,5 +47,14 @@ public class LocationAgent {
 	public LocationAgent() {
 
 	}
+	public LocationAgent(long id, String state, String city, String address, double latitude, double longitude) {
+		super();
+		this.id = id;
+		this.state = state;
+		this.city = city;
+		this.address = address;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
     
 }

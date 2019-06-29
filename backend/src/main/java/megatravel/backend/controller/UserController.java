@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -29,15 +29,27 @@ public class UserController {
 	
 	//register new user
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ResponseEntity<User> registerUser(@RequestBody User user)
+	public ResponseEntity<User> registerUser(@RequestParam("username") String username, @RequestParam("password") String password,
+			@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, @RequestParam("typeOfUser") String typeOfUser,
+			@RequestParam("address") String address, @RequestParam("pib") String pib)
 	{
+		User user;
+		System.out.println(">>>>>>>>>>" + typeOfUser);
+		if (typeOfUser.equals("user")) {
+			user = new User(typeOfUser, firstName, lastName, username, password, null, null, null);
+			System.out.println(">>>>>>>>>>" + user);
+		} else {
+			Long pib_ = Long.parseLong(pib);
+			user = new User(typeOfUser, firstName, lastName, username, password, address, pib_, null);
+		}
+		
 		if (userService.create(user) == null) {
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		}
 		else 
 		{
 			restTemplate.postForObject("http://agent-service/user-agent/add", user, User.class);
-			return new ResponseEntity<User>(userService.create(user), HttpStatus.OK);
+			return new ResponseEntity<User>(user, HttpStatus.OK);
 		}
 	}
 	

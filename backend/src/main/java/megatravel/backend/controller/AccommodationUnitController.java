@@ -26,6 +26,7 @@ public class AccommodationUnitController {
 	@RequestMapping(value = "/postAccommodation", method = RequestMethod.POST)
 	public ResponseEntity<AccommodationUnit> postAccommodationUnit(@RequestBody AccommodationUnit accommodationUnit) 
 	{
+		System.out.println("++++++++++"+ accommodationUnit);
 		return new ResponseEntity<AccommodationUnit>(accommodationUnitService.create(accommodationUnit), HttpStatus.CREATED);
 	}
 

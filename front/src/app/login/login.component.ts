@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from "@angular/router";
 
@@ -9,7 +9,7 @@ import { Router } from "@angular/router";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-	isType: boolean = false;
+	isTypeF: boolean = false;
   user: any;
   response: any;
 
@@ -19,9 +19,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  typeOfUser()
+  isType()
   {
-  	this.isType = !this.isType;
+  	this.isTypeF = !this.isTypeF;
   }
   encrypt(username: string, password: string)
   {
@@ -40,14 +40,51 @@ export class LoginComponent implements OnInit {
       }
       else if (this.response.user.typeOfUser == 'user') 
       {
-        this.router.navigate(['/user-home']);
+        this.router.navigate(['/']);
       }
 
       this.cookie.set('Authorization', auth, expireDate);
       console.log(this.cookie.getAll());
-      this.cookie.delete('Authorization');
+    }, 
+      error => console.log(error));
+  }
+
+  register(username: string, password: string, firstName: string, lastName: string, typeOfUser: string, address: string, pib: string)
+  {
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', 'Basic ' + btoa(username +"&"+ password)).set('Content-Type', 'text/plain');
+
+
+    if (typeOfUser == 'user') {
+      address = "";
+      pib = "";
+    }
+
+    this.http.post('http://localhost:8083/user/registration?'
+      + 'firstName=' + firstName 
+      + '&lastName=' + lastName 
+      + '&username=' + username
+      + '&password=' + password
+      + '&typeOfUser=' + typeOfUser
+      + '&address=' + address
+      + '&pib=' + pib , { headers: headers })
+    .subscribe((response) => {
+      console.log(response);
+      this.user = response;
+      var expireDate = new Date().getTime() + (1000 * 1000);
+      var auth = this.user.id + "&" + this.user.typeOfUser;
+
+      if (typeOfUser == 'agent') 
+      {
+        this.router.navigate(['/agent-home']);
+      }
+      else if (typeOfUser == 'user') 
+      {
+        this.router.navigate(['/']);
+      }
+
+      this.cookie.set('Authorization', auth, expireDate);
       console.log(this.cookie.getAll());
-      this.user = this.cookie.get('Authorization');
     }, 
       error => console.log(error));
   }

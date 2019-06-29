@@ -9,18 +9,18 @@
 	</div>
 	<div>
 		<p>Registrujte se:</p>
-		<form action="www.youtube.com">
-			<input type="text" name="firstName" placeholder="Ime">
-			<input type="text" name="lastName" placeholder="Prezime">
-			<input type="text" name="username" placeholder="Korisnicko ime">
-			<input type="password" name="password" placeholder="Lozinka">
-			<input type="radio" name="typeOfUser" (change)="typeOfUser()">Agent<br>
-			<input type="radio" name="typeOfUser" (change)="typeOfUser()">Obicni korisnik<br>
-			<div *ngIf="isType">
-				<input type="text" name="address" placeholder="Adresa">
-				<input type="text" name="pib" placeholder="PIB">
+		<form>
+			<input type="text" name="firstName" [(ngModel)]="firstName" placeholder="Ime">
+			<input type="text" name="lastName" [(ngModel)]="lastName" placeholder="Prezime">
+			<input type="text" name="userName" [(ngModel)]="userName" placeholder="Korisnicko ime">
+			<input type="password" name="passWord" [(ngModel)]="passWord" placeholder="Lozinka">
+			<input type="radio" name="typeOfUser" [(ngModel)]="typeOfUser" value="agent" (change)="isType()">Agent<br>
+			<input type="radio" name="typeOfUser" [(ngModel)]="typeOfUser" value="user" (change)="isType()">Obicni korisnik<br>
+			<div *ngIf="isTypeF">
+				<input type="text" name="address" [(ngModel)]="address" placeholder="Adresa">
+				<input type="text" name="pib" [(ngModel)]="pib" placeholder="PIB">
 			</div>
-			<input type="submit" value="Registracija">
+			<input type="submit" (click)="register(userName, passWord, firstName, lastName, typeOfUser, address, pib)" value="Registracija">
 		</form>
 	</div>
 </div>

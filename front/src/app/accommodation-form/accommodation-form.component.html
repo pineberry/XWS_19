@@ -1,6 +1,33 @@
 <div>
 	<form>
-		<input type="text" name="" placeholder="">
-		<input type="text" name="" placeholder="">
+		<input type="text" name="city" placeholder="Mesto" [(ngModel)]="city" required="required"><br>
+		<input type="text" name="state" placeholder="Drzava" [(ngModel)]="state" required="required"><br>
+		<input type="text" name="address" placeholder="Adresa" [(ngModel)]="address" required="required"><br>
+		Tip:<select name="type" [(ngModel)]="type" required="required"><br>
+			<option value="hotel">Hotel</option>
+			<option value="pansion">Pansion</option>
+			<option value="apartman">Apartman</option>
+		</select>
+		Kategorija:<select name="category" [(ngModel)]="category" required="required"><br>
+			<option value="1*">★</option>
+			<option value="2*">★★</option>
+			<option value="3*">★★★</option>
+			<option value="4*">★★★★</option>
+			<option value="5*">★★★★★</option>
+		</select><br>
+		<input type="text" name="description" placeholder="Opis" [(ngModel)]="description" required="required"><br>
+		Smestajni kapacitet:<input type="number" min="1" name="unitCapacity" [(ngModel)]="unitCapacity" required="required"><br>
+		Otkazni period:<input type="number" min="0" name="cancelationPeriod" [(ngModel)]="cancelationPeriod" required="required"><br>
+		<input type="text" name="price" placeholder="Cena" [(ngModel)]="price" required="required"><br>
+		<!-- <fieldset>
+			<legend>Dodatne usluge:</legend> 
+			<div *ngFor="let a of amenities">
+				<input type="checkbox" [(ngModel)]="isChecked" name="amenity">{{a.amenity}}<br>
+			</div>
+		</fieldset> -->
+		<input type="submit" (click)="createAccommodation(city, state, address, type, category, description, unitCapacity, cancelationPeriod, price)"value="Dodaj">
 	</form>
+</div>
+<div>
+	
 </div>

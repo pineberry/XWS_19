@@ -2,6 +2,7 @@ package megatravel.agentservice.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -29,7 +30,7 @@ import lombok.Data;
 public class UserAgent {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @XmlElement(name = "type_of_user", required = true)
     private String typeOfUser;
@@ -42,9 +43,9 @@ public class UserAgent {
     @XmlElement(required = true)
     private String password;
     //required since these are Agent fields
-    @XmlElement(required = true)
+    @XmlElement(required = false)
     private String address;
-    @XmlElement(required = true)
+    @XmlElement(required = false)
     private Long pib;
 	
     public UserAgent() {

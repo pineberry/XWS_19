@@ -46,9 +46,9 @@ public class User {
     @XmlElement(required = true)
     private String password;
     //required since these are Agent fields
-    @XmlElement(required = true)
+    @XmlElement(required = false)
     private String address;
-    @XmlElement(required = true)
+    @XmlElement(required = false)
     private Long pib;
     
     @OneToMany(targetEntity = Reservation.class)
@@ -62,6 +62,19 @@ public class User {
 			String address, Long pib, List<Reservation> reservations) {
 		super();
 		this.id = id;
+		this.typeOfUser = typeOfUser;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.password = password;
+		this.address = address;
+		this.pib = pib;
+		this.reservations = reservations;
+	}
+
+	public User(String typeOfUser, String firstName, String lastName, String username, String password,
+			String address, Long pib, List<Reservation> reservations) {
+		super();
 		this.typeOfUser = typeOfUser;
 		this.firstName = firstName;
 		this.lastName = lastName;

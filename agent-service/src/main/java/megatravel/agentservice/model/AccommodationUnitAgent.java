@@ -2,6 +2,7 @@ package megatravel.agentservice.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -46,7 +47,7 @@ public class AccommodationUnitAgent {
 	@XmlElement(required = true)
 	private long hostId;
 	@XmlElement(required = true)
-	@OneToOne(targetEntity = LocationAgent.class)
+	@OneToOne(targetEntity = LocationAgent.class, cascade = CascadeType.MERGE)
 	private LocationAgent location;
 	@XmlElement(required = true)
 	private String type;
@@ -70,10 +71,14 @@ public class AccommodationUnitAgent {
     @XmlElement(required = true)
     @ElementCollection
     private List<String> bookedDates;
-    
+
+	public AccommodationUnitAgent() {
+		
+	}
+
 	public AccommodationUnitAgent(long hostId, LocationAgent location, String type, String category, String description,
-			int unitCapacity, List<ImageAgent> images, List<AmenityAgent> amenities, long cancelationPeriod, double price,
-			List<String> bookedDates) {
+			int unitCapacity, List<ImageAgent> images, List<AmenityAgent> amenities, long cancelationPeriod,
+			double price, List<String> bookedDates) {
 		super();
 		this.hostId = hostId;
 		this.location = location;
@@ -86,10 +91,6 @@ public class AccommodationUnitAgent {
 		this.cancelationPeriod = cancelationPeriod;
 		this.price = price;
 		this.bookedDates = bookedDates;
-	}
-
-	public AccommodationUnitAgent() {
-		
 	}
     
     

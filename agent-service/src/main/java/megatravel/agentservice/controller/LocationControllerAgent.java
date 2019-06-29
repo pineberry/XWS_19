@@ -4,16 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-
 import megatravel.agentservice.dto.LocationDTO;
 import megatravel.agentservice.dto.LocationListDTO;
 import megatravel.agentservice.service.LocationServiceAgent;
-import megatravel.backend.model.Location;
 import megatravel.agentservice.model.LocationAgent;
 
 @RestController
@@ -23,18 +20,15 @@ public class LocationControllerAgent {
 	@Autowired
 	private LocationServiceAgent locationService;
 	
-	@Autowired
-	private RestTemplate restTemplate;
-	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public ResponseEntity<LocationAgent> addNewLocation(@RequestBody LocationAgent location)
+	public ResponseEntity<LocationAgent> addNewLocation(@RequestParam("state") String state, @RequestParam("city") String city, @RequestParam("address") String address)
 	{
+		LocationAgent location = new LocationAgent(state, city, address, 0, 0);
+		System.out.println("\nevo me!\n");
+		System.out.println(location + "\n");
 		locationService.create(location);
+		//Location location_ = new Location(state, city, address, 0, 0);
 		
-		Location location_ = new Location(location.getState(), location.getCity(), location.getAddress(), location.getLatitude(), location.getLongitude());
-		
-		//sync with main db ↓↓↓↓↓↓
-		restTemplate.postForObject("http://backend/location/add", location_, Location.class);
 		
 		return new ResponseEntity<LocationAgent>(location, HttpStatus.CREATED);
 	}

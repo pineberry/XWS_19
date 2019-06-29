@@ -22,7 +22,7 @@ public class AddResponseHeaderFilter implements Filter {
         httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
         httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
-        httpServletResponse.setHeader("Access-Control-Allow-Headers", "x-requested-with, authorization");
+        httpServletResponse.setHeader("Access-Control-Allow-Headers", "x-requested-with, authorization, content-type");
 
         if ("OPTIONS".equalsIgnoreCase(httpServletRequest.getMethod())) {
         	httpServletResponse.setStatus(HttpServletResponse.SC_OK);

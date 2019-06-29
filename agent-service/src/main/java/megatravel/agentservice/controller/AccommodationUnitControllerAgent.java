@@ -1,7 +1,6 @@
 package megatravel.agentservice.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,18 +9,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import megatravel.agentservice.dto.AccommodationUnitDTO;
 import megatravel.agentservice.dto.AccommodationUnitListDTO;
 import megatravel.agentservice.model.AccommodationUnitAgent;
-import megatravel.agentservice.model.AmenityAgent;
-import megatravel.agentservice.model.ImageAgent;
+import megatravel.agentservice.model.LocationAgent;
 import megatravel.agentservice.service.AccommodationUnitServiceAgent;
+import megatravel.agentservice.service.LocationServiceAgent;
 import megatravel.backend.model.AccommodationUnit;
-import megatravel.backend.model.Amenity;
-import megatravel.backend.model.Image;
 import megatravel.backend.model.Location;
 
 
@@ -33,30 +31,44 @@ public class AccommodationUnitControllerAgent {
 	private AccommodationUnitServiceAgent accommodationUnitService;
 	
 	@Autowired
+	private LocationServiceAgent locationService;
+	
+	@Autowired
 	private RestTemplate restTemplate;
 	
 	@RequestMapping(value = "/postAccommodation", method = RequestMethod.POST)
-	public ResponseEntity<AccommodationUnitAgent> postAccommodationUnitAgent(@RequestBody AccommodationUnitAgent accommodationUnit) 
+	public ResponseEntity<AccommodationUnitAgent> postAccommodationUnitAgent(@RequestParam(value = "hostId") String hostID, @RequestParam("locationID") String locationID,
+			@RequestParam("type") String type, @RequestParam("category") String category, @RequestParam("description") String description, @RequestParam("unitCapacity") String unitCapacity,
+			@RequestParam("cancelationPeriod") String cancelationPeriod, @RequestParam("price") String price) 
 	{
+		Long id = Long.parseLong(locationID);
+		Optional<LocationAgent> location = locationService.readById(id);
+		AccommodationUnitAgent accommodationUnit = new AccommodationUnitAgent(Long.parseLong(hostID.split("&")[0]), new LocationAgent(id, location.get().getState(),
+				location.get().getCity(), location.get().getAddress(), location.get().getLatitude(), location.get().getLongitude()), type, category,
+				description, Integer.parseInt(unitCapacity), null, null, Long.parseLong(cancelationPeriod), Double.parseDouble(price), null);
+		
+		System.out.println(">>>>>>>>>>>"+ accommodationUnit);
 		accommodationUnitService.create(accommodationUnit);
 				
-		Location location = new Location(accommodationUnit.getLocation().getId(), accommodationUnit.getLocation().getState(), accommodationUnit.getLocation().getCity(), accommodationUnit.getLocation().getAddress(), accommodationUnit.getLocation().getLatitude(), accommodationUnit.getLocation().getLongitude());
+		Location location_ = new Location(location.get().getId(), accommodationUnit.getLocation().getState(), accommodationUnit.getLocation().getCity(), accommodationUnit.getLocation().getAddress(), accommodationUnit.getLocation().getLatitude(), accommodationUnit.getLocation().getLongitude());
 		System.out.println(location);
-		List<Image> images = new ArrayList<Image>();
-		for (ImageAgent image : accommodationUnit.getImages()) {
-			images.add(new Image(image.getSrc()));
-		}
-		List<Amenity> amenities = new ArrayList<Amenity>();
-		for (AmenityAgent amenity : accommodationUnit.getAmenities()) {
-			amenities.add(new Amenity(amenity.getAmenity()));
-		} /*
+		/*
+		 * List<Image> images = new ArrayList<Image>(); for (ImageAgent image :
+		 * accommodationUnit.getImages()) { images.add(new Image(image.getSrc())); }
+		 * List<Amenity> amenities = new ArrayList<Amenity>(); for (AmenityAgent amenity
+		 * : accommodationUnit.getAmenities()) { amenities.add(new
+		 * Amenity(amenity.getAmenity())); }
+		 *//*
 			 * List<Review> reviews = new ArrayList<Review>(); for (ReviewAgent review :
 			 * accommodationUnit.getReviews()) { reviews.add(new
 			 * Review(review.getReviewContent(), review.getMark())); }
 			 */
 		
-		AccommodationUnit accommodation = new AccommodationUnit(accommodationUnit.getId(), location, accommodationUnit.getType(), accommodationUnit.getCategory(), accommodationUnit.getDescription(), accommodationUnit.getUnitCapacity(), images, amenities, accommodationUnit.getCancelationPeriod(), accommodationUnit.getPrice(), null, accommodationUnit.getBookedDates());
+		AccommodationUnit accommodation = new AccommodationUnit(Long.parseLong(hostID.split("&")[0]), location_, accommodationUnit.getType(), accommodationUnit.getCategory(), accommodationUnit.getDescription(), accommodationUnit.getUnitCapacity(), null, null, accommodationUnit.getCancelationPeriod(), accommodationUnit.getPrice(), null, accommodationUnit.getBookedDates());
+		System.out.println(">>>>>>>>>>>"+ Long.parseLong(hostID.split("&")[0]));
 		System.out.println(accommodation);
+		//sync with main db ↓↓↓↓↓↓
+		restTemplate.postForObject("http://backend/location/add", location_, Location.class);
 		//sync with main backend db ↓↓↓↓↓↓
 		restTemplate.postForObject("http://backend/accommodation/postAccommodation", accommodation, AccommodationUnit.class);
 		

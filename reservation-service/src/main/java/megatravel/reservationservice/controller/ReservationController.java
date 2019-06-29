@@ -10,10 +10,9 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import megatravel.backend.model.AccommodationUnit;
@@ -42,23 +41,26 @@ public class ReservationController {
 	}
 
 	// rezervisi smestaj za od do
-	@RequestMapping(value = "/book/{id}/{checkincheckout}", method = RequestMethod.POST)
-	public ResponseEntity<Reservation> bookAccomodation(@RequestBody AccommodationUnit accommodationUnit, 
-			@PathVariable("id") Long userID, @PathVariable("checkincheckout") String datesIO) throws ParseException
+	@RequestMapping(value = "/book", method = RequestMethod.POST)
+	public ResponseEntity<Reservation> bookAccomodation(@RequestParam(name = "accID", required = false) String accID, 
+			@RequestParam(name = "id", required = false) String userID, 
+			@RequestParam(name = "checkincheckout", required = false) String datesIO) throws ParseException
 	{
-		String[] date = datesIO.split("-");
-		Date checkin = new SimpleDateFormat("dd.MM.yyyy.").parse(date[0]);
-		Date checkout = new SimpleDateFormat("dd.MM.yyyy.").parse(date[1]);
-		System.out.println("test:" + accommodationUnit + date);
-		if (userService.readById(userID) != null) 
+		System.out.println("\n"+ accID + userID + datesIO +"\n");
+		String[] date = datesIO.split("x");
+		Date checkin = new SimpleDateFormat("yyyy-MM-dd").parse(date[0]);
+		Date checkout = new SimpleDateFormat("yyyy-MM-dd").parse(date[1]);
+		
+		if (userService.readById(Long.parseLong(userID)) != null) 
 		  	{
 				//registrated user premition 
 				double numOfDays = getDateDiff(checkin, checkout, TimeUnit.DAYS); 
-				double totalPrice = accommodationUnit.getPrice() * numOfDays; 
+				Optional<AccommodationUnit> accommodationUnit = accommodationUnitService.readById(Long.parseLong(accID));
+				double totalPrice = accommodationUnit.get().getPrice() * numOfDays; 
 				
-				Reservation reservation = new Reservation(accommodationUnit, userID, checkin, checkout, totalPrice, null, "waiting-for-response", false);
+				Reservation reservation = new Reservation(accommodationUnit.get(), Long.parseLong(userID), checkin, checkout, totalPrice, null, "waiting-for-response", false);
 				
-				Optional<AccommodationUnit> accommodation = accommodationUnitService.readById(accommodationUnit.getId());
+				Optional<AccommodationUnit> accommodation = accommodationUnitService.readById(accommodationUnit.get().getId());
 				
 				List<String> dates = accommodation.get().getBookedDates();
 				dates.add(checkin + "-" + checkout);
@@ -69,13 +71,13 @@ public class ReservationController {
 				reservationService.create(reservation);
 				
 				//update info on user.reservations and agent.reservations
-				userService.updateData(userID, reservation);
-				userService.updateData(accommodationUnit.getHostId(), reservation);
+				userService.updateData(Long.parseLong(userID), reservation);
+				userService.updateData(accommodationUnit.get().getHostId(), reservation);
 								
 				return new ResponseEntity<Reservation>(reservation, HttpStatus.CREATED);
 		  	}
 			else
-				return new ResponseEntity<Reservation>(HttpStatus.INTERNAL_SERVER_ERROR);		
+				return new ResponseEntity<Reservation>(HttpStatus.UNAUTHORIZED);		
 	}
 
 	static double getDateDiff(Date checkin, Date checkout, TimeUnit timeUnit) 

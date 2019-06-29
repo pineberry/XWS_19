@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 
 
@@ -32,7 +32,8 @@ import { AmenityFormComponent } from './amenity-form/amenity-form.component';
 	BrowserModule,
 	AppRoutingModule,
 	HttpClientModule,
-	FormsModule
+	FormsModule,
+	ReactiveFormsModule
   ],
   providers: [ CookieService ],
 bootstrap: [AppComponent]

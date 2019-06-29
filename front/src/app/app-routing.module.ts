@@ -6,6 +6,7 @@ import { SearchComponent } from './search/search.component';
 import { LoginComponent } from './login/login.component';
 import { UserHomeComponent } from './user-home/user-home.component';
 import { AgentHomeComponent } from './agent-home/agent-home.component';
+import { AmenityFormComponent } from './amenity-form/amenity-form.component';
 
 const routes: Routes = [
 	{ path: 'search', component:SearchComponent },
@@ -13,7 +14,8 @@ const routes: Routes = [
 	{ path: 'login', component: LoginComponent },
 	{ path: 'content', component: HeaderComponent },
 	{ path: 'user-home', component: UserHomeComponent },
-	{ path: 'agent-home', component: AgentHomeComponent }
+	{ path: 'agent-home', component: AgentHomeComponent },
+	{ path: 'amenity', component: AmenityFormComponent }
 ];
 
 @NgModule({

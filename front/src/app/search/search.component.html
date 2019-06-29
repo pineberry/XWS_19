@@ -1,13 +1,13 @@
 <div class="content">
 	<div *ngIf="isAdvanced">
 		<form action="megatravel/search" method="get">
-			<select name="location">
+			<select name="location" [(ngModel)]="location">
 				<option *ngFor="let location of (getCities())" [value]="location">{{location}}</option>
 			</select>
-			<input type="date" name="checkin">
-			<input type="date" name="checkout">
-			<input type="number" min="1" name="guests">
-			<input type="submit" value="Pretrazi">
+			<input type="date" [(ngModel)]="checkin" name="checkin">
+			<input type="date" [(ngModel)]="checkout" name="checkout">
+			<input type="number" min="1" [(ngModel)]="guests" name="guests">
+			<input type="submit" (click)="search(location,checkin, checkout, guests)" value="Pretrazi">
 		</form>
 		<button (click)="advanced()">Napredna pretraga</button>
 	</div>
@@ -43,5 +43,17 @@
 		</form>
 		<button (click)="advanced()">Nazadna pretraga</button>
 	</div>
-	
+</div>
+<div *ngIf="accommodations">
+	<table>
+		<tr>
+			<th>Mesto</th>
+			<th>Kapacitet</th>
+		</tr>
+		<tr *ngFor="let acc of accommodations">
+			<td>{{acc.location.city}}</td>
+			<td>{{acc.unitCapacity}}</td>
+			<td><button (click)="book(acc.id, checkin, checkout)">Rezervisi</button></td>
+		</tr>
+	</table>
 </div>

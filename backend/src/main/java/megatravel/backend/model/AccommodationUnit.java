@@ -2,6 +2,7 @@ package megatravel.backend.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -47,7 +48,7 @@ public class AccommodationUnit {
 	@XmlElement(required = true)
 	private long hostId;
 	@XmlElement(required = true)
-	@OneToOne(targetEntity = Location.class)
+	@OneToOne(targetEntity = Location.class, cascade = CascadeType.MERGE)
 	private Location location;
 	@XmlElement(required = true)
 	private String type;

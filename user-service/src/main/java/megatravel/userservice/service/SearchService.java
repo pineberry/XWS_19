@@ -30,22 +30,25 @@ public class SearchService {
 		AccommodationUnitListDTO available = new AccommodationUnitListDTO();
 		//parameter.getLocation().getCity().equals(accommodationUnit.getLocation().getCity()) &&
 		for (AccommodationUnit accommodationUnit : accommodationRepository.findAll()) {
-			if (parameter.getLocation().get().getCity().equals(accommodationUnit.getLocation().getCity()))
+			if (parameter.getCity().equals(accommodationUnit.getLocation().getCity()))
 			{
-				for (String datePairs : accommodationUnit.getBookedDates()) { // datum-datum, datum-datum
-					
-					String[] date = datePairs.split("-");
-					Date checkin = new SimpleDateFormat("dd.MM.yyyy.").parse(date[0]);
-					Date checkout = new SimpleDateFormat("dd.MM.yyyy.").parse(date[1]);
-					if(parameter.getCheckin().compareTo(checkin) != 0) 
-					{ //different  checkin dates, if dates are the same, then its not available
-						if(parameter.getCheckin().compareTo(checkout) >= 0) //if requested checkin is the same day or after a checkout of some other reservation 
-						{ 
-							if (parameter.getNumOfGuests() <= accommodationUnit.getUnitCapacity()) { //if unit is for the requested number  of people or more 
-								temp.add(accommodationUnit); 
+				if (!accommodationUnit.getBookedDates().isEmpty()) {
+					for (String datePairs : accommodationUnit.getBookedDates()) { // datum-datum, datum-datum
+
+						String[] date = datePairs.split("-");
+						Date checkin = new SimpleDateFormat("dd.MM.yyyy.").parse(date[0]);
+						Date checkout = new SimpleDateFormat("dd.MM.yyyy.").parse(date[1]);
+						if (parameter.getCheckin().compareTo(checkin) != 0) { //different  checkin dates, if dates are the same, then its not available
+							if (parameter.getCheckin().compareTo(checkout) >= 0) //if requested checkin is the same day or after a checkout of some other reservation 
+							{
+								if (parameter.getNumOfGuests() <= accommodationUnit.getUnitCapacity()) { //if unit is for the requested number  of people or more 
+									temp.add(accommodationUnit);
+								}
 							}
 						}
-					}
+					} 
+				} else {
+					temp.add(accommodationUnit);
 				}
 					 
 			}
@@ -58,7 +61,7 @@ public class SearchService {
 	//advanced search: regular search parameters + accommodation type & category, 0
 	public List<AccommodationUnit> availableAddt(SearchParametersAddtDTO parameter) throws ParseException
 	{
-		SearchParametersDTO baseParameters = new SearchParametersDTO(parameter.getLocation(), parameter.getCheckin(), parameter.getCheckout(), parameter.getNumOfGuests());
+		SearchParametersDTO baseParameters = new SearchParametersDTO(parameter.getCity(), parameter.getCheckin(), parameter.getCheckout(), parameter.getNumOfGuests());
 		AccommodationUnitListDTO available = available(baseParameters); //returns list of available accommodation filtered by given parameters
 					
 		
