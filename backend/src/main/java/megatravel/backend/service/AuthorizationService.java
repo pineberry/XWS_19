@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +49,7 @@ public class AuthorizationService {
 		return temp.format(date);
 	}
 	
-	public Optional<User> getUserInfo(String loginCredentials)
+	public User getUserInfo(String loginCredentials)
 	{
 		String[] credentials = loginCredentials.split("&"); //credentials[0] → username & credentials[1] → password
 		List<User> users = userRepository.findAll();
@@ -67,7 +66,7 @@ public class AuthorizationService {
 				}	
 			}
 		}
-		return Optional.of(user);
+		return user;
 	}
 	
 }

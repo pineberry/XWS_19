@@ -18,7 +18,7 @@ public class ReservationsControllerAgent {
 	
 	@Autowired
 	private ReservationService reservationService;
-	
+		
 	@RequestMapping("/all")
 	public ResponseEntity<ReservationListDTO> getAllAgentsReservations(@RequestBody Long hostID)
 	{

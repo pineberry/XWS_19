@@ -31,7 +31,7 @@ public class ReservationController {
 	
 	@Autowired
 	private AccommodationUnitService accommodationUnitService;
-	
+		
 	@Autowired
 	private UserService userService;
 	
@@ -66,7 +66,13 @@ public class ReservationController {
 				accommodation.get().setBookedDates(dates); // datum-datum,datum-datum
 				accommodationUnitService.update(accommodation.get(), accommodation.get().getId());
 				
-				return new ResponseEntity<Reservation>(reservationService.create(reservation), HttpStatus.CREATED);
+				reservationService.create(reservation);
+				
+				//update info on user.reservations and agent.reservations
+				userService.updateData(userID, reservation);
+				userService.updateData(accommodationUnit.getHostId(), reservation);
+								
+				return new ResponseEntity<Reservation>(reservation, HttpStatus.CREATED);
 		  	}
 			else
 				return new ResponseEntity<Reservation>(HttpStatus.INTERNAL_SERVER_ERROR);		

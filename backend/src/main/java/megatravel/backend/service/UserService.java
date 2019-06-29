@@ -1,11 +1,13 @@
 package megatravel.backend.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import megatravel.backend.model.Reservation;
 import megatravel.backend.model.User;
 import megatravel.backend.repository.UserRepository;
 
@@ -34,9 +36,20 @@ public class UserService {
 	}
 	
 	//read by ID
-	public Optional<User> readById(Long id)
+	public User readById(Long id)
 	{
-		return userRepository.findById(id);
+		Optional<User> u = userRepository.findById(id);
+		User user = new User();
+		user.setAddress(u.get().getAddress());
+		user.setFirstName(u.get().getFirstName());
+		user.setLastName(u.get().getLastName());
+		user.setId(u.get().getId());
+		user.setPassword(u.get().getPassword());
+		user.setUsername(u.get().getUsername());
+		user.setPib(u.get().getPib());
+		user.setTypeOfUser(u.get().getTypeOfUser());
+		user.setReservations(u.get().getReservations());
+		return user;
 	}
 	
 	//read all
@@ -57,6 +70,20 @@ public class UserService {
 				return true;
 		}
 		return false;
+	}
+
+	public void update(User user) {
+		userRepository.save(user);		
+	}
+
+	//method for updating info on user.reservations and agent.reservations
+	public void updateData(Long userID, Reservation reservation) {
+		User user = readById(userID);
+		List<Reservation> reservations = new ArrayList<Reservation>();
+		reservations = user.getReservations();
+		reservations.add(reservation);
+		user.setReservations(reservations);
+		update(user);
 	}
 	
 }

@@ -16,6 +16,9 @@ public class ReservationService {
 	@Autowired
 	private ReservationRepository reservationRepository;
 	
+	@Autowired
+	private UserService userService;
+	
 	public Reservation create(Reservation reservation)
 	{
 		return reservationRepository.save(reservation);
@@ -55,12 +58,18 @@ public class ReservationService {
 		return reservation;
 	}
 
-	public Reservation confirm(Long id) {
+	public Reservation confirm(Long reservationID) {
 		
-		Optional<Reservation> r = reservationRepository.findById(id);
+		Optional<Reservation> r = reservationRepository.findById(reservationID);
+		
 		
 		Reservation reservation = new Reservation(r.get().getAccommodationUnit(), r.get().getGuestId(), r.get().getCheckInDate(),
 				r.get().getCheckOutDate(), r.get().getTotalPrice(), r.get().getChat(), "confirmed", true);
+		
+		//update on user
+		userService.updateData(r.get().getGuestId(), reservation);
+		//update on agent
+		userService.updateData(r.get().getAccommodationUnit().getHostId(), reservation);
 	
 		return reservationRepository.save(reservation);
 	}
@@ -71,6 +80,11 @@ public class ReservationService {
 		
 		Reservation reservation = new Reservation(r.get().getAccommodationUnit(), r.get().getGuestId(), r.get().getCheckInDate(),
 				r.get().getCheckOutDate(), r.get().getTotalPrice(), r.get().getChat(), "canceled", false);
+		
+		//update on user
+		userService.updateData(r.get().getGuestId(), reservation);
+		//update on agent
+		userService.updateData(r.get().getAccommodationUnit().getHostId(), reservation);
 	
 		return reservationRepository.save(reservation);
 	}
