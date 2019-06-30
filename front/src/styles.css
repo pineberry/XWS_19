@@ -1,1 +1,59 @@
-/* You can add global styles to this file, and also import other style files */
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css?family=Cagliostro");
+
+body{
+	font-family: Cagliostro;
+	display: flex;
+	justify-content: center;
+	font-color: darkblue;
+}
+button, input[type="submit"] {
+	font-family: Cagliostro;
+	background-color: #cdd9e3;
+	border-radius: 5px;
+	border: 1px solid darkblue;
+	height: 2.5vh;
+	margin: 2px;
+	width: 100%;
+	align-self: center;
+	display: flex;
+}
+button:hover{
+	color: white;
+	background-color: darkblue;
+	border-radius: 5px;
+	border: 1px solid #cdd9e3;
+}
+input[type="submit"]:hover{
+	color: white;
+	background-color: darkblue;
+	border-radius: 5px;
+	border: 1px solid #cdd9e3;
+}
+input[type="text"], input[type="password"], input[type="number"] {
+	font-family: Cagliostro;
+	border-radius: 5px;
+	border: 1px solid darkblue;
+	height: 2vh;
+	margin: 2px;
+	width: 100%;
+	padding: 2px;
+}
+input[type="date"]{
+	font-family: Cagliostro;
+	border-radius: 5px;
+	border: 1px solid darkblue;
+	height: 2vh;
+	margin: 2px;
+	width: 100%;
+	padding: 2px;
+}
+select {
+	font-family: Cagliostro;
+	border-radius: 5px;
+	border: 1px solid darkblue;
+	height: 2.5vh;
+	margin: 2px;
+	width: 100%;
+	padding: 2px;
+}

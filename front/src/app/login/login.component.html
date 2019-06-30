@@ -2,24 +2,25 @@
 	<div>
 		<p>Prijavite se:</p>
 		<form method="post">
-			<input type="text" name="username" [(ngModel)]="username" placeholder="Korisnicko ime">
-			<input type="password" name="password" [(ngModel)]="password" placeholder="Lozinka">
-			<input type="submit" (click)="encrypt(username, password)" value="Prijava">
+			<input type="text" name="username" [(ngModel)]="username" placeholder="Korisnicko ime"><br>
+			<input type="password" name="password" [(ngModel)]="password" placeholder="Lozinka"><br>
+			<input type="submit" (click)="encrypt(username, password)" value="Prijava"><br>
 		</form>
 	</div>
 	<div>
 		<p>Registrujte se:</p>
 		<form>
-			<input type="text" name="firstName" [(ngModel)]="firstName" placeholder="Ime">
-			<input type="text" name="lastName" [(ngModel)]="lastName" placeholder="Prezime">
-			<input type="text" name="userName" [(ngModel)]="userName" placeholder="Korisnicko ime">
-			<input type="password" name="passWord" [(ngModel)]="passWord" placeholder="Lozinka">
+			<input type="text" name="firstName" [(ngModel)]="firstName" placeholder="Ime"><br>
+			<input type="text" name="lastName" [(ngModel)]="lastName" placeholder="Prezime"><br>
+			<input type="text" name="userName" [(ngModel)]="userName" placeholder="Korisnicko ime"><br>
+			<input type="password" name="passWord" [(ngModel)]="passWord" placeholder="Lozinka"><br>
+			<div *ngIf="isTypeF">
+				<input type="text" name="address" [(ngModel)]="address" placeholder="Adresa"><br>
+				<input type="text" name="pib" [(ngModel)]="pib" placeholder="PIB"><br>
+			</div>
 			<input type="radio" name="typeOfUser" [(ngModel)]="typeOfUser" value="agent" (change)="isType()">Agent<br>
 			<input type="radio" name="typeOfUser" [(ngModel)]="typeOfUser" value="user" (change)="isType()">Obicni korisnik<br>
-			<div *ngIf="isTypeF">
-				<input type="text" name="address" [(ngModel)]="address" placeholder="Adresa">
-				<input type="text" name="pib" [(ngModel)]="pib" placeholder="PIB">
-			</div>
+			
 			<input type="submit" (click)="register(userName, passWord, firstName, lastName, typeOfUser, address, pib)" value="Registracija">
 		</form>
 	</div>

@@ -1,10 +1,14 @@
-@charset "UTF-8";
-@import url("https://fonts.googleapis.com/css?family=Cagliostro");
-
 .content{
-    overflow-x: hidden; 
-	font-family: Cagliostro;
-	color: darkturquoise;
 	font-size: 15px;
-	background-color: lightyellow;
+	border-radius: 5px;
+	border: 5px solid darkblue;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 40vh;
+	width: 75vw;
+	flex-direction: column;
+}
+.search {
+
 }
