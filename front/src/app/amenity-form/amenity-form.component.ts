@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from "@angular/router";
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Amenity } from "../shared/models/amenity.model"
 
 @Component({
   selector: 'app-amenity-form',
@@ -11,12 +11,21 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
   styleUrls: ['./amenity-form.component.css']
 })
 export class AmenityFormComponent implements OnInit{
-	amenities: any;
+	amenityForm: FormGroup;
+  amenity: Amenity;
+
+  amenities: any;
   response: any;
+  
   constructor(private http: HttpClient, private cookie: CookieService, private router: Router) { }
 
   ngOnInit() {
-    this.http.get('http://localhost:8083/amenity/all')
+    this.amenityForm = new FormGroup
+    ({
+      amenity: new FormControl()
+    });
+
+    this.http.get('http://localhost:8083/amenities')
     .subscribe((response) =>
       {
         this.response = response;
@@ -25,10 +34,12 @@ export class AmenityFormComponent implements OnInit{
       });
   }
 
-  createAmenity(amenity: string)
+  newAmenity()
   {
-  	const body = new HttpParams().set('amenity', amenity);
-  	this.http.post('http://localhost:8081/amenity-agent/add?amenity=' + amenity, amenity).subscribe(); 
+    this.amenity = new Amenity().deserialize(this.amenityForm.value);
+
+    this.http.post('http://localhost:8083/amenities/add', this.amenity).subscribe();
     this.router.navigate(['/agent-home']);
   }
+
 }

@@ -12,9 +12,9 @@ button, input[type="submit"] {
 	background-color: #cdd9e3;
 	border-radius: 5px;
 	border: 1px solid darkblue;
-	height: 2.5vh;
+	height: 3vh;
 	margin: 2px;
-	width: 100%;
+	width: 50%;
 	align-self: center;
 	display: flex;
 }
@@ -34,7 +34,7 @@ input[type="text"], input[type="password"], input[type="number"] {
 	font-family: Cagliostro;
 	border-radius: 5px;
 	border: 1px solid darkblue;
-	height: 2vh;
+	height: 3vh;
 	margin: 2px;
 	width: 100%;
 	padding: 2px;
@@ -43,7 +43,7 @@ input[type="date"]{
 	font-family: Cagliostro;
 	border-radius: 5px;
 	border: 1px solid darkblue;
-	height: 2vh;
+	height: 3vh;
 	margin: 2px;
 	width: 100%;
 	padding: 2px;
@@ -52,7 +52,7 @@ select {
 	font-family: Cagliostro;
 	border-radius: 5px;
 	border: 1px solid darkblue;
-	height: 2.5vh;
+	height: 4vh;
 	margin: 2px;
 	width: 100%;
 	padding: 2px;

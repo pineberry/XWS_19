@@ -13,13 +13,4 @@ export class AgentHomeComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  logOut()
-  {
-  	this.cookie.delete('Authorization');
-  	if (this.cookie.get('Authorization') == '') {
-  		console.log('Agent logged out!');
-  	}
-  	this.router.navigate(['/']);
-  }
 }

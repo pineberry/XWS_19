@@ -16,46 +16,50 @@ import megatravel.backend.service.AccommodationUnitService;
 
 
 @RestController
-@RequestMapping("/accommodation")
+@RequestMapping("/accommodations")
 public class AccommodationUnitController {
+	
+	/*
+	 *   "/accommodations" -> all
+	 *   "/accommodations/{id}"
+	 *   "/accommodations/add"
+	 *   "/accommodations/remove"
+	 */
 
 	@Autowired
 	private AccommodationUnitService accommodationUnitService;
 	
-	//post Accommodation
-	@RequestMapping(value = "/postAccommodation", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<AccommodationUnitListDTO> getAllAccommodationUnits() 
+	{
+		AccommodationUnitListDTO temp = new AccommodationUnitListDTO();
+		temp.setAccommodationUnits(accommodationUnitService.readAll());
+		
+		return new ResponseEntity<AccommodationUnitListDTO>(temp, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<AccommodationUnit> postAccommodationUnit(@RequestBody AccommodationUnit accommodationUnit) 
 	{
-		System.out.println("++++++++++"+ accommodationUnit);
 		return new ResponseEntity<AccommodationUnit>(accommodationUnitService.create(accommodationUnit), HttpStatus.CREATED);
 	}
 
-	//get Accommodation by ID
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<AccommodationUnitDTO> getAccommodationUnitById(@PathVariable("id") Long id) 
 	{
 		AccommodationUnitDTO temp = new AccommodationUnitDTO();
 		temp.setAccommodationUnit(accommodationUnitService.readById(id));
+		
 		return new ResponseEntity<AccommodationUnitDTO>(temp, HttpStatus.OK);
 	}
 	
-	
-	//get all Accommodations
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	public ResponseEntity<AccommodationUnitListDTO> getAllAccommodationUnits() 
-	{
-		AccommodationUnitListDTO temp = new AccommodationUnitListDTO();
-		temp.setAccommodationUnits(accommodationUnitService.readAll());
-		return new ResponseEntity<AccommodationUnitListDTO>(temp, HttpStatus.OK);
-	}
-	
-	
-	//remove Accommodation
-	@SuppressWarnings("rawtypes")
+
 	@RequestMapping(value = "/remove", method = RequestMethod.GET)
 	public ResponseEntity removeAccommodationUnit(@RequestBody AccommodationUnit accommodationUnit) 
 	{
 		accommodationUnitService.delete(accommodationUnit);
+		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

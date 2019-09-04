@@ -1,27 +1,55 @@
-<div>
-	<div>
-		<p>Prijavite se:</p>
-		<form method="post">
-			<input type="text" name="username" [(ngModel)]="username" placeholder="Korisnicko ime"><br>
-			<input type="password" name="password" [(ngModel)]="password" placeholder="Lozinka"><br>
-			<input type="submit" (click)="encrypt(username, password)" value="Prijava"><br>
-		</form>
+<h1>Logovanje:</h1>
+<form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+	<div class="form-group">
+		<label>Korisnicko ime</label>
+		<input type="text" class="form-control" formControlName="username">
 	</div>
-	<div>
-		<p>Registrujte se:</p>
-		<form>
-			<input type="text" name="firstName" [(ngModel)]="firstName" placeholder="Ime"><br>
-			<input type="text" name="lastName" [(ngModel)]="lastName" placeholder="Prezime"><br>
-			<input type="text" name="userName" [(ngModel)]="userName" placeholder="Korisnicko ime"><br>
-			<input type="password" name="passWord" [(ngModel)]="passWord" placeholder="Lozinka"><br>
-			<div *ngIf="isTypeF">
-				<input type="text" name="address" [(ngModel)]="address" placeholder="Adresa"><br>
-				<input type="text" name="pib" [(ngModel)]="pib" placeholder="PIB"><br>
-			</div>
-			<input type="radio" name="typeOfUser" [(ngModel)]="typeOfUser" value="agent" (change)="isType()">Agent<br>
-			<input type="radio" name="typeOfUser" [(ngModel)]="typeOfUser" value="user" (change)="isType()">Obicni korisnik<br>
-			
-			<input type="submit" (click)="register(userName, passWord, firstName, lastName, typeOfUser, address, pib)" value="Registracija">
-		</form>
+	<div class="form-group">
+		<label>Lozinka</label>
+		<input type="password" class="form-control" formControlName="password">
 	</div>
-</div>
+	<input type="submit" value="Uloguj me!">
+</form>
+
+
+<h1>Registracija:</h1>
+ <form [formGroup]="registrationForm" (ngSubmit)="register()" novalidate>
+	<div class="form-group">
+		<label>Ime</label>
+		<input type="text" class="form-control" formControlName="firstName">
+	</div>
+	<div class="form-group">
+		<label>Prezime</label>
+		<input type="text" class="form-control" formControlName="lastName">
+	</div>
+	<div class="form-group">
+		<label>Korisnicko ime</label>
+		<input type="text" class="form-control" formControlName="username">
+	</div>
+	<div class="form-group">
+		<label>Lozinka</label>
+		<input type="password" class="form-control" formControlName="password">
+	</div>
+	<div *ngIf="isAgent">
+		<div class="form-group">
+			<label>Adresa</label>
+			<input type="text" class="form-control" formControlName="address">
+		</div>
+		<div class="form-group">
+			<label>PIB</label>
+			<input type="text" class="form-control" formControlName="pib">
+		</div>
+	</div>
+	<div class="form-group">
+		<label>Agent</label>
+		<input type="radio" formControlName="typeOfUser" value="agent" (change)="isType('agent')">
+	</div>
+	<div class="form-group">
+		<label>Obican korisnik</label>
+		<input type="radio" formControlName="typeOfUser" value="user" (change)="isType('user')">
+	</div>
+	<input type="submit" value="Registruj me!">
+</form>
+<br><br><br><br>
+Logovanje info:<pre>{{loginForm.value | json}}</pre>
+Registracija info:<pre>{{registrationForm.value | json}}</pre>

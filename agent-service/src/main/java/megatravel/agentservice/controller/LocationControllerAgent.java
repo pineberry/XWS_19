@@ -23,7 +23,7 @@ public class LocationControllerAgent {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<LocationAgent> addNewLocation(@RequestParam("state") String state, @RequestParam("city") String city, @RequestParam("address") String address)
 	{
-		LocationAgent location = new LocationAgent(state, city, address, 0, 0);
+		LocationAgent location = new LocationAgent(state, city, address);
 		System.out.println("\nevo me!\n");
 		System.out.println(location + "\n");
 		locationService.create(location);

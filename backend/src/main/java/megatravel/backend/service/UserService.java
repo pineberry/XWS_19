@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import megatravel.backend.dto.UserDTO;
 import megatravel.backend.model.Reservation;
 import megatravel.backend.model.User;
 import megatravel.backend.repository.UserRepository;
@@ -54,9 +55,15 @@ public class UserService {
 	}
 	
 	//read all
-	public List<User> readAll() 
+	public List<UserDTO> readAll() 
 	{
-		return userRepository.findAll();
+		List<UserDTO> users = new ArrayList<UserDTO>();
+		for (User user : userRepository.findAll()) {
+			UserDTO temp = new UserDTO();
+			temp.setUser(user);
+			users.add(temp);
+		}
+		return users;
 	}
 	
 	//update

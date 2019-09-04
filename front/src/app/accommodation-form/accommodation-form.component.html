@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
 	<form>
 		<input type="text" name="city" placeholder="Mesto" [(ngModel)]="city" required="required"><br>
 		<input type="text" name="state" placeholder="Drzava" [(ngModel)]="state" required="required"><br>
@@ -19,15 +19,153 @@
 		Smestajni kapacitet:<input type="number" min="1" name="unitCapacity" [(ngModel)]="unitCapacity" required="required"><br>
 		Otkazni period:<input type="number" min="0" name="cancelationPeriod" [(ngModel)]="cancelationPeriod" required="required"><br>
 		<input type="text" name="price" placeholder="Cena" [(ngModel)]="price" required="required"><br>
-		<!-- <fieldset>
+		<!<fieldset>
 			<legend>Dodatne usluge:</legend> 
 			<div *ngFor="let a of amenities">
 				<input type="checkbox" [(ngModel)]="isChecked" name="amenity">{{a.amenity}}<br>
 			</div>
-		</fieldset> -->
+		</fieldset>
 		<input type="submit" (click)="createAccommodation(city, state, address, type, category, description, unitCapacity, cancelationPeriod, price)"value="Dodaj">
 	</form>
-</div>
-<div>
-	
-</div>
+</div> -->
+<h1>Unos smestajne jedinice:</h1>
+<form [formGroup]="accommodationForm" (ngSubmit)="newAccommodation()" novalidate>
+	<div *ngIf="show=='d1'" id="d1">
+		<fieldset formGroupName="location">
+			<legend>Lokacija</legend>
+			<div *ngIf="error">
+				<p style="color: red">Niste uneli potrebne podatke!</p>
+			</div>
+			<div class="form-group">
+				<label>Mesto</label>
+				<input type="text" class="form-control" formControlName="city">
+			</div>
+			<div class="form-group">
+				<label>Drzava</label>
+				<input type="text" class="form-control" formControlName="state">
+			</div>
+			<div class="form-group">
+				<label>Adresa</label>
+				<input type="text" class="form-control" formControlName="address">
+			</div>
+			<button (click)="prebaci('d2')">Sledece</button>
+		</fieldset>
+	</div>
+	<div *ngIf="show=='d2'" id="d2">
+		<fieldset>
+			<button (click)="prebaci('d1')">Prethodno</button>
+			<legend>Osnovni podaci</legend>
+			<div *ngIf="error">
+				<p style="color: red">Niste uneli potrebne podatke!</p>
+			</div>
+			<label>Tip</label>
+			<select class="form-control" formControlName="type">
+			  	<option value="hotel">Hotel</option>
+				<option value="pansion">Pansion</option>
+				<option value="apartman">Apartman</option>
+			</select>
+			<label>Kategorija</label>
+			<select class="form-control" formControlName="category">
+			  	<option value="1*">★</option>
+				<option value="2*">★★</option>
+				<option value="3*">★★★</option>
+				<option value="4*">★★★★</option>
+				<option value="5*">★★★★★</option>
+			</select>
+			<div class="form-group">
+				<label>Smestajni kapacitet</label>
+				<input type="number" min="1" class="form-control" formControlName="unitCapacity">
+			</div>
+			<div class="form-group">
+				<label>Otkazni period</label>
+				<input type="number" min="0" class="form-control" formControlName="cancelationPeriod">
+			</div>
+			<div class="form-group">
+				<label>Opis</label>
+				<input type="text" class="form-control" formControlName="description">
+			</div>
+			<button (click)="prebaci('d3')">Sledece</button>
+		</fieldset>
+	</div>
+	<div *ngIf="show=='d3'" id="d3">
+		<fieldset formGroupName="amenities">
+			<button (click)="prebaci('d2')">Prethodno</button>
+			<legend>Dodatne usluge</legend>
+			<div *ngIf="error">
+				<p style="color: red">Niste uneli potrebne podatke!</p>
+			</div>
+			<div>
+				<input type="checkbox" formControlName="wifi">Wi-Fi<br>
+				<input type="checkbox" formControlName="parking">Parking<br>
+				<input type="checkbox" formControlName="fen">Fen<br>
+				<input type="checkbox" formControlName="kuhinja">Kuhinja<br>
+			</div>
+			<div>
+				<input type="checkbox" formControlName="ljubimci">Dozvoljeni kućni ljubimci<br>
+				<input type="checkbox" formControlName="kada">Kada<br>
+				<input type="checkbox" formControlName="bazen">Sopstveni bazen<br>
+				<input type="checkbox" formControlName="terasa">Terasa/Balkon<br>
+			</div>
+			<div>
+				<input type="checkbox" formControlName="pogled">Pogled<br>
+				<input type="checkbox" formControlName="kafeaparat">Aparat za kafu<br>
+				<input type="checkbox" formControlName="vesmasina">Mašina za pranje veša<br>
+				<input type="checkbox" formControlName="izolacija">Zvučna izolacija<br>
+			</div>
+			<button (click)="prebaci('d4')">Sledece</button>
+		</fieldset>
+	</div>
+	<div *ngIf="show=='d4'" id="d4">
+		<fieldset>
+			<button (click)="prebaci('d3')">Prethodno</button>
+			<legend>Cene</legend>
+			<div *ngIf="error">
+				<p style="color: red">Niste uneli potrebne podatke!</p>
+			</div>
+			
+			<label>Osnovna cena:</label>
+			<input type="number" min="1" step="0.1" formControlName="defaultPrice">
+
+			<button (click)="prebaci('d5')">Cenovni plan</button>
+		</fieldset>
+	</div>
+	<div *ngIf="show=='d5'" id="d5">
+		<fieldset formGroupName="pricePlan">
+			<button (click)="prebaci('d4')">Prethodno</button>
+			<legend>Cenovni plan</legend>
+			<div *ngIf="error">
+				<p style="color: red">Niste uneli potrebne podatke!</p>
+			</div>
+			<label>Od datuma:</label>
+			<input type="date" formControlName="fromDate">
+			
+			<label>Do datuma:</label>
+			<input type="date" formControlName="toDate">
+			
+			<label>Cena</label>
+			<input type="number" min="1" step="0.5" formControlName="price">
+			
+			<button type="submit" (click)="newPrice()">Dodaj cenu</button>
+					
+			<table *ngIf="pricePlan!=null" style="border: 1px black solid">
+				<tr>
+					<td colspan="2">Osnovna cena</td>
+					<td>{{defaultPrice}}</td>
+				</tr>
+				<tr>
+					<th>Od datuma</th>
+					<th>Do datuma</th>
+					<th>Cena</th>
+				</tr>
+				<tr *ngFor="let price of pricePlan">
+					<td>{{price[0][0]}}</td>
+					<td>{{price[0][1]}}</td>
+					<td>{{price[1]}}</td>
+				</tr>
+			</table>
+		</fieldset>
+	</div>
+	<!-- <input type="submit" value="Dodaj smestaj!"> -->
+	<input *ngIf="show=='d4' || show=='d5'" type="submit" value="Dodaj smestaj!">
+</form>
+Smestaj info:<pre>{{accommodationForm.value | json}}</pre>

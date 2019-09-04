@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from "@angular/router";
+import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { User } from "../shared/models/user.model";
 
 @Component({
   selector: 'app-login',
@@ -9,83 +11,87 @@ import { Router } from "@angular/router";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-	isTypeF: boolean = false;
-  user: any;
+	isAgent: boolean = false;
+  user: User;
+  headers: HttpHeaders;
   response: any;
+  registrationForm: FormGroup;
+  loginForm: FormGroup;
 
   constructor(private http: HttpClient, private cookie: CookieService, private router: Router) { }
     
 
   ngOnInit() {
+     this.registrationForm = new FormGroup
+    ({
+      typeOfUser: new FormControl(),
+      firstName: new FormControl(),
+      lastName: new FormControl(),
+      username: new FormControl(),
+      password: new FormControl(),
+      address: new FormControl(),
+      pib: new FormControl()
+    });
+    this.loginForm = new FormGroup
+    ({
+      username: new FormControl(),
+      password: new FormControl()
+    });
   }
 
-  isType()
+  isType(type: string)
   {
-  	this.isTypeF = !this.isTypeF;
-  }
-  encrypt(username: string, password: string)
-  {
-  	let headers = new HttpHeaders();
-    headers = headers.set('Authorization', 'Basic ' + btoa(username +"&"+ password));
-  	
-    this.http.get('http://localhost:8083/login/', { headers: headers })
-	  .subscribe((response) => {
-      this.response = response;
-      var expireDate = new Date().getTime() + (1000 * 1000);
-      var auth = this.response.user.id + "&" + this.response.user.typeOfUser;
-
-      if (this.response.user.typeOfUser == 'agent') 
-      {
-        this.router.navigate(['/agent-home']);
-      }
-      else if (this.response.user.typeOfUser == 'user') 
-      {
-        this.router.navigate(['/']);
-      }
-
-      this.cookie.set('Authorization', auth, expireDate);
-      console.log(this.cookie.getAll());
-    }, 
-      error => console.log(error));
-  }
-
-  register(username: string, password: string, firstName: string, lastName: string, typeOfUser: string, address: string, pib: string)
-  {
-    let headers = new HttpHeaders();
-    headers = headers.set('Authorization', 'Basic ' + btoa(username +"&"+ password)).set('Content-Type', 'text/plain');
-
-
-    if (typeOfUser == 'user') {
-      address = "";
-      pib = "";
+    if (type == 'agent') {
+      this.isAgent = true;
+    } else if (type = 'user') {
+      this.isAgent = false;
     }
+  }
 
-    this.http.post('http://localhost:8083/user/registration?'
-      + 'firstName=' + firstName 
-      + '&lastName=' + lastName 
-      + '&username=' + username
-      + '&password=' + password
-      + '&typeOfUser=' + typeOfUser
-      + '&address=' + address
-      + '&pib=' + pib , { headers: headers })
-    .subscribe((response) => {
-      console.log(response);
-      this.user = response;
-      var expireDate = new Date().getTime() + (1000 * 1000);
-      var auth = this.user.id + "&" + this.user.typeOfUser;
+  routeLoggedUser(typeOfUser: string)
+  {
+    if (typeOfUser == 'agent') 
+    {
+      this.router.navigate(['/agent-home']);
+    }
+    else if (typeOfUser == 'user') 
+    {
+      this.router.navigate(['/']);
+    }
+  }
 
-      if (typeOfUser == 'agent') 
-      {
-        this.router.navigate(['/agent-home']);
-      }
-      else if (typeOfUser == 'user') 
-      {
-        this.router.navigate(['/']);
-      }
+  register()
+  {
+    this.user = new User().deserialize(this.registrationForm.value);
+    this.headers = new HttpHeaders().set('Authorization', 'Basic ' + btoa(this.user.username +"&"+ this.user.password));
+   
+    this.http.post('http://localhost:8083/user/registration', this.user, { headers : this.headers})
+      .subscribe((res) => {
+        var expireDate = new Date().getTime() + (1000 * 1000);
+        var auth = 'Basic ' + btoa(this.user.username +"&"+ this.user.password);
+        this.cookie.set('Authorization', auth, expireDate);
+        console.log(this.cookie.getAll());
 
-      this.cookie.set('Authorization', auth, expireDate);
-      console.log(this.cookie.getAll());
-    }, 
-      error => console.log(error));
+        this.routeLoggedUser(this.user.typeOfUser);
+      },
+        error => console.log(error));
+  }
+
+  login()
+  {
+    this.headers = new HttpHeaders().set('Authorization', 'Basic ' + btoa(this.loginForm.value.username +"&"+ this.loginForm.value.password));
+
+     this.http.get('http://localhost:8083/login/', { headers: this.headers })
+      .subscribe((response) => {
+        this.response = response;
+        this.user = this.response.user;
+        console.log(this.user)
+        var expireDate = new Date().getTime() + (1000 * 1000);
+        var auth = 'Basic ' + btoa(this.user.id +"&"+ this.user.username +"&"+ this.user.password);
+        this.cookie.set('Authorization', auth, expireDate);
+        console.log(this.cookie.getAll());
+
+    this.routeLoggedUser(this.response.user.typeOfUser);
+        });
   }
 }

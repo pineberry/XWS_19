@@ -9,19 +9,28 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class HeaderComponent implements OnInit {
 
+  isLogged: boolean = false;
+  user: string;
+  
   constructor(private http: HttpClient, private cookie: CookieService) { }
-
+  
   ngOnInit() {
+    var auth = this.cookie.get('Authorization');
+    if (auth != '') {
+      auth = auth.substring(6);
+      auth = atob(auth);
+      var parts: string[] = auth.split('&');
+      this.isLogged = true;
+      this.user = parts[1];
+    }
   }
-  test()
+  logOut()
   {
-    let headers = new HttpHeaders();
-    this.http.get('http://localhost:8083/user/all', { headers: headers, responseType: 'text' })
-    .subscribe((response) => 
-      {
-        console.log(this.cookie.getAll());
-        console.log('Model: ' + response)
-      });
-	
-  }
+    this.cookie.delete('Authorization');
+    if (this.cookie.get('Authorization') == '') {
+      console.log('Agent logged out!');
+    }
+    window.location.reload();
+   }
+
 }

@@ -13,7 +13,6 @@ import megatravel.backend.dto.AccommodationUnitListDTO;
 import megatravel.backend.dto.SearchParametersAddtDTO;
 import megatravel.backend.dto.SearchParametersDTO;
 import megatravel.backend.model.AccommodationUnit;
-import megatravel.backend.model.Amenity;
 import megatravel.backend.repository.AccommodationUnitRepository;
 
 @Service

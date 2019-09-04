@@ -15,28 +15,19 @@ import org.springframework.context.event.EventListener;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.client.RestTemplate;
 
-import megatravel.agentservice.model.AccommodationUnitAgent;
-import megatravel.agentservice.model.AmenityAgent;
 import megatravel.agentservice.model.ImageAgent;
 import megatravel.agentservice.model.LocationAgent;
-import megatravel.agentservice.model.ReviewAgent;
-import megatravel.agentservice.model.UserAgent;
 import megatravel.agentservice.service.AccommodationUnitServiceAgent;
-import megatravel.agentservice.service.AmenityServiceAgent;
 import megatravel.agentservice.service.ImageServiceAgent;
 import megatravel.agentservice.service.LocationServiceAgent;
-import megatravel.agentservice.service.UserServiceAgent;
 import megatravel.backend.dto.AccommodationUnitListDTO;
-import megatravel.backend.dto.AmenityListDTO;
 import megatravel.backend.dto.ImageListDTO;
 import megatravel.backend.dto.LocationListDTO;
-import megatravel.backend.dto.UserListDTO;
-import megatravel.backend.model.User;
 
 @SpringBootApplication
 @EnableEurekaClient
 @EnableConfigurationProperties
-@EntityScan(basePackages = {"megatravel.agentservice.model", "megatravel.backend.model"})
+@EntityScan(basePackages = {"megatravel.agentservice.model"})
 @ComponentScan(basePackages = {"megatravel.agentservice.controller", "megatravel.agentservice.service", "megatravel.backend.service", "megatravel.backend"})
 @EnableJpaRepositories({"megatravel.backend.repository", "megatravel.agentservice.repository"})
 public class AgentServiceApplication {
@@ -49,13 +40,7 @@ public class AgentServiceApplication {
 	private LocationServiceAgent locationService;
 	
 	@Autowired
-	private AmenityServiceAgent amenityService;
-	
-	@Autowired
 	private ImageServiceAgent imageService;
-	
-	@Autowired
-	private UserServiceAgent userService;
 	
 	/*
 	 * @Autowired private ReviewServiceAgent reviewService;
@@ -67,24 +52,16 @@ public class AgentServiceApplication {
 	@EventListener(ApplicationReadyEvent.class)
 	public void doSomethingAfterStartup() {
 
-		
-		LocationListDTO locations = restTemplate.getForObject("http://backend/location/all", LocationListDTO.class);
+		LocationListDTO locations = restTemplate.getForObject("http://backend/locations", LocationListDTO.class);
 		
 		for (megatravel.backend.model.Location l: locations.getLocations()) 
 		{
-			LocationAgent location = new LocationAgent(l.getState(), l.getCity(), l.getAddress(), l.getLatitude(), l.getLongitude());
-			locationService.create(location);
+			/*
+			 * LocationAgent location = new LocationAgent(l.getState(), l.getCity(),
+			 * l.getAddress(), l.getLatitude(), l.getLongitude());
+			 * locationService.create(location);
+			 */
 		}
-		
-		
-		AmenityListDTO amenities = restTemplate.getForObject("http://backend/amenity/all", AmenityListDTO.class);
-		
-		for (megatravel.backend.model.Amenity a : amenities.getAmenities()) 
-		{
-			AmenityAgent amenity = new AmenityAgent(a.getAmenity());
-			amenityService.create(amenity);
-		}
-		
 		
 		ImageListDTO images = restTemplate.getForObject("http://backend/image/all", ImageListDTO.class);
 		
@@ -106,11 +83,11 @@ public class AgentServiceApplication {
 		 */
 		
 		
-		AccommodationUnitListDTO accommodations = restTemplate.getForObject("http://backend/accommodation/all", AccommodationUnitListDTO.class);
+		AccommodationUnitListDTO accommodations = restTemplate.getForObject("http://backend/accommodations", AccommodationUnitListDTO.class);
 		
 		for (megatravel.backend.model.AccommodationUnit a : accommodations.getAccommodationUnits()) {
 			
-			LocationAgent location_ = new LocationAgent(a.getLocation().getState(), a.getLocation().getCity(), a.getLocation().getAddress(), a.getLocation().getLatitude(), a.getLocation().getLongitude());
+			LocationAgent location_ = new LocationAgent(a.getLocation().getState(), a.getLocation().getCity(), a.getLocation().getAddress());
 			
 			List<ImageAgent> images_ = new ArrayList<ImageAgent>();
 			
@@ -118,32 +95,10 @@ public class AgentServiceApplication {
 				images_.add(new ImageAgent(i.getSrc()));
 			}
 			
-			List<AmenityAgent> amenities_ = new ArrayList<AmenityAgent>();
+			//AccommodationUnitAgent accommodation = new AccommodationUnitAgent(a.getId(), location_, a.getType(), a.getCategory(), a.getDescription(), a.getUnitCapacity(), images_, a.getAmenities(), a.getp a.getCancelationPeriod(), a.getPricingPlan(), a.getBookedDates());
 			
-			for (megatravel.backend.model.Amenity a_ : a.getAmenities()) {
-				amenities_.add(new AmenityAgent(a_.getAmenity()));
-			}
-			
-			List<ReviewAgent> reviews_ = new ArrayList<ReviewAgent>();
-			
-			for (megatravel.backend.model.Review r : a.getReviews()) {
-				reviews_.add(new ReviewAgent(r.getReviewContent(), r.getMark()));
-			}
-			
-			AccommodationUnitAgent accommodation = new AccommodationUnitAgent(a.getId(), location_, a.getType(), a.getCategory(), a.getDescription(), a.getUnitCapacity(), images_, amenities_, a.getCancelationPeriod(), a.getPrice(), a.getBookedDates());
-			
-			accommodationService.create(accommodation);
+			//accommodationService.create(accommodation);
 		}
-		
-		
-		UserListDTO users = restTemplate.getForObject("http://backend/user/all", UserListDTO.class);
-		
-		for (User u: users.getUsers()) 
-		{
-			UserAgent user = new UserAgent(u.getTypeOfUser(), u.getFirstName(), u.getLastName(), u.getUsername(), u.getPassword(), u.getAddress(), u.getPib());
-			userService.create(user);
-		}
-
 	}
 	
 	public static void main(String[] args) {

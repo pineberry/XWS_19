@@ -1,3 +1,10 @@
 <div class="header">
-	<h1>Welcome to MegaTravel...</h1>
+	<a [routerLink]="['/']"><h1>Welcome to MegaTravel...</h1></a>
+	<div *ngIf="!isLogged">
+		<button [routerLink]="['/login']">Prijava/Registracija</button>
+	</div>
+	<div *ngIf="isLogged">
+		{{user}}
+		<button (click)="logOut()">Odjavi se</button>
+	</div>
 </div>

@@ -15,30 +15,34 @@ import megatravel.backend.service.LocationService;
 import megatravel.backend.model.Location;
 
 @RestController
-@RequestMapping("/location")
+@RequestMapping("/locations")
 public class LocationController {
 
 	@Autowired
 	private LocationService locationService;
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<LocationListDTO> getAllLocations()
+	{
+		LocationListDTO locations = new LocationListDTO();
+		locations.setLocations(locationService.readAll());
+		
+		return new ResponseEntity<LocationListDTO>(locations, HttpStatus.OK);
+	}
 			
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<Location> addNewLocation(@RequestBody Location location)
 	{
 		return new ResponseEntity<Location>(locationService.create(location), HttpStatus.CREATED);
 	}
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	public ResponseEntity<LocationListDTO> getAllLocations()
-	{
-		LocationListDTO locations = new LocationListDTO();
-		locations.setLocations(locationService.readAll());
-		return new ResponseEntity<LocationListDTO>(locations, HttpStatus.OK);
-	}
+	
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<LocationDTO> getLocationById(@PathVariable("id")Long id)
 	{
 		LocationDTO location = new LocationDTO();
 		location.setLocation(locationService.readById(id));
+		
 		return new ResponseEntity<LocationDTO>(location, HttpStatus.OK);
 	}
 	

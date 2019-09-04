@@ -16,9 +16,7 @@ import lombok.Data;
     "id",
     "state",
     "city",
-    "address",
-    "latitude",
-    "longitude"
+    "address"
 })
 @Entity
 @Data
@@ -33,28 +31,22 @@ public class LocationAgent {
     private String city;
     @XmlElement(required = true)
     private String address;
-    private double latitude;
-    private double longitude;
     
-	public LocationAgent(String state, String city, String address, double latitude, double longitude) {
+	public LocationAgent(String state, String city, String address) {
 		super();
 		this.state = state;
 		this.city = city;
 		this.address = address;
-		this.latitude = latitude;
-		this.longitude = longitude;
 	}
 	public LocationAgent() {
 
 	}
-	public LocationAgent(long id, String state, String city, String address, double latitude, double longitude) {
+	public LocationAgent(long id, String state, String city, String address) {
 		super();
 		this.id = id;
 		this.state = state;
 		this.city = city;
 		this.address = address;
-		this.latitude = latitude;
-		this.longitude = longitude;
 	}
     
 }

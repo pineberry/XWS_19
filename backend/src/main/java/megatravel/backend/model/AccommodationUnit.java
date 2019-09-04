@@ -1,6 +1,7 @@
 package megatravel.backend.model;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
@@ -8,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -33,8 +33,8 @@ import lombok.Data;
 	    "images",
 	    "amenities",
 	    "cancelationPeriod",
-	    "price",
-	    "reviews",
+	    "defaultPrice",
+	    "pricePlan",
 	    "bookedDates"
 })
 @Entity
@@ -62,23 +62,46 @@ public class AccommodationUnit {
 	@OneToMany(targetEntity = Image.class)
 	private List<Image> images;
 	@XmlElement(required = true)
-	@ManyToMany(targetEntity = Amenity.class)
-	private List<Amenity> amenities;	
+	@ElementCollection
+	private Map<String, Boolean> amenities;
 	@XmlElement(name = "cancelation_period")
 	@XmlSchemaType(name = "unsignedInt")
 	private long cancelationPeriod;
 	@XmlElement(required = true)
-    private double price;
-    @XmlElement(required = true)
-    @OneToMany(targetEntity = Review.class)
-    private List<Review> reviews;
+	private double defaultPrice;
+	@XmlElement(required = true)
+	@ElementCollection
+	private Map<String, Double> pricePlan;
     @XmlElement(required = true)
     @ElementCollection
     private List<String> bookedDates;
 	
-    public AccommodationUnit(long hostId, Location location, String type, String category, String description,
-			int unitCapacity, List<Image> images, List<Amenity> amenities, long cancelationPeriod, double price,
-			List<Review> reviews, List<String> bookedDates) {
+    public AccommodationUnit() {
+		
+	}
+
+	public AccommodationUnit(Long id, long hostId, Location location, String type, String category, String description,
+			int unitCapacity, List<Image> images, Map<String, Boolean> amenities, long cancelationPeriod,
+			double defaultPrice, Map<String, Double> pricePlan, List<String> bookedDates) {
+		super();
+		this.id = id;
+		this.hostId = hostId;
+		this.location = location;
+		this.type = type;
+		this.category = category;
+		this.description = description;
+		this.unitCapacity = unitCapacity;
+		this.images = images;
+		this.amenities = amenities;
+		this.cancelationPeriod = cancelationPeriod;
+		this.defaultPrice = defaultPrice;
+		this.pricePlan = pricePlan;
+		this.bookedDates = bookedDates;
+	}
+
+	public AccommodationUnit(long hostId, Location location, String type, String category, String description,
+			int unitCapacity, List<Image> images, Map<String, Boolean> amenities, long cancelationPeriod,
+			double defaultPrice, Map<String, Double> pricePlan, List<String> bookedDates) {
 		super();
 		this.hostId = hostId;
 		this.location = location;
@@ -89,14 +112,9 @@ public class AccommodationUnit {
 		this.images = images;
 		this.amenities = amenities;
 		this.cancelationPeriod = cancelationPeriod;
-		this.price = price;
-		this.reviews = reviews;
+		this.defaultPrice = defaultPrice;
+		this.pricePlan = pricePlan;
 		this.bookedDates = bookedDates;
 	}
-
-	public AccommodationUnit() {
-		
-	}
-    
     
 }

@@ -33,12 +33,6 @@ public class ReservationController {
 		
 	@Autowired
 	private UserService userService;
-	
-	@RequestMapping("/test")
-	public String string()
-	{
-		return "Hello";
-	}
 
 	// rezervisi smestaj za od do
 	@RequestMapping(value = "/book", method = RequestMethod.POST)

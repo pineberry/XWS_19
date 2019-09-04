@@ -16,9 +16,7 @@ import lombok.Data;
     "id",
     "state",
     "city",
-    "address",
-    "latitude",
-    "longitude"
+    "address"
 })
 @Entity
 @Data
@@ -33,31 +31,26 @@ public class Location {
     private String city;
     @XmlElement(required = true)
     private String address;
-    private double latitude;
-    private double longitude;
-    
-	public Location(String state, String city, String address, double latitude, double longitude) {
-		super();
-		this.state = state;
-		this.city = city;
-		this.address = address;
-		this.latitude = latitude;
-		this.longitude = longitude;
+
+	public Location() {
+		
 	}
-	
-	public Location(long id, String state, String city, String address, double latitude, double longitude) {
+
+	public Location(long id, String state, String city, String address) {
 		super();
 		this.id = id;
 		this.state = state;
 		this.city = city;
 		this.address = address;
-		this.latitude = latitude;
-		this.longitude = longitude;
 	}
 
-	public Location() {
-		
+	public Location(String state, String city, String address) {
+		super();
+		this.state = state;
+		this.city = city;
+		this.address = address;
 	}
-    
+
+	
     
 }
