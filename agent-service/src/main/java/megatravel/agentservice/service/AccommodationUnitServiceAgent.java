@@ -1,5 +1,6 @@
 package megatravel.agentservice.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,7 @@ public class AccommodationUnitServiceAgent {
 	//create
 	public AccommodationUnitAgent create(AccommodationUnitAgent accommodationUnit) 
 	{
+		System.out.println("\n accommodationunit service: \n" + accommodationUnit + "\n");
 		return accommodationUnitRepository.save(accommodationUnit);
 	}
 	
@@ -28,9 +30,19 @@ public class AccommodationUnitServiceAgent {
 	}
 	
 	//read all
-	public List<AccommodationUnitAgent> readAll() 
+	public List<AccommodationUnitAgent> readAll(int id) 
 	{
-		return accommodationUnitRepository.findAll();
+		List<AccommodationUnitAgent> allAccommodations = accommodationUnitRepository.findAll();
+		List<AccommodationUnitAgent> agentAccommodations = new ArrayList<AccommodationUnitAgent>();
+		 
+		for (AccommodationUnitAgent accommodationUnit : allAccommodations) {
+			if(accommodationUnit.getHostId() == id)
+			{
+				agentAccommodations.add(accommodationUnit);
+			}
+		}
+		
+		return agentAccommodations;
 	}
 	
 	//update - by ID

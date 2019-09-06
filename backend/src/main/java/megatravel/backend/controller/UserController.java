@@ -30,7 +30,7 @@ public class UserController {
 	
 	//register new user
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ResponseEntity<User> registerUser(@RequestBody User user)
+	public ResponseEntity<UserDTO> registerUser(@RequestBody User user)
 	{
 		System.out.println("\n################\n" + user + "\n################\n");
 		
@@ -38,11 +38,13 @@ public class UserController {
 		String auth = user.getUsername() + "&" + user.getPassword();
 		//("Set-Cookie", "test=somevalue; Domain=.mydomain.org; Expires=" + cookieLifeTime + "; Path=/; HTTPOnly")
 		headers.add("Set-Cookie","Authorization=" + "Basic " + Base64.getEncoder().encodeToString(auth.getBytes()) + ";Domain=http://localhost:4200");
+		UserDTO u = new UserDTO();
+		u.setUser(user);
 		
 		if (userService.create(user) == null) {
-			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<UserDTO>(HttpStatus.BAD_REQUEST);
 		} else {
-			return new ResponseEntity<User>(user, headers, HttpStatus.OK);
+			return new ResponseEntity<UserDTO>(u, headers, HttpStatus.OK);
 		}
 	}
 	

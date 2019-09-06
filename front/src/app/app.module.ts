@@ -15,6 +15,7 @@ import { UserHomeComponent } from './user-home/user-home.component';
 import { AgentHomeComponent } from './agent-home/agent-home.component';
 import { AccommodationFormComponent } from './accommodation-form/accommodation-form.component';
 import { AmenityFormComponent } from './amenity-form/amenity-form.component';
+import { AgentAccommodationsComponent } from './agent-accommodations/agent-accommodations.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AmenityFormComponent } from './amenity-form/amenity-form.component';
 	UserHomeComponent,
 	AgentHomeComponent,
 	AccommodationFormComponent,
-	AmenityFormComponent
+	AmenityFormComponent,
+	AgentAccommodationsComponent
   ],
   imports: [
 	BrowserModule,

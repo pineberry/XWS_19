@@ -3,8 +3,8 @@
 	<div *ngIf="!isLogged">
 		<button [routerLink]="['/login']">Prijava/Registracija</button>
 	</div>
-	<div *ngIf="isLogged">
-		{{user}}
+	<div *ngIf="isLogged" class="column">
+		<p>{{user}}</p>
 		<button (click)="logOut()">Odjavi se</button>
 	</div>
 </div>

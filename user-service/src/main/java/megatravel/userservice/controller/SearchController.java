@@ -2,6 +2,7 @@ package megatravel.userservice.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,9 +29,11 @@ public class SearchController {
 	private SearchService searchService;
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ResponseEntity<AccommodationUnitListDTO> getAvailableAccommodation(@RequestParam(name = "location") String location, @RequestParam(name = "checkin") String checkin_,
+	public ResponseEntity<AccommodationUnitListDTO> getAvailableAccommodation(@RequestParam(name = "location") String location, 
+			@RequestParam(name = "checkin") String checkin_,
 			@RequestParam(name = "checkout") String checkout_, @RequestParam(name = "guests") String numOfGuests) throws ParseException
 	{
+		//http://localhost:8082/search?location=Beograd&checkin=2019-09-01&checkout=2019-09-04&guests=2
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date checkin = sdf.parse(checkin_);
 		Date checkout = sdf.parse(checkout_);
@@ -40,8 +43,16 @@ public class SearchController {
 	} 
 	
 	@RequestMapping("/more")
-	public ResponseEntity<List<AccommodationUnit>> getAvailableQuestAccommodation(@RequestBody SearchParametersAddtDTO parameter) throws ParseException
+	public ResponseEntity<AccommodationUnitListDTO> getAvailableQuestAccommodation(@RequestParam(name = "location") String location, 
+			@RequestParam(name = "checkin") String checkin_, @RequestParam(name = "checkout") String checkout_, 
+			@RequestParam(name = "type") String type, @RequestParam(name = "category") String category,
+			@RequestParam(name = "amenities") ArrayList<Boolean> amenities, @RequestParam(name = "guests") String numOfGuests) throws ParseException
 	{
-		return new ResponseEntity<List<AccommodationUnit>>(searchService.availableAddt(parameter), HttpStatus.OK);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date checkin = sdf.parse(checkin_);
+		Date checkout = sdf.parse(checkout_);
+		SearchParametersAddtDTO parameter = new SearchParametersAddtDTO(location, checkin, checkout, Integer.parseInt(numOfGuests), type, category, amenities);
+		System.out.println(location + checkin_ + checkout_ + type + category + amenities + numOfGuests);
+		return new ResponseEntity<AccommodationUnitListDTO>(searchService.availableAddt(parameter), HttpStatus.OK);
 	}
 }

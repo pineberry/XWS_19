@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -62,6 +64,7 @@ public class AccommodationUnitAgent {
 	private List<ImageAgent> images;
 	@XmlElement(required = true)
 	@ElementCollection
+	@CollectionTable(joinColumns = @JoinColumn(name = "accommodation_unit_agent_id"))
 	private Map<String, Boolean> amenities;	
 	@XmlElement(name = "cancelation_period")
 	private long cancelationPeriod;

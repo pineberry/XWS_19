@@ -36,23 +36,23 @@ public class ReservationController {
 
 	// rezervisi smestaj za od do
 	@RequestMapping(value = "/book", method = RequestMethod.POST)
-	public ResponseEntity<Reservation> bookAccomodation(@RequestParam(name = "accID", required = false) String accID, 
-			@RequestParam(name = "id", required = false) String userID, 
-			@RequestParam(name = "checkincheckout", required = false) String datesIO) throws ParseException
+	public ResponseEntity<Reservation> bookAccomodation(@RequestParam(name = "accommodationId") String accommodationId, 
+			@RequestParam(name = "userId") String userId, 
+			@RequestParam(name = "checkincheckout") String datesIO) throws ParseException
 	{
-		System.out.println("\n"+ accID + userID + datesIO +"\n");
+		System.out.println("\n"+ accommodationId + userId + datesIO +"\n");
 		String[] date = datesIO.split("x");
 		Date checkin = new SimpleDateFormat("yyyy-MM-dd").parse(date[0]);
 		Date checkout = new SimpleDateFormat("yyyy-MM-dd").parse(date[1]);
 		
-		if (userService.readById(Long.parseLong(userID)) != null) 
+		if (userService.readById(Long.parseLong(userId)) != null) //dodatna autorizacija i bulletproofing xD
 		  	{
 				//registrated user premition 
 				double numOfDays = getDateDiff(checkin, checkout, TimeUnit.DAYS); 
-				Optional<AccommodationUnit> accommodationUnit = accommodationUnitService.readById(Long.parseLong(accID));
-				double totalPrice = accommodationUnit.get().getPrice() * numOfDays; 
+				Optional<AccommodationUnit> accommodationUnit = accommodationUnitService.readById(Long.parseLong(accommodationId));
+				double totalPrice = accommodationUnit.get().getDefaultPrice() * numOfDays; 
 				
-				Reservation reservation = new Reservation(accommodationUnit.get(), Long.parseLong(userID), checkin, checkout, totalPrice, null, "waiting-for-response", false);
+				Reservation reservation = new Reservation(accommodationUnit.get(), Long.parseLong(userId), checkin, checkout, totalPrice, null, "waiting-for-response", false);
 				
 				Optional<AccommodationUnit> accommodation = accommodationUnitService.readById(accommodationUnit.get().getId());
 				
@@ -65,7 +65,7 @@ public class ReservationController {
 				reservationService.create(reservation);
 				
 				//update info on user.reservations and agent.reservations
-				userService.updateData(Long.parseLong(userID), reservation);
+				userService.updateData(Long.parseLong(userId), reservation);
 				userService.updateData(accommodationUnit.get().getHostId(), reservation);
 								
 				return new ResponseEntity<Reservation>(reservation, HttpStatus.CREATED);

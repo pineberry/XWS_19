@@ -1,4 +1,4 @@
-input[type="date"], input[type="number"], select{
+/*input[type="date"], input[type="number"], select{
 	width: 10vw;
 	height: 2vh;
 	margin: 5px;
@@ -6,7 +6,7 @@ input[type="date"], input[type="number"], select{
 select{
 	width: 10vw;
 	height: 2vh;
-}
+}*/
 .search{
 	display: flex;
 	justify-content: space-between;

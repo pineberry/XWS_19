@@ -161,6 +161,7 @@ export class AccommodationFormComponent implements OnInit {
       {
         console.log(res);
       });
+      this.router.navigate(['/agent-home']);
   }
 /*    this.http.post('http://localhost:8081/location-agent/', this.accommodation)
      .subscribe((res) => 

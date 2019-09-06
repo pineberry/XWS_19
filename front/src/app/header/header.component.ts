@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,7 @@ export class HeaderComponent implements OnInit {
   isLogged: boolean = false;
   user: string;
   
-  constructor(private http: HttpClient, private cookie: CookieService) { }
+  constructor(private http: HttpClient, private cookie: CookieService, private router: Router) { }
   
   ngOnInit() {
     var auth = this.cookie.get('Authorization');
@@ -30,7 +31,7 @@ export class HeaderComponent implements OnInit {
     if (this.cookie.get('Authorization') == '') {
       console.log('Agent logged out!');
     }
-    window.location.reload();
+    this.router.navigate(['/']);
    }
 
 }

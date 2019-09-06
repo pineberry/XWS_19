@@ -12,7 +12,7 @@ import { User } from "../shared/models/user.model";
 })
 export class LoginComponent implements OnInit {
 	isAgent: boolean = false;
-  user: User;
+  user: User = new User();
   headers: HttpHeaders;
   response: any;
   registrationForm: FormGroup;
@@ -67,8 +67,12 @@ export class LoginComponent implements OnInit {
    
     this.http.post('http://localhost:8083/user/registration', this.user, { headers : this.headers})
       .subscribe((res) => {
+        this.response = res;
+        
+        this.user = this.response.user;
+        console.log(this.response);
         var expireDate = new Date().getTime() + (1000 * 1000);
-        var auth = 'Basic ' + btoa(this.user.username +"&"+ this.user.password);
+        var auth = 'Basic ' + btoa(this.user.id +"&"+ this.user.username +"&"+ this.user.password);
         this.cookie.set('Authorization', auth, expireDate);
         console.log(this.cookie.getAll());
 
@@ -85,7 +89,7 @@ export class LoginComponent implements OnInit {
       .subscribe((response) => {
         this.response = response;
         this.user = this.response.user;
-        console.log(this.user)
+        console.log(this.response);
         var expireDate = new Date().getTime() + (1000 * 1000);
         var auth = 'Basic ' + btoa(this.user.id +"&"+ this.user.username +"&"+ this.user.password);
         this.cookie.set('Authorization', auth, expireDate);

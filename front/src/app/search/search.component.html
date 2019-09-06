@@ -1,30 +1,39 @@
-<div class="search">
+
 	<div class="search">
 		<div *ngIf="isAdvanced">
-			<form action="megatravel/search" method="get">
-				Lokacija:<select name="location" [(ngModel)]="location">
+			<form action="megatravel/search" method="get" (keypress)="removeError()">
+				<p *ngIf="error" style="color: red">Niste uneli sve potrebne podatke!</p>
+				<label>Lokacija:</label>
+				<input type="text" list="locations" name="location" [(ngModel)]="location">
+				<datalist id="locations">
 					<option *ngFor="let location of (getCities())" [value]="location">{{location}}</option>
-				</select>
-				<br><input type="date" [(ngModel)]="checkin" name="checkin"><br>
+				</datalist>
+				<label>Od datuma:</label>
+				<input type="date" [(ngModel)]="checkin" name="checkin"><br>
+				<label>Do datuma:</label>
 				<input type="date" [(ngModel)]="checkout" name="checkout"><br>
-				Broj gostiju:<input type="number" min="1" [(ngModel)]="guests" name="guests"><br>
+				<label>Broj gostiju:</label>
+				<input type="number" min="1" [(ngModel)]="guests" name="guests"><br>
 				<input type="submit" (click)="search(location,checkin, checkout, guests)" value="Pretrazi">
 			</form>
 			<button (click)="advanced()">Napredna pretraga</button>
 		</div>
 		<div *ngIf="!isAdvanced">
-			<form action="megatravel/search/more" method="get">
-				<select name="location">
+			<form action="megatravel/search/more" method="get" (keypress)="removeError()">
+				<p *ngIf="error" style="color: red">Niste uneli sve potrebne podatke!</p>
+				<label>Lokacija:</label>
+				<input type="text" list="locations" name="location" [(ngModel)]="location">
+				<datalist id="locations">
 					<option *ngFor="let location of (getCities())" [value]="location">{{location}}</option>
-				</select>
-				<select name="type">
-					<option hidden="hidden" value="" disabled="">Tip</option>
+				</datalist>
+				<label>Tip:</label>
+				<select name="type" [(ngModel)]="type">
 					<option value="hotel">Hotel</option>
 					<option value="pansion">Pansion</option>
 					<option value="apartman">Apartman</option>
 				</select>
-				<select name="category">
-					<option hidden="hidden" value="" disabled="">Kategorija</option>
+				<label>Kategorija:</label>
+				<select name="category" [(ngModel)]="category">
 					<option value="1*">★</option>
 					<option value="2*">★★</option>
 					<option value="3*">★★★</option>
@@ -33,29 +42,62 @@
 				</select>
 				<fieldset>
 					 <legend>Dodatne usluge</legend> 
-					 <div *ngFor="let amenity of amenities">
-					 	<input type="checkbox" name="amenities" [value]="amenity.amenity">{{amenity.amenity}}<br>
-					 </div>
+					 <div>
+						<input type="checkbox" [(ngModel)]="wifi" name="wifi">Wi-Fi<br>
+						<input type="checkbox" [(ngModel)]="parking" name="parking">Parking<br>
+						<input type="checkbox" [(ngModel)]="fen" name="fen">Fen<br>
+						<input type="checkbox" [(ngModel)]="kuhinja" name="kuhinja">Kuhinja<br>
+					</div>
+					<div>
+						<input type="checkbox" [(ngModel)]="ljubimci" name="ljubimci">Dozvoljeni kućni ljubimci<br>
+						<input type="checkbox" [(ngModel)]="kada" name="kada">Kada<br>
+						<input type="checkbox" [(ngModel)]="bazen" name="bazen">Sopstveni bazen<br>
+						<input type="checkbox" [(ngModel)]="terasa" name="terasa">Terasa/Balkon<br>
+					</div>
+					<div>
+						<input type="checkbox" [(ngModel)]="pogled" name="pogled">Pogled<br>
+						<input type="checkbox" [(ngModel)]="kafeaparat" name="kafeaparat">Aparat za kafu<br>
+						<input type="checkbox" [(ngModel)]="vesmasina" name="vesmasina">Mašina za pranje veša<br>
+						<input type="checkbox" [(ngModel)]="izolacija" name="izolacija">Zvučna izolacija<br>
+					</div>
 				</fieldset>
-				<input type="date" name="checkin">
-				<input type="date" name="checkout">
-				<input type="number" min="1" name="guests">
-				<input type="submit" value="Pretrazi">
+				<label>Od datuma:</label>
+				<input type="date" [(ngModel)]="checkin" name="checkin"><br>
+				<label>Do datuma:</label>
+				<input type="date" [(ngModel)]="checkout" name="checkout"><br>
+				<label>Broj gostiju:</label>
+				<input type="number" min="1" [(ngModel)]="guests" name="guests"><br>
+				<input type="submit" (click)="searchAdvanced(location, type, category, wifi, parking, fen, kuhinja, ljubimci, kada, bazen, terasa, pogled, kafeaparat, vesmasina, izolacija, checkin, checkout, guests)" value="Pretrazi">
 			</form>
 			<button (click)="advanced()">Nazadna pretraga</button>
 		</div>
 	</div>
-	<div *ngIf="accommodations">
+	<div *ngIf="accommodations.length > 0">
+		Sva mesta iz: <i>{{accommodations[0].location.city}}</i>, pronadjeno {{accommodations.length}} rezultata:
 		<table>
 			<tr>
-				<th>Mesto</th>
+				<th>Adresa</th>
 				<th>Kapacitet</th>
+				<th>Dodatne usluge</th>
+				<th>Opis</th>
+				<th>Tip</th>
+				<th>Kategorija</th>
+				<th>Cena po danu</th>
+				<th>Cena ukupno</th>
 			</tr>
 			<tr *ngFor="let acc of accommodations">
-				<td>{{acc.location.city}}</td>
+				<td>{{acc.location.address}}</td>
 				<td>{{acc.unitCapacity}}</td>
+				<td>POPUNITI</td>
+				<td>{{acc.description}}</td>
+				<td>{{acc.type}}</td>
+				<td>{{acc.category}}</td>
+				<td>{{acc.defaultPrice}}</td>
+				<th>{{calculatePrice(acc.defaultPrice, checkin, checkout)}}</th>
 				<td><button (click)="book(acc.id, checkin, checkout)">Rezervisi</button></td>
 			</tr>
 		</table>
 	</div>
-</div>
+	<div *ngIf="accommodations.length > 0">
+		<p style="color: red">{{infoText}}</p>
+	</div>
