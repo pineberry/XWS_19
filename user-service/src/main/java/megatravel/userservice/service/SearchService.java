@@ -1,11 +1,13 @@
 package megatravel.userservice.service;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +39,9 @@ public class SearchService {
 					for (String datePairs : accommodationUnit.getBookedDates()) { // datum-datum, datum-datum
 
 						String[] date = datePairs.split("-");
-						Date checkin = new SimpleDateFormat("dd.MM.yyyy.").parse(date[0]);
-						Date checkout = new SimpleDateFormat("dd.MM.yyyy.").parse(date[1]);
+						DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+						Date checkin = dateFormat.parse(date[0]);
+						Date checkout = dateFormat.parse(date[1]);
 						if (parameter.getNumOfGuests() <= accommodationUnit.getUnitCapacity()) { //if unit is for the requested number  of people or more
 							if (parameter.getCheckin().compareTo(checkin) != 0) { //different  checkin dates, if dates are the same, then its not available
 								if (parameter.getCheckin().compareTo(checkout) >= 0) //if requested checkin is the same day or after a checkout of some other reservation 

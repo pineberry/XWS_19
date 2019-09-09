@@ -30,13 +30,13 @@
 			</div>
 			<label>Tip</label>
 			<select class="form-control" formControlName="type">
-			  	<option value="hotel">Hotel</option>
+				<option value="hotel">Hotel</option>
 				<option value="pansion">Pansion</option>
 				<option value="apartman">Apartman</option>
 			</select>
 			<label>Kategorija</label>
 			<select class="form-control" formControlName="category">
-			  	<option value="1*">★</option>
+				<option value="1*">★</option>
 				<option value="2*">★★</option>
 				<option value="3*">★★★</option>
 				<option value="4*">★★★★</option>
@@ -64,23 +64,25 @@
 			<div *ngIf="error">
 				<p style="color: red">Niste uneli potrebne podatke!</p>
 			</div>
-			<div>
-				<input type="checkbox" formControlName="wifi">Wi-Fi<br>
-				<input type="checkbox" formControlName="parking">Parking<br>
-				<input type="checkbox" formControlName="fen">Fen<br>
-				<input type="checkbox" formControlName="kuhinja">Kuhinja<br>
-			</div>
-			<div>
-				<input type="checkbox" formControlName="ljubimci">Dozvoljeni kućni ljubimci<br>
-				<input type="checkbox" formControlName="kada">Kada<br>
-				<input type="checkbox" formControlName="bazen">Sopstveni bazen<br>
-				<input type="checkbox" formControlName="terasa">Terasa/Balkon<br>
-			</div>
-			<div>
-				<input type="checkbox" formControlName="pogled">Pogled<br>
-				<input type="checkbox" formControlName="kafeaparat">Aparat za kafu<br>
-				<input type="checkbox" formControlName="vesmasina">Mašina za pranje veša<br>
-				<input type="checkbox" formControlName="izolacija">Zvučna izolacija<br>
+			<div class="column space_between">
+				<div>
+					<input type="checkbox" formControlName="wifi">Wi-Fi<br>
+					<input type="checkbox" formControlName="parking">Parking<br>
+					<input type="checkbox" formControlName="fen">Fen<br>
+					<input type="checkbox" formControlName="kuhinja">Kuhinja<br>
+				</div>
+				<div>
+					<input type="checkbox" formControlName="ljubimci">Dozvoljeni kućni ljubimci<br>
+					<input type="checkbox" formControlName="kada">Kada<br>
+					<input type="checkbox" formControlName="bazen">Sopstveni bazen<br>
+					<input type="checkbox" formControlName="terasa">Terasa/Balkon<br>
+				</div>
+				<div>
+					<input type="checkbox" formControlName="pogled">Pogled<br>
+					<input type="checkbox" formControlName="kafeaparat">Aparat za kafu<br>
+					<input type="checkbox" formControlName="vesmasina">Mašina za pranje veša<br>
+					<input type="checkbox" formControlName="izolacija">Zvučna izolacija<br>
+				</div>
 			</div>
 			<button (click)="prebaci('d4')">Sledece</button>
 		</fieldset>
@@ -116,7 +118,7 @@
 			<input type="number" min="1" step="0.5" formControlName="price">
 			
 			<button type="submit" (click)="newPrice()">Dodaj cenu</button>
-					
+
 			<table *ngIf="pricePlan!=null" style="border: 1px black solid">
 				<tr>
 					<td colspan="2">Osnovna cena</td>

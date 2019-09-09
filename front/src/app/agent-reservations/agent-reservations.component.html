@@ -1,8 +1,9 @@
 <app-header></app-header>
 <div class="column">
-	<button [routerLink]="['/']">Pretrazi smestajeve</button>
+	<button [routerLink]="['/agent-home']">Pocetna</button>
+	<button [routerLink]="['/agent-accommodations']">Smestajne jedinice</button>
 </div>
-<div>
+<div *ngIf="reservations.length > 0">
 	<h1>Rezervacije:</h1>
 	<table>
 		<tr>
@@ -23,7 +24,13 @@
 			<td>{{reservation.totalPrice}}EUR</td>
 			<td *ngIf="reservation.status=='confirmed'">Potvrdjeno</td>
 			<td *ngIf="reservation.status=='canceled'">Otkazano</td>
-			<td *ngIf="reservation.status=='waiting-for-response'">Cekanje na odgovor</td>
+			<td *ngIf="reservation.status=='waiting-for-response'">
+				<button (click)="confirm(reservation.id)">Potvrdi</button>
+				<button (click)="cancel(reservation.id)">Otkazi</button>
+			</td>
 		</tr>
 	</table>
+</div>
+<div *ngIf="!reservations">
+	<p>Nemate rezervacija!</p>
 </div>

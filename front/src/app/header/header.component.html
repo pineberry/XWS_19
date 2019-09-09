@@ -1,9 +1,9 @@
 <div class="header">
 	<a [routerLink]="['/']"><h1>Welcome to MegaTravel...</h1></a>
-	<div *ngIf="!isLogged">
+	<div *ngIf="!isLogged" class="column end">
 		<button [routerLink]="['/login']">Prijava/Registracija</button>
 	</div>
-	<div *ngIf="isLogged" class="column">
+	<div *ngIf="isLogged" class="p_button column end">
 		<p>{{user}}</p>
 		<button (click)="logOut()">Odjavi se</button>
 	</div>

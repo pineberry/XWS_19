@@ -75,6 +75,7 @@ public class AccommodationUnitAgent {
 	private Map<String, Double> pricePlan;
     @XmlElement(required = true)
     @ElementCollection
+    @CollectionTable(joinColumns = @JoinColumn(name = "accommodation_unit_agent_id"))
     private List<String> bookedDates;
 
 	public AccommodationUnitAgent() {

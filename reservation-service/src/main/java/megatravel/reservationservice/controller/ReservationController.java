@@ -38,28 +38,28 @@ public class ReservationController {
 	@RequestMapping(value = "/book", method = RequestMethod.POST)
 	public ResponseEntity<Reservation> bookAccomodation(@RequestParam(name = "accommodationId") String accommodationId, 
 			@RequestParam(name = "userId") String userId, 
-			@RequestParam(name = "checkincheckout") String datesIO) throws ParseException
+			@RequestParam(name = "checkin") String checkIn, 
+			@RequestParam(name = "checkout") String checkOut) throws ParseException
 	{
-		System.out.println("\n"+ accommodationId + userId + datesIO +"\n");
-		String[] date = datesIO.split("x");
-		Date checkin = new SimpleDateFormat("yyyy-MM-dd").parse(date[0]);
-		Date checkout = new SimpleDateFormat("yyyy-MM-dd").parse(date[1]);
+
+		Date checkin = new SimpleDateFormat("dd.MM.yyyy.").parse(checkIn);
+		Date checkout = new SimpleDateFormat("dd.MM.yyyy.").parse(checkOut);
 		
 		if (userService.readById(Long.parseLong(userId)) != null) //dodatna autorizacija i bulletproofing xD
 		  	{
 				//registrated user premition 
-				double numOfDays = getDateDiff(checkin, checkout, TimeUnit.DAYS); 
+				double numOfDays = getDateDiff(checkin, checkout); 
+				System.out.println("\n\n>>>>" + numOfDays + "\n\n");
 				Optional<AccommodationUnit> accommodationUnit = accommodationUnitService.readById(Long.parseLong(accommodationId));
 				double totalPrice = accommodationUnit.get().getDefaultPrice() * numOfDays; 
 				
-				Reservation reservation = new Reservation(accommodationUnit.get(), Long.parseLong(userId), checkin, checkout, totalPrice, null, "waiting-for-response", false);
+				Reservation reservation = new Reservation(accommodationUnit.get().getId(), Long.parseLong(userId), checkin, checkout, totalPrice, null, "waiting-for-response", false);
 				
 				Optional<AccommodationUnit> accommodation = accommodationUnitService.readById(accommodationUnit.get().getId());
 				
-				List<String> dates = accommodation.get().getBookedDates();
-				dates.add(checkin + "-" + checkout);
-				
-				accommodation.get().setBookedDates(dates); // datum-datum,datum-datum
+				List<String> dates = accommodation.get().getBookedDates(); //pokupili stare
+				dates.add(checkin + "-" + checkout); //dodali novi par
+				accommodation.get().setBookedDates(dates); // setovali nove datume, datum-datum,datum-datum
 				accommodationUnitService.update(accommodation.get(), accommodation.get().getId());
 				
 				reservationService.create(reservation);
@@ -74,11 +74,10 @@ public class ReservationController {
 				return new ResponseEntity<Reservation>(HttpStatus.UNAUTHORIZED);		
 	}
 
-	static double getDateDiff(Date checkin, Date checkout, TimeUnit timeUnit) 
-	{
+	static double getDateDiff(Date checkin, Date checkout) {
 	    long diffInMillies = checkout.getTime() - checkin.getTime();
 	    
-	    return (double)timeUnit.convert(diffInMillies,TimeUnit.DAYS);
+	    return (double)TimeUnit.DAYS.convert(diffInMillies,TimeUnit.MILLISECONDS);
 	}
 }
 

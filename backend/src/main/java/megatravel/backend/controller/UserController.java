@@ -16,6 +16,7 @@ import megatravel.backend.dto.ReservationListDTO;
 import megatravel.backend.dto.UserDTO;
 import megatravel.backend.dto.UserListDTO;
 import megatravel.backend.model.User;
+import megatravel.backend.service.ReservationService;
 import megatravel.backend.service.UserService;
 
 @RestController
@@ -24,6 +25,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ReservationService reservationService;
 	
 	@Autowired
 	private RestTemplate restTemplate;
@@ -57,11 +61,22 @@ public class UserController {
 		return new ResponseEntity<UserListDTO>(temp, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/{id}/reservations", method = RequestMethod.GET)
+	@RequestMapping(value = "/reservations/{id}", method = RequestMethod.GET)
 	public ResponseEntity<ReservationListDTO> getAllUsersReservation(@PathVariable(name = "id") Long id) 
 	{
-		System.out.println(">>>>>>>>>>>>>>>>>" + id);
 		return new ResponseEntity<ReservationListDTO>(restTemplate.getForObject("http://user-service/reservation/" + id.toString() + "/all", ReservationListDTO.class), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/reservation/{id}/confirm", method = RequestMethod.POST)
+	public ResponseEntity<ReservationListDTO> confirmReservation(@RequestBody Long reservationID, @PathVariable(name = "id") Long id)
+	{
+		System.out.println("\n\n\n>>>>>>>>>>>>>" + reservationID);
+		reservationService.confirm(reservationID);
+		
+		ReservationListDTO reservations = new ReservationListDTO();
+		reservations.setReservations(reservationService.readAllFromHost(reservationID));
+		
+		return new ResponseEntity<ReservationListDTO>(reservations, HttpStatus.OK);
 	}
 	
 	//read by ID

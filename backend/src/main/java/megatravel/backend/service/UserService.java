@@ -17,7 +17,9 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
+
+
 	//create
 	public User create(User user) 
 	{
@@ -36,7 +38,7 @@ public class UserService {
 		}
 		return user;
 	}
-	
+
 	//read by ID
 	public User readById(Long id)
 	{
@@ -53,7 +55,7 @@ public class UserService {
 		user.setReservations(u.get().getReservations());
 		return user;
 	}
-	
+
 	//read all
 	public List<UserDTO> readAll() 
 	{
@@ -65,10 +67,10 @@ public class UserService {
 		}
 		return users;
 	}
-	
+
 	//update
 	//delete
-	
+
 	//help method that checks if an user already registered, returns false if it is not registered
 	private boolean userAlreadyRegistered(User user) 
 	{
@@ -80,21 +82,16 @@ public class UserService {
 		return false;
 	}
 
-	public void update(User user, Long userID) {
-		
-		userRepository.deleteById(userID);
-		userRepository.save(user);		
-	}
-
 	//method for updating info on user.reservations and agent.reservations
 	public void updateData(Long userID, Reservation reservation) {
-		User user = readById(userID);
-		List<Reservation> reservations = new ArrayList<Reservation>();
-		reservations = user.getReservations();
-		reservations.add(reservation);
-		user.setReservations(reservations);
-		user.setId(0);
-		update(user,userID);
+
+		User user = readById(userID); //logika je da se cuva samo ID rezervacije u koloni rezervacija korisnika, ne ceo objekat rezervacije 
+		List<Long> reservations = new ArrayList<Long>(); 
+		reservations = user.getReservations(); 
+		reservations.add(reservation.getId());
+		user.setReservations(reservations); 
+		userRepository.save(user);
+
 	}
-	
+
 }

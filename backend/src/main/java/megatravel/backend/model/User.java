@@ -2,11 +2,13 @@ package megatravel.backend.model;
 
 import java.util.List;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -50,16 +52,17 @@ public class User {
     private String address;
     @XmlElement(required = false)
     private Long pib;
-    
-    @OneToMany(targetEntity = Reservation.class)
-    private List<Reservation> reservations;
+    @XmlElement(required = true)
+    @ElementCollection
+    @CollectionTable(joinColumns = @JoinColumn(name = "guest_id"))
+    private List<Long> reservations;
 	
     public User() {
 	
 	}
 
 	public User(long id, String typeOfUser, String firstName, String lastName, String username, String password,
-			String address, Long pib, List<Reservation> reservations) {
+			String address, Long pib, List<Long> reservations) {
 		super();
 		this.id = id;
 		this.typeOfUser = typeOfUser;
@@ -72,8 +75,8 @@ public class User {
 		this.reservations = reservations;
 	}
 
-	public User(String typeOfUser, String firstName, String lastName, String username, String password,
-			String address, Long pib, List<Reservation> reservations) {
+	public User(String typeOfUser, String firstName, String lastName, String username, String password, String address,
+			Long pib, List<Long> reservations) {
 		super();
 		this.typeOfUser = typeOfUser;
 		this.firstName = firstName;
@@ -84,5 +87,6 @@ public class User {
 		this.pib = pib;
 		this.reservations = reservations;
 	}
-	
+    
+    
 }

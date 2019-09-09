@@ -5,7 +5,7 @@ import { AccommodationUnit } from "./accommodation-unit.model"
 export class Reservation implements Deserializable{
 	
 	id: number;
-	accommodationUnit: AccommodationUnit;
+	accommodationUnitId: number;
 	checkInDate: Date;
 	checkOutDate: Date;
 	totalPrice: number;

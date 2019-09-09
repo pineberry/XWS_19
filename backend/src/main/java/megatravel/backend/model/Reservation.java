@@ -37,10 +37,8 @@ public class Reservation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     
-	@XmlElement(name = "accommodation_unit", required = true)
-    @OneToOne
-    @JoinColumn(name = "accommodation_unit", nullable = false)
-    private AccommodationUnit accommodationUnit;
+	@XmlElement(required = true)
+    private long accommodationUnitId;
     
 	@XmlElement(required = true)
     private long guestId; //user that booked a accommodation
@@ -66,12 +64,17 @@ public class Reservation {
 	
 	@XmlElement(required = true)
 	private boolean confirmed;
+	
+	public Reservation() {
+		
+	}
 
-	public Reservation(AccommodationUnit accommodationUnit, long user, Date checkInDate, Date checkOutDate,
+	public Reservation(long id, long accommodationUnitId, long guestId, Date checkInDate, Date checkOutDate,
 			double totalPrice, Chat chat, String status, boolean confirmed) {
 		super();
-		this.accommodationUnit = accommodationUnit;
-		this.guestId = user;
+		this.id = id;
+		this.accommodationUnitId = accommodationUnitId;
+		this.guestId = guestId;
 		this.checkInDate = checkInDate;
 		this.checkOutDate = checkOutDate;
 		this.totalPrice = totalPrice;
@@ -80,8 +83,18 @@ public class Reservation {
 		this.confirmed = confirmed;
 	}
 
-	public Reservation() {
-		
+	public Reservation(long accommodationUnitId, long guestId, Date checkInDate, Date checkOutDate, double totalPrice,
+			Chat chat, String status, boolean confirmed) {
+		super();
+		this.accommodationUnitId = accommodationUnitId;
+		this.guestId = guestId;
+		this.checkInDate = checkInDate;
+		this.checkOutDate = checkOutDate;
+		this.totalPrice = totalPrice;
+		this.chat = chat;
+		this.status = status;
+		this.confirmed = confirmed;
 	}
+	
 	
 }

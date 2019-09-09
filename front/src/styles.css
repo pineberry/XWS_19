@@ -5,34 +5,39 @@ body{
 	font-family: Cagliostro;
 	display: flex;
 	justify-content: center;
-	font-color: darkblue;
+	font-color: #504b59;
+	margin: 25px;
 }
 button, input[type="submit"] {
 	font-family: Cagliostro;
-	background-color: #cdd9e3;
+	color: white;
+	background-color: #B0A2BD;
 	border-radius: 5px;
-	border: 1px solid darkblue;
+	border: none;
 	height: 3vh;
 	margin: 2px;
 	align-self: center;
 	display: flex;
+	padding: 5px 25px;
 }
 button:hover{
 	color: white;
-	background-color: darkblue;
-	border-radius: 5px;
-	border: 1px solid #cdd9e3;
+	background-color: #6d5e7b;
+
+}
+
+input[type="checkbox"] {
+	margin: 5px 10px 0 0;
 }
 input[type="submit"]:hover{
 	color: white;
-	background-color: darkblue;
-	border-radius: 5px;
-	border: 1px solid #cdd9e3;
+	background-color: #6d5e7b;
+
 }
 input[type="text"], input[type="password"], input[type="number"] {
 	font-family: Cagliostro;
 	border-radius: 5px;
-	border: 1px solid darkblue;
+	border: 1px solid #504b59;
 	height: 3vh;
 	margin: 2px;
 	width: 100%;
@@ -41,7 +46,7 @@ input[type="text"], input[type="password"], input[type="number"] {
 input[type="date"]{
 	font-family: Cagliostro;
 	border-radius: 5px;
-	border: 1px solid darkblue;
+	border: 1px solid #504b59;
 	height: 3vh;
 	margin: 2px;
 	width: 100%;
@@ -50,7 +55,7 @@ input[type="date"]{
 select {
 	font-family: Cagliostro;
 	border-radius: 5px;
-	border: 1px solid darkblue;
+	border: 1px solid #504b59;
 	height: 4vh;
 	margin: 2px;
 	width: 100%;
@@ -58,5 +63,59 @@ select {
 }
 .column {
 	display: flex;
+}
+.end {
+	justify-content: flex-end;
+}
+.space_between {
 	justify-content: space-between;
+}
+.center {
+	align-items: center;
+	justify-content: center;
+}
+table {
+	width: 100%;
+	margin-top: 25px;
+	color: #504b59;
+}
+th {
+	padding: 5px;
+	background-color: #B0A2BD;
+	color: white;
+}
+
+td {
+	padding: 5px;
+}
+table tr:nth-child(2n) {
+	background-color: #f8f6ff;
+}
+app-root {
+	width: 100%;
+}
+.header a {
+	text-decoration: none;
+}
+.header a:visited {
+	color: #504b59;
+	text-decoration: none;
+}
+.p_button p {
+	border-bottom: 5px solid #B0A2BD;
+	padding: 5px 25px 0 10px;
+}
+.p_button button {
+	margin: 5px;
+	margin-left: -5px;
+}
+h1 {
+	margin: 0;
+	color: #504b59;
+}
+p {
+	color: #504b59;
+}
+.margin {
+	margin: 50px;
 }

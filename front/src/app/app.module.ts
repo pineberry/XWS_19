@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
+import { DatePipe } from '@angular/common'
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +17,7 @@ import { AgentHomeComponent } from './agent-home/agent-home.component';
 import { AccommodationFormComponent } from './accommodation-form/accommodation-form.component';
 import { AmenityFormComponent } from './amenity-form/amenity-form.component';
 import { AgentAccommodationsComponent } from './agent-accommodations/agent-accommodations.component';
+import { AgentReservationsComponent } from './agent-reservations/agent-reservations.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { AgentAccommodationsComponent } from './agent-accommodations/agent-accom
 	AgentHomeComponent,
 	AccommodationFormComponent,
 	AmenityFormComponent,
-	AgentAccommodationsComponent
+	AgentAccommodationsComponent,
+	AgentReservationsComponent
   ],
   imports: [
 	BrowserModule,
@@ -37,7 +40,9 @@ import { AgentAccommodationsComponent } from './agent-accommodations/agent-accom
 	FormsModule,
 	ReactiveFormsModule
   ],
-  providers: [ CookieService ],
+  providers: [ 
+  	CookieService,
+  	DatePipe ],
 bootstrap: [AppComponent]
 })
 export class AppModule { }

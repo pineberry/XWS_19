@@ -12,6 +12,7 @@ export class AgentAccommodationsComponent implements OnInit {
 	accommodations: any = [];
 	agentId: number;
 	response: any;
+  addAccFlag: boolean = false;
 
   constructor(private http: HttpClient, private cookie: CookieService, private router: Router) { }
 
@@ -28,6 +29,10 @@ export class AgentAccommodationsComponent implements OnInit {
   				this.accommodations = this.response.accommodationUnits;
   				console.log(this.accommodations);
   			});
+  }
+
+  addAcc() {
+    this.addAccFlag = !this.addAccFlag;
   }
 
 }

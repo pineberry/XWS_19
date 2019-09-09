@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from "@angular/router";
+import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-search',
@@ -14,13 +15,13 @@ export class SearchComponent implements OnInit {
   	accommodations: any = [];
   	response: any;
   	auth: string;
-  	info: string[];
+  	//info: string[];
   	error: boolean = false;
   	amenities: boolean[] = [];
   	infoText: string = "";
 
 
-  constructor(private http: HttpClient, private cookie: CookieService, private router: Router) { }
+  constructor(private http: HttpClient, private cookie: CookieService, private router: Router, public datepipe: DatePipe) { }
 
   ngOnInit() {
   	this.http.get('http://localhost:8083/locations')
@@ -128,7 +129,11 @@ export class SearchComponent implements OnInit {
 
 	book(acc: string, checkin: string, checkout: string)
 	{
-		console.log(acc, checkin, checkout);
+
+ 		let checkIn_date = this.datepipe.transform(new Date(checkin), 'dd.MM.yyyy.');
+ 		let checkOut_date = this.datepipe.transform(new Date(checkout), 'dd.MM.yyyy.');
+
+		console.log(acc, checkIn_date, checkOut_date);
 
 		this.auth = this.cookie.get('Authorization');
 		console.log(this.auth);
@@ -139,13 +144,13 @@ export class SearchComponent implements OnInit {
     		let hostInfoParts = hostInfo.split('&');
     		let userId = +hostInfoParts[0];
     		this.http.post('http://localhost:8084/book-accommodation/book?'
-    			+ 'userId' + userId 
-				+ 'accommodationId=' + acc 
-				+ '&id=' + this.info[0] 
-				+ '&checkincheckout=' + checkin + 'x' + checkout)
+    			+ 'userId=' + userId 
+				+ '&accommodationId=' + acc 
+				+ '&checkin=' + checkIn_date 
+				+ '&checkout=' + checkOut_date, acc)
 			.subscribe((response) => 
 				{
-					console.log(response);
+					this.router.navigate(['/user-home']);
 				});
 		}
 		

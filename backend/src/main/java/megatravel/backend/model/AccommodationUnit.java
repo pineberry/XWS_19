@@ -74,9 +74,11 @@ public class AccommodationUnit {
 	private double defaultPrice;
 	@XmlElement(required = true)
 	@ElementCollection
+	@CollectionTable(joinColumns = @JoinColumn(name = "accommodation_unit_id"))
 	private Map<String, Double> pricePlan;
     @XmlElement(required = true)
     @ElementCollection
+    @CollectionTable(joinColumns = @JoinColumn(name = "accommodation_unit_id"))
     private List<String> bookedDates;
 	
     public AccommodationUnit() {

@@ -50,66 +50,6 @@ public class AccommodationUnitControllerAgent {
 		return new ResponseEntity<AccommodationUnitAgent>(accUnit, HttpStatus.OK);
 	}
 
-	/*
-	 * @RequestMapping(value = "/postAccommodation", method = RequestMethod.POST)
-	 * public ResponseEntity<AccommodationUnitAgent>
-	 * postAccommodationUnitAgent(@RequestParam(value = "hostId") String
-	 * hostID, @RequestParam("locationID") String locationID,
-	 * 
-	 * @RequestParam("type") String type, @RequestParam("category") String
-	 * category, @RequestParam("description") String
-	 * description, @RequestParam("unitCapacity") String unitCapacity,
-	 * 
-	 * @RequestParam("cancelationPeriod") String
-	 * cancelationPeriod, @RequestParam("price") String price) { Long id =
-	 * Long.parseLong(locationID); Optional<LocationAgent> location =
-	 * locationService.readById(id); AccommodationUnitAgent accommodationUnit = new
-	 * AccommodationUnitAgent(Long.parseLong(hostID.split("&")[0]), new
-	 * LocationAgent(id, location.get().getState(), location.get().getCity(),
-	 * location.get().getAddress(), location.get().getLatitude(),
-	 * location.get().getLongitude()), type, category, description,
-	 * Integer.parseInt(unitCapacity), null, null,
-	 * Long.parseLong(cancelationPeriod), Double.parseDouble(price), null);
-	 * 
-	 * System.out.println(">>>>>>>>>>>"+ accommodationUnit);
-	 * accommodationUnitService.create(accommodationUnit);
-	 * 
-	 * Location location_ = new Location(location.get().getId(),
-	 * accommodationUnit.getLocation().getState(),
-	 * accommodationUnit.getLocation().getCity(),
-	 * accommodationUnit.getLocation().getAddress(),
-	 * accommodationUnit.getLocation().getLatitude(),
-	 * accommodationUnit.getLocation().getLongitude());
-	 * System.out.println(location);
-	 * 
-	 * List<Image> images = new ArrayList<Image>(); for (ImageAgent image :
-	 * accommodationUnit.getImages()) { images.add(new Image(image.getSrc())); }
-	 * List<Amenity> amenities = new ArrayList<Amenity>(); for (AmenityAgent amenity
-	 * : accommodationUnit.getAmenities()) { amenities.add(new
-	 * Amenity(amenity.getAmenity())); }
-	 * 
-	 * List<Review> reviews = new ArrayList<Review>(); for (ReviewAgent review :
-	 * accommodationUnit.getReviews()) { reviews.add(new
-	 * Review(review.getReviewContent(), review.getMark())); }
-	 * 
-	 * 
-	 * AccommodationUnit accommodation = new
-	 * AccommodationUnit(Long.parseLong(hostID.split("&")[0]), location_,
-	 * accommodationUnit.getType(), accommodationUnit.getCategory(),
-	 * accommodationUnit.getDescription(), accommodationUnit.getUnitCapacity(),
-	 * null, null, accommodationUnit.getCancelationPeriod(),
-	 * accommodationUnit.getPrice(), null, accommodationUnit.getBookedDates());
-	 * System.out.println(">>>>>>>>>>>"+ Long.parseLong(hostID.split("&")[0]));
-	 * System.out.println(accommodation); //sync with main db ↓↓↓↓↓↓
-	 * restTemplate.postForObject("http://backend/locations/add", location_,
-	 * Location.class); //sync with main backend db ↓↓↓↓↓↓
-	 * restTemplate.postForObject("http://backend/accommodations/add",
-	 * accommodation, AccommodationUnit.class);
-	 * 
-	 * return new ResponseEntity<AccommodationUnitAgent>(accommodationUnit,
-	 * HttpStatus.CREATED); }
-	 */
-
 	// get Accommodation by ID
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<AccommodationUnitDTO> getAccommodationUnitByIdAgent(@PathVariable("id") Long id) {

@@ -93,7 +93,7 @@
 				<td>{{acc.type}}</td>
 				<td>{{acc.category}}</td>
 				<td>{{acc.defaultPrice}}</td>
-				<th>{{calculatePrice(acc.defaultPrice, checkin, checkout)}}</th>
+				<td>{{calculatePrice(acc.defaultPrice, checkin, checkout)}}</td>
 				<td><button (click)="book(acc.id, checkin, checkout)">Rezervisi</button></td>
 			</tr>
 		</table>

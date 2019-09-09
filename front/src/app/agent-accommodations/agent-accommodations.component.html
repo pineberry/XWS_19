@@ -1,29 +1,40 @@
 <app-header></app-header>
-<div *ngIf="accommodations.length > 0">
-	<table>
-		<tr>
-			<th>Mesto (drzava)</th>
-			<th>Adresa</th>
-			<th>Tip</th>
-			<th>Kategorija</th>
-			<th>Kapacitet</th>
-			<th>Otkazni period</th>
-			<th>Opis</th>
-			<th>Osnovna cena</th>
-		</tr>
-		<tr *ngFor="let acc of accommodations">
-			<td>{{acc.location.city}}, {{acc.location.state}}</td>
-			<td>{{acc.location.address}}</td>
-			<td>{{acc.type}}</td>
-			<td>{{acc.category}}</td>
-			<td>{{acc.unitCapacity}}</td>
-			<td>{{acc.cancelationPeriod}}</td>
-			<td>{{acc.description}}</td>
-			<td>{{acc.defaultPrice}}</td>
-		</tr>
-	</table>
-</div>
 <div class="column">
-	<p>Dodajte smestajnu jedinicu:</p>
-	<button [routerLink]="['/agent-accommodations']">Dodaj</button>
+	<button [routerLink]="['/agent-home']">Pocetna</button>
+	<button [routerLink]="['/agent-reservations']">Rezervacije</button>
+	<button *ngIf="addAccFlag" (click)="addAcc()">Smestajevi</button>
 </div>
+
+<div *ngIf="!addAccFlag">
+	<div *ngIf="accommodations.length > 0">
+		<h1>Smestajevi:</h1>
+		<table>
+			<tr>
+				<th>Mesto, drzava</th>
+				<th>Adresa</th>
+				<th>Tip</th>
+				<th>Kategorija</th>
+				<th>Kapacitet</th>
+				<th>Otkazni period</th>
+				<th>Opis</th>
+				<th>Osnovna cena</th>
+			</tr>
+			<tr *ngFor="let acc of accommodations">
+				<td>{{acc.location.city}}, {{acc.location.state}}</td>
+				<td>{{acc.location.address}}</td>
+				<td>{{acc.type}}</td>
+				<td>{{acc.category}}</td>
+				<td>{{acc.unitCapacity}}</td>
+				<td>{{acc.cancelationPeriod}}</td>
+				<td>{{acc.description}}</td>
+				<td>{{acc.defaultPrice}} EUR</td>
+			</tr>
+		</table>
+	</div>
+	<br>
+	<div class="column">
+		<p style="margin-right: 25px">Dodajte smestajnu jedinicu:</p>
+		<button (click)="addAcc()" >Dodaj</button>
+	</div>
+</div>
+<app-accommodation-form *ngIf="addAccFlag"></app-accommodation-form>
