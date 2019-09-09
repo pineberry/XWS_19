@@ -37,7 +37,11 @@ export class AgentReservationsComponent implements OnInit {
 
     cancel(reservationId: number) {
         if(this.userId != null) {
-            this.http.post('http://localhost:8081/reservation-agent/'+ this.userId + '/deny', reservationId);
+            this.http.post('http://localhost:8081/reservation-agent/'+ this.userId + '/deny', reservationId)
+            .subscribe((response) =>
+            {
+                this.collect();
+            });
         }
     }
 

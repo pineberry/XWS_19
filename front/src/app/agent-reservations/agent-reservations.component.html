@@ -19,8 +19,8 @@
 					{{acc.location.city}} ({{acc.location.state}})
 				</td>
 			</ng-container>
-			<td>{{reservation.checkInDate}}</td>
-			<td>{{reservation.checkOutDate}}</td>
+			<td>{{reservation.checkInDate.slice(0, 10)}}</td>
+			<td>{{reservation.checkOutDate.slice(0, 10)}}</td>
 			<td>{{reservation.totalPrice}}EUR</td>
 			<td *ngIf="reservation.status=='confirmed'">Potvrdjeno</td>
 			<td *ngIf="reservation.status=='canceled'">Otkazano</td>

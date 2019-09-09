@@ -65,47 +65,20 @@ public class ReservationService {
 
 	public Reservation confirm(Long reservationID) {
 
-		/*
-		 * ##########
-
-
-Reservation(id=1, accommodationUnitId=2, guestId=2, checkInDate=2020-08-09 00:00:00.0, checkOutDate=2020-10-09 00:00:00.0, totalPrice=915.0, chat=null, 
-status=waiting-for-response, confirmed=false)
-
-
-##########
-##########
-
-
-Reservation(id=1, accommodationUnitId=2, guestId=2, checkInDate=2020-08-09 00:00:00.0, checkOutDate=2020-10-09 00:00:00.0, totalPrice=915.0, chat=null, 
-status=waiting-for-response, confirmed=false)
-
-
-##########
-		 * */
-
-
-		System.out.println("##########\n\n\n"+reservationID+"\n\n\n##########");
 		Optional<Reservation> r = reservationRepository.findById(reservationID);
 
-		System.out.println("##########\n\n\n"+r.get()+"\n\n\n##########");
 		Reservation reservation = new Reservation(r.get().getId(), r.get().getAccommodationUnitId(), r.get().getGuestId(), r.get().getCheckInDate(),
 				r.get().getCheckOutDate(), r.get().getTotalPrice(), r.get().getChat(), "confirmed", true);
-		System.out.println("##########\n\n\n"+reservation+"\n\n\n##########");
+
 		return reservationRepository.save(reservation);
 	}
 
-	public Reservation cancel(Long id) {
+	public Reservation cancel(Long reservationID) {
 
-		Optional<Reservation> r = reservationRepository.findById((long)id);
+		Optional<Reservation> r = reservationRepository.findById(reservationID);
 
-		Reservation reservation = new Reservation(r.get().getAccommodationUnitId(), r.get().getGuestId(), r.get().getCheckInDate(),
+		Reservation reservation = new Reservation(r.get().getId(), r.get().getAccommodationUnitId(), r.get().getGuestId(), r.get().getCheckInDate(),
 				r.get().getCheckOutDate(), r.get().getTotalPrice(), r.get().getChat(), "canceled", false);
-
-		//update on user
-		//		userService.updateData(r.get().getGuestId(), reservation);
-		//update on agent
-		//		userService.updateData(accommodationUnitService.findById((long) reservation.getAccommodationUnitId()).get().getHostId(), reservation);
 
 		return reservationRepository.save(reservation);
 	}

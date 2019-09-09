@@ -33,8 +33,12 @@ export class HeaderComponent implements OnInit {
         if (this.cookie.get('Authorization') == '') {
             console.log('Logged out!');
         }
-        window.location.reload();
-        this.router.navigate(['/']);
+        if(this.router.url == '/')
+        {
+            window.location.reload();
+        } else {
+            this.router.navigate(['/']);
+        }
     }
 
 }

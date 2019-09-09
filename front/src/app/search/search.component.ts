@@ -60,8 +60,10 @@ export class SearchComponent implements OnInit {
 
 	searchAdvanced(location: string, type: string, category: string, wifi: boolean, parking: boolean, fen: boolean, 
   	kuhinja: boolean, ljubimci: boolean, kada: boolean, bazen: boolean, terasa: boolean, pogled: boolean,
-  	kafeaparat: boolean, vesmasina: boolean, izolacija: boolean, checkin: string, checkout: string, guests: string) {
-		if (location == null || checkin == null || checkout ==  null || guests == null || type == null || category == null) {
+  	kafeaparat: boolean, vesmasina: boolean, izolacija: boolean, checkin: string, checkout: string, guests: string) 
+  	{
+		this.infoText = null;
+		if (location == null || checkin == null || checkout ==  null || guests == null) {
 			this.error = true;
 		} else {
 			this.amenities[0] = wifi;
@@ -95,11 +97,15 @@ export class SearchComponent implements OnInit {
 				this.response = response;
 				console.log(this.response);
 				this.accommodations = this.response.accommodationUnits;
+				if (this.accommodations.length == 0) {
+					this.infoText = "Nema raspolozivog smestaja za unesene parametre!"
+				}
 			});
   	}
 
 	search(location: string, checkin: string, checkout: string, guests: string)
 	{
+		this.infoText = null;
 		if (location == null || checkin == null || checkout ==  null || guests == null) {
 			this.error = true;
 		} else {
@@ -111,6 +117,7 @@ export class SearchComponent implements OnInit {
 			{
 				this.response = response;
 				this.accommodations = this.response.accommodationUnits;
+				console.log(this.accommodations);
 				if (this.accommodations.length == 0) {
 					this.infoText = "Nema raspolozivog smestaja za unesene parametre!"
 				}

@@ -70,8 +70,18 @@ public class UserController {
 	@RequestMapping(value = "/reservation/{id}/confirm", method = RequestMethod.POST)
 	public ResponseEntity<ReservationListDTO> confirmReservation(@RequestBody Long reservationID, @PathVariable(name = "id") Long id)
 	{
-		System.out.println("\n\n\n>>>>>>>>>>>>>" + reservationID);
 		reservationService.confirm(reservationID);
+		
+		ReservationListDTO reservations = new ReservationListDTO();
+		reservations.setReservations(reservationService.readAllFromHost(reservationID));
+		
+		return new ResponseEntity<ReservationListDTO>(reservations, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/reservation/{id}/deny", method = RequestMethod.POST)
+	public ResponseEntity<ReservationListDTO> denyReservation(@RequestBody Long reservationID, @PathVariable(name = "id") Long id)
+	{
+		reservationService.cancel(reservationID);
 		
 		ReservationListDTO reservations = new ReservationListDTO();
 		reservations.setReservations(reservationService.readAllFromHost(reservationID));

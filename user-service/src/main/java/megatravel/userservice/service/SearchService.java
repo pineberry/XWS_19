@@ -29,37 +29,52 @@ public class SearchService {
 	//regular search: location, check-in & check-out, number of guests
 	public AccommodationUnitListDTO available(SearchParametersDTO parameter) throws ParseException
 	{
-		List<AccommodationUnit> temp = new ArrayList<AccommodationUnit>();
+		List<AccommodationUnit> toRemove = new ArrayList<AccommodationUnit>();
 		AccommodationUnitListDTO available = new AccommodationUnitListDTO();
+		List<AccommodationUnit> temp = accommodationRepository.findAll();
 		//parameter.getLocation().getCity().equals(accommodationUnit.getLocation().getCity()) &&
-		for (AccommodationUnit accommodationUnit : accommodationRepository.findAll()) {
-			if (parameter.getCity().equals(accommodationUnit.getLocation().getCity()))
+		for (AccommodationUnit accommodationUnit : temp) {
+			if (!parameter.getCity().equals(accommodationUnit.getLocation().getCity()))
 			{
-				if (!accommodationUnit.getBookedDates().isEmpty()) {
-					for (String datePairs : accommodationUnit.getBookedDates()) { // datum-datum, datum-datum
+				toRemove.add(accommodationUnit);
+				continue;
+			}
+			if (!accommodationUnit.getBookedDates().isEmpty()) {
+				for (String datePairs : accommodationUnit.getBookedDates()) { // datum-datum, datum-datum
 
-						String[] date = datePairs.split("-");
-						DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
-						Date checkin = dateFormat.parse(date[0]);
-						Date checkout = dateFormat.parse(date[1]);
-						if (parameter.getNumOfGuests() <= accommodationUnit.getUnitCapacity()) { //if unit is for the requested number  of people or more
-							if (parameter.getCheckin().compareTo(checkin) != 0) { //different  checkin dates, if dates are the same, then its not available
-								if (parameter.getCheckin().compareTo(checkout) >= 0) //if requested checkin is the same day or after a checkout of some other reservation 
-								{
-									temp.add(accommodationUnit);
-								}
-							}
+					String[] date = datePairs.split("-");
+					DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+					Date checkin = dateFormat.parse(date[0]);
+					Date checkout = dateFormat.parse(date[1]);
+					if (parameter.getCheckin().compareTo(checkin) == 0) {
+						toRemove.add(accommodationUnit);
+						break;
+					}
+					if (parameter.getCheckin().compareTo(checkin) < 0) {
+						if (parameter.getCheckout().compareTo(checkin) > 0) {
+							toRemove.add(accommodationUnit);
+							break;
 						}
-					} 
-				} else if (parameter.getNumOfGuests() <= accommodationUnit.getUnitCapacity()) {
-					temp.add(accommodationUnit);
+					}
+					if (parameter.getCheckin().compareTo(checkin) > 0) {
+						if (parameter.getCheckin().compareTo(checkout) < 0) {
+							toRemove.add(accommodationUnit);
+							break;
+						}
+					}
+				} 
+			}
+			if (parameter.getNumOfGuests() > accommodationUnit.getUnitCapacity()) {
+				if(!toRemove.contains(accommodationUnit))
+				{
+					toRemove.add(accommodationUnit);
+					continue;
 				}
-
-
 			}
 		}
-
+		temp.removeAll(toRemove);
 		available.setAccommodationUnits(temp);
+		System.out.println(available +"\n\n\n");
 		return available;
 	}
 
@@ -72,19 +87,20 @@ public class SearchService {
 
 		for (int i = 0; i < available.getAccommodationUnits().size(); i++) {
 			AccommodationUnit accommodationUnit = available.getAccommodationUnits().get(i);
-			if(!parameter.getCategory().equals(accommodationUnit.getCategory()))
-			{
-				toRemove.add(accommodationUnit);
-				//available.getAccommodationUnits().remove(accommodationUnit);
-				break;
+			if (!parameter.getCategory().equals("undefined")) {
+				if (!parameter.getCategory().equals(accommodationUnit.getCategory())) {
+					toRemove.add(accommodationUnit);
+					//available.getAccommodationUnits().remove(accommodationUnit);
+					continue;
+				} 
 			}
-			if(!parameter.getType().equals(accommodationUnit.getType()))
-			{
-				toRemove.add(accommodationUnit);
-				//available.getAccommodationUnits().remove(accommodationUnit);
-				break;
+			if (!parameter.getType().equals("undefined")) {
+				if (!parameter.getType().equals(accommodationUnit.getType())) {
+					toRemove.add(accommodationUnit);
+					//available.getAccommodationUnits().remove(accommodationUnit);
+					continue;
+				} 
 			}
-
 			if(!parameter.getAmenities().isEmpty()) { 
 				Map<String, Boolean> amenities = new HashMap<String, Boolean>();
 				amenities.put("wifi", parameter.getAmenities().get(0));

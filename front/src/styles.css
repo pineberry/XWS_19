@@ -18,7 +18,7 @@ button, input[type="submit"] {
 	margin: 2px;
 	align-self: center;
 	display: flex;
-	padding: 5px 25px;
+	padding: 0px 25px;
 }
 button:hover{
 	color: white;
@@ -71,7 +71,6 @@ select {
 	justify-content: space-between;
 }
 .center {
-	align-items: center;
 	justify-content: center;
 }
 table {
@@ -102,12 +101,16 @@ app-root {
 	text-decoration: none;
 }
 .p_button p {
-	border-bottom: 5px solid #B0A2BD;
 	padding: 5px 25px 0 10px;
+	margin: 0;
 }
 .p_button button {
 	margin: 5px;
 	margin-left: -5px;
+}
+.p_button {
+	border-bottom: 1px solid #B0A2BD;
+	margin-bottom: 5px;
 }
 h1 {
 	margin: 0;
@@ -119,3 +122,7 @@ p {
 .margin {
 	margin: 50px;
 }
+.search label {
+	margin-left: 5px;
+}
+
