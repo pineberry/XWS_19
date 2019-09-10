@@ -9,15 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
+//import org.springframework.web.client.RestTemplate;
 
 import megatravel.agentservice.dto.AccommodationUnitDTO;
 import megatravel.agentservice.dto.AccommodationUnitListDTO;
 import megatravel.agentservice.model.AccommodationUnitAgent;
 import megatravel.agentservice.service.AccommodationUnitServiceAgent;
 import megatravel.agentservice.service.LocationServiceAgent;
-import megatravel.backend.model.AccommodationUnit;
-import megatravel.backend.model.Location;
 
 @RestController
 @RequestMapping("/agent/accommodations")
@@ -29,24 +27,22 @@ public class AccommodationUnitControllerAgent {
 	@Autowired
 	private LocationServiceAgent locationService;
 
-	@Autowired
-	private RestTemplate restTemplate;
+	//@Autowired
+	//private RestTemplate restTemplate;
 	
 	@RequestMapping(value = "/post", method = RequestMethod.POST)
 	public ResponseEntity<AccommodationUnitAgent> postAccommodationUnit(@RequestBody AccommodationUnitAgent accUnit){
 		locationService.create(accUnit.getLocation());
 		System.out.println(accUnit);
 		accommodationUnitService.create(accUnit);
-		Location location = new Location(accUnit.getLocation().getId(), accUnit.getLocation().getState(), accUnit.getLocation().getCity(), accUnit.getLocation().getAddress());
-		AccommodationUnit accommodation = new AccommodationUnit(accUnit.getHostId(), location, accUnit.getType(),
+		//Location location = new Location(accUnit.getLocation().getId(), accUnit.getLocation().getState(), accUnit.getLocation().getCity(), accUnit.getLocation().getAddress());
+		/*AccommodationUnit accommodation = new AccommodationUnit(accUnit.getHostId(), location, accUnit.getType(),
 				accUnit.getCategory(), accUnit.getDescription(), accUnit.getUnitCapacity(), null,
 				accUnit.getAmenities(), accUnit.getCancelationPeriod(), accUnit.getDefaultPrice(), accUnit.getPricePlan(), 
-				accUnit.getBookedDates());
+				accUnit.getBookedDates());*/
 		//sync with main backend db ↓↓↓↓↓↓
-		System.out.println("\n"+location+"\n");
-		System.out.println("\n"+accommodation+"\n");
-		restTemplate.postForObject("http://backend/locations/add", location, Location.class);
-		restTemplate.postForObject("http://backend/accommodations/add", accommodation, AccommodationUnit.class);
+		//restTemplate.postForObject("http://backend/locations/add", location, Location.class);
+		//restTemplate.postForObject("http://backend/accommodations/add", accommodation, AccommodationUnit.class);
 		return new ResponseEntity<AccommodationUnitAgent>(accUnit, HttpStatus.OK);
 	}
 
@@ -81,7 +77,7 @@ public class AccommodationUnitControllerAgent {
 		// accommodationUnit.setReserved(true);
 		accommodationUnitService.confirmReservation(accommodationUnit);
 		// database synchronisation ↓
-		restTemplate.postForObject("http://backend/accommodations/add", accommodationUnit, AccommodationUnit.class);
+		//restTemplate.postForObject("http://backend/accommodations/add", accommodationUnit, AccommodationUnit.class);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

@@ -8,17 +8,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-
-import megatravel.backend.dto.ReservationListDTO;
-import megatravel.backend.service.ReservationService;
+//import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/reservation-agent")
 public class ReservationsControllerAgent {
 
 
-
+/*
 	@Autowired
 	private ReservationService reservationService;
 
@@ -44,6 +41,6 @@ public class ReservationsControllerAgent {
 	public ResponseEntity<ReservationListDTO> denyReservation(@RequestBody Long reservationID, @PathVariable(name = "id") Long id)
 	{
 		return new ResponseEntity<ReservationListDTO>(restTemplate.postForObject("http://backend/user/reservation/" + id + "/deny", reservationID, ReservationListDTO.class), HttpStatus.OK);
-	}
+	}*/
 
 }

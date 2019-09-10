@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 import lombok.Data;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Location", propOrder = {
+@XmlType(name = "location", propOrder = {
     "id",
     "state",
     "city",
@@ -24,13 +24,13 @@ public class LocationAgent {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+	protected long id;
     @XmlElement(required = true)
-    private String state;
+    protected String city;
     @XmlElement(required = true)
-    private String city;
+    protected String state;
     @XmlElement(required = true)
-    private String address;
+    protected String address;
     
 	public LocationAgent(String state, String city, String address) {
 		super();

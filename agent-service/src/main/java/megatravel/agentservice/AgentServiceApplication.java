@@ -13,8 +13,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableEurekaClient
 @EnableConfigurationProperties
 @EntityScan(basePackages = {"megatravel.agentservice.model"})
-@ComponentScan(basePackages = {"megatravel.agentservice.controller", "megatravel.agentservice.service", "megatravel.backend.service", "megatravel.backend"})
-@EnableJpaRepositories({"megatravel.backend.repository", "megatravel.agentservice.repository"})
+@ComponentScan(basePackages = {"megatravel.agentservice.controller", "megatravel.agentservice.service", "megatravel.agentservice"})
+@EnableJpaRepositories({"megatravel.agentservice.repository"})
 public class AgentServiceApplication {
 	
 	public static void main(String[] args) {
@@ -22,3 +22,11 @@ public class AgentServiceApplication {
 	}
 
 }
+/*
+@SpringBootApplication
+@EnableEurekaClient
+@EnableConfigurationProperties
+@EntityScan(basePackages = {"megatravel.agentservice.model"})
+@ComponentScan(basePackages = {"megatravel.agentservice.controller", "megatravel.agentservice.service", "megatravel.backend.service", "megatravel.backend"})
+@EnableJpaRepositories({"megatravel.backend.repository", "megatravel.agentservice.repository"})
+*/
