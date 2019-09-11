@@ -3,11 +3,11 @@ package megatravel.agentservice.dto;
 import java.util.Optional;
 
 import lombok.Data;
-import megatravel.agentservice.model.AccommodationUnitAgent;
+import megatravel.agentservice.model.AccommodationUnit;
 
 @Data
 public class AccommodationUnitDTO {
 
-	private Optional<AccommodationUnitAgent> accommodationUnit;
+	private Optional<AccommodationUnit> accommodationUnit;
 
 }

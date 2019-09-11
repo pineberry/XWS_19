@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import megatravel.agentservice.dto.AccommodationUnitDTO;
 import megatravel.agentservice.dto.AccommodationUnitListDTO;
-import megatravel.agentservice.model.AccommodationUnitAgent;
+import megatravel.agentservice.model.AccommodationUnit;
 import megatravel.agentservice.service.AccommodationUnitServiceAgent;
 import megatravel.agentservice.service.LocationServiceAgent;
 
@@ -31,7 +31,7 @@ public class AccommodationUnitControllerAgent {
 	//private RestTemplate restTemplate;
 	
 	@RequestMapping(value = "/post", method = RequestMethod.POST)
-	public ResponseEntity<AccommodationUnitAgent> postAccommodationUnit(@RequestBody AccommodationUnitAgent accUnit){
+	public ResponseEntity<AccommodationUnit> postAccommodationUnit(@RequestBody AccommodationUnit accUnit){
 		locationService.create(accUnit.getLocation());
 		System.out.println(accUnit);
 		accommodationUnitService.create(accUnit);
@@ -43,7 +43,7 @@ public class AccommodationUnitControllerAgent {
 		//sync with main backend db ↓↓↓↓↓↓
 		//restTemplate.postForObject("http://backend/locations/add", location, Location.class);
 		//restTemplate.postForObject("http://backend/accommodations/add", accommodation, AccommodationUnit.class);
-		return new ResponseEntity<AccommodationUnitAgent>(accUnit, HttpStatus.OK);
+		return new ResponseEntity<AccommodationUnit>(accUnit, HttpStatus.OK);
 	}
 
 	// get Accommodation by ID
@@ -65,7 +65,7 @@ public class AccommodationUnitControllerAgent {
 	// remove Accommodation
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ResponseEntity removeAccommodationUnitAgent(@RequestBody AccommodationUnitAgent accommodationUnit) {
+	public ResponseEntity removeAccommodationUnit(@RequestBody AccommodationUnit accommodationUnit) {
 		accommodationUnitService.delete(accommodationUnit);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -73,7 +73,7 @@ public class AccommodationUnitControllerAgent {
 	// when confirming updateing main db as well
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/{id}/confirm", method = RequestMethod.GET)
-	public ResponseEntity confirm(@RequestBody AccommodationUnitAgent accommodationUnit) {
+	public ResponseEntity confirm(@RequestBody AccommodationUnit accommodationUnit) {
 		// accommodationUnit.setReserved(true);
 		accommodationUnitService.confirmReservation(accommodationUnit);
 		// database synchronisation ↓

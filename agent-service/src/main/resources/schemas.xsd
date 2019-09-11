@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://megatravel.com/schemas"
+	targetNamespace="http://megatravel.com/schemas"
+	elementFormDefault="qualified">
+
+	<xs:element name="locationRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="locationResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="location" type="tns:location" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="location">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" />
+			<xs:element name="city" type="xs:string" />
+			<xs:element name="state" type="xs:string" />
+			<xs:element name="address" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="accommodationUnitRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="accommodationUnitResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="accommodationUnit"
+					type="tns:accommodationUnit" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="addAccommodationUnitRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="accommodationUnit"
+					type="tns:accommodationUnit" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="addAccommodationUnitResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="accommodationUnit"
+					type="tns:accommodationUnit" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="deleteAccommodationUnitRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id"
+					type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="deleteAccommodationUnitResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="accommodationUnit"
+					type="tns:accommodationUnit" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="updateAccommodationUnitRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="accommodationUnit"
+					type="tns:accommodationUnit" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="updateAccommodationUnitResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="accommodationUnit"
+					type="tns:accommodationUnit" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="accommodationUnitListRequest">
+		<xs:complexType />
+	</xs:element>
+
+
+	<xs:element name="accommodationUnitListResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="accommodationUnit"
+					type="tns:accommodationUnit" maxOccurs="unbounded" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="accommodationUnit">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" />
+			<xs:element name="hostId" type="xs:long" />
+			<xs:element name="location" type="tns:location" />
+			<xs:element name="type" type="xs:string" />
+			<xs:element name="category" type="xs:string" />
+			<xs:element name="description" type="xs:string" />
+			<xs:element name="unitCapacity" type="xs:int" />
+			<xs:element name="amenities">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="entry" minOccurs="0"
+							maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="key" minOccurs="0"
+										type="xs:string" />
+									<xs:element name="value" minOccurs="0"
+										type="xs:boolean" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="cancelationPeriod" type="xs:long" />
+			<xs:element name="defaultPrice" type="xs:double" />
+			<xs:element name="pricePlan">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="entry" minOccurs="0"
+							maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="key" minOccurs="0"
+										type="xs:string" />
+									<xs:element name="value" minOccurs="0"
+										type="xs:double" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="bookedDates" type="xs:string"
+				maxOccurs="unbounded" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

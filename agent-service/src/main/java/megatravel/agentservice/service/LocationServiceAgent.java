@@ -6,26 +6,26 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import megatravel.agentservice.repository.LocationRepositoryAgent;
-import megatravel.agentservice.model.LocationAgent;
+import megatravel.agentservice.model.Location;
+import megatravel.agentservice.repository.LocationRepository;
 
 @Service
 public class LocationServiceAgent {
 
 	@Autowired
-	private LocationRepositoryAgent locationRepository;
+	private LocationRepository locationRepository;
 	
-	public LocationAgent create(LocationAgent location)
+	public Location create(Location location)
 	{
 		return locationRepository.save(location);
 	}
 	
-	public List<LocationAgent> readAll() 
+	public List<Location> readAll() 
 	{
 		return locationRepository.findAll();
 	}
 	
-	public Optional<LocationAgent> readById(Long id)
+	public Optional<Location> readById(Long id)
 	{
 		return locationRepository.findById(id);
 	}	

@@ -6,12 +6,10 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import com.megatravel.location.GetLocationRequest;
-import com.megatravel.location.GetLocationResponse;
-import com.megatravel.location.Location;
-
-import megatravel.agentservice.model.LocationAgent;
-import megatravel.agentservice.repository.LocationRepositoryAgent;
+import megatravel.agentservice.model.Location;
+import megatravel.agentservice.model.LocationRequest;
+import megatravel.agentservice.model.LocationResponse;
+import megatravel.agentservice.repository.LocationRepository;
 
 
 
@@ -21,23 +19,18 @@ public class LocationEndpoint {
 	private static final String NAMESPACE_URI = "http://megatravel.com/location";
 	
 	@Autowired
-	private LocationRepositoryAgent locationRepository;
+	private LocationRepository locationRepository;
 	
 	@Autowired
-	public LocationEndpoint(LocationRepositoryAgent locationRepository) {
+	public LocationEndpoint(LocationRepository locationRepository) {
 		this.locationRepository = locationRepository;
 	}
 	
-	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "getLocationRequest")
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "locationRequest")
 	@ResponsePayload
-	public GetLocationResponse getLocation(@RequestPayload GetLocationRequest request){
-		GetLocationResponse response = new GetLocationResponse();
-		Location location = new Location();
-		LocationAgent temp = locationRepository.findById(request.getId()).get();
-		location.setId(temp.getId());
-		location.setCity(temp.getCity());
-		location.setState(temp.getState());
-		location.setAddress(temp.getAddress());
+	public LocationResponse getLocation(@RequestPayload LocationRequest request){
+		LocationResponse response = new LocationResponse();
+		Location location = locationRepository.findById(request.getId()).get();
 		response.setLocation(location);
 		return response;
 	}

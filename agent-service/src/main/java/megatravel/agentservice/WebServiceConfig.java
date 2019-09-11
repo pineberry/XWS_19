@@ -24,18 +24,19 @@ public class WebServiceConfig extends WsConfigurerAdapter{
 		return new ServletRegistrationBean(messageDispatcherServlet, "/ws/*");
 	}
 	
-	@Bean(name = "locations")
-	public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema studentsSchema) {
+	@Bean(name = "schemas")
+	public DefaultWsdl11Definition defaultWsdl11DefinitionLocation(XsdSchema schemasSchema) {
 		DefaultWsdl11Definition definition = new DefaultWsdl11Definition();
-		definition.setPortTypeName("LocationPort");
-		definition.setLocationUri("/ws/location");
-		definition.setTargetNamespace("http://megatravel.com/location");
-		definition.setSchema(studentsSchema);
+		definition.setPortTypeName("SchemasPort");
+		definition.setLocationUri("/ws/schemas");
+		definition.setTargetNamespace("http://megatravel.com/schemas");
+		definition.setSchema(schemasSchema);
 		return definition;
 	}
 	
 	@Bean
-	public XsdSchema studentsSchema() {
-		return new SimpleXsdSchema(new ClassPathResource("location.xsd"));
+	public XsdSchema schemasSchema() {
+		return new SimpleXsdSchema(new ClassPathResource("schemas.xsd"));
 	}
+	
 }

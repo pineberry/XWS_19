@@ -3,10 +3,10 @@ package megatravel.agentservice.dto;
 import java.util.Optional;
 
 import lombok.Data;
-import megatravel.agentservice.model.LocationAgent;
+import megatravel.agentservice.model.Location;
 
 @Data
 public class LocationDTO {
 
-	private Optional<LocationAgent> location;
+	private Optional<Location> location;
 }
