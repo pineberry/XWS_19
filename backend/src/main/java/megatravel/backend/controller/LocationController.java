@@ -25,7 +25,7 @@ public class LocationController {
 	public ResponseEntity<LocationListDTO> getAllLocations()
 	{
 		LocationListDTO locations = new LocationListDTO();
-		locations.setLocations(locationService.readAll());
+		//locations.setLocations(locationService.readAll());
 		
 		return new ResponseEntity<LocationListDTO>(locations, HttpStatus.OK);
 	}
@@ -33,7 +33,7 @@ public class LocationController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<Location> addNewLocation(@RequestBody Location location)
 	{
-		return new ResponseEntity<Location>(locationService.create(location), HttpStatus.CREATED);
+		return new ResponseEntity<Location>(HttpStatus.CREATED);
 	}
 	
 	
@@ -41,7 +41,7 @@ public class LocationController {
 	public ResponseEntity<LocationDTO> getLocationById(@PathVariable("id")Long id)
 	{
 		LocationDTO location = new LocationDTO();
-		location.setLocation(locationService.readById(id));
+		//location.setLocation(locationService.readById(id));
 		
 		return new ResponseEntity<LocationDTO>(location, HttpStatus.OK);
 	}
@@ -50,8 +50,8 @@ public class LocationController {
 	public ResponseEntity<LocationDTO> update(@RequestBody Location location, @PathVariable("id")Long id)
 	{
 		LocationDTO temp = new LocationDTO();
-		locationService.create(location);
-		temp.setLocation(locationService.readById(id));
+		//locationService.create(location);
+		//temp.setLocation(locationService.readById(id));
 		return new ResponseEntity<LocationDTO>(temp, HttpStatus.OK);
 	}
 }

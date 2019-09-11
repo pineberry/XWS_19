@@ -28,7 +28,55 @@
 			<xs:element name="address" type="xs:string" />
 		</xs:sequence>
 	</xs:complexType>
-	
+
+	<xs:element name="addLocationRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="location" type="tns:location" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="addLocationResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="location" type="tns:location" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="deleteLocationRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="deleteLocationResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="location" type="tns:location" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="updateLocationRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="location" type="tns:location" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="updateLocationResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="location" type="tns:location" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
 	<xs:element name="accommodationUnitRequest">
 		<xs:complexType>
 			<xs:sequence>
@@ -63,12 +111,11 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
+
 	<xs:element name="deleteAccommodationUnitRequest">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="id"
-					type="xs:long" />
+				<xs:element name="id" type="xs:long" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -81,7 +128,7 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
+
 	<xs:element name="updateAccommodationUnitRequest">
 		<xs:complexType>
 			<xs:sequence>
@@ -163,5 +210,5 @@
 				maxOccurs="unbounded" minOccurs="0" />
 		</xs:sequence>
 	</xs:complexType>
-	
+
 </xs:schema>

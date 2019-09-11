@@ -1,6 +1,5 @@
 package megatravel.backend;
 
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -16,8 +15,8 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 @EnableEurekaClient
 @EnableConfigurationProperties
-@EntityScan(basePackages = {"megatravel.backend.model"})
-@ComponentScan(basePackages = {"megatravel.backend.controller", "megatravel.backend.service", "megatravel.backend"})
+@EntityScan(basePackages = {"megatravel.backend.model", "megatravel.backend.soap"})
+@ComponentScan(basePackages = {"megatravel.backend.controller", "megatravel.backend.service", "megatravel.backend", "megatravel.backend.soap"})
 @ServletComponentScan
 public class BackendApplication {
 	

@@ -6,8 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -53,12 +51,7 @@ public class Reservation {
     
 	@XmlElement(name = "total_price", required = true)
     private double totalPrice;
-    
-	@XmlElement(required = true)
-    @OneToOne
-    @JoinColumn(name = "chatId", nullable = true)
-    private Chat chat;
-	
+ 	
 	@XmlElement(required = true)
 	private String status;
 	
@@ -70,7 +63,7 @@ public class Reservation {
 	}
 
 	public Reservation(long id, long accommodationUnitId, long guestId, Date checkInDate, Date checkOutDate,
-			double totalPrice, Chat chat, String status, boolean confirmed) {
+			double totalPrice, String status, boolean confirmed) {
 		super();
 		this.id = id;
 		this.accommodationUnitId = accommodationUnitId;
@@ -78,20 +71,17 @@ public class Reservation {
 		this.checkInDate = checkInDate;
 		this.checkOutDate = checkOutDate;
 		this.totalPrice = totalPrice;
-		this.chat = chat;
 		this.status = status;
 		this.confirmed = confirmed;
 	}
 
-	public Reservation(long accommodationUnitId, long guestId, Date checkInDate, Date checkOutDate, double totalPrice,
-			Chat chat, String status, boolean confirmed) {
+	public Reservation(long accommodationUnitId, long guestId, Date checkInDate, Date checkOutDate, double totalPrice, String status, boolean confirmed) {
 		super();
 		this.accommodationUnitId = accommodationUnitId;
 		this.guestId = guestId;
 		this.checkInDate = checkInDate;
 		this.checkOutDate = checkOutDate;
 		this.totalPrice = totalPrice;
-		this.chat = chat;
 		this.status = status;
 		this.confirmed = confirmed;
 	}

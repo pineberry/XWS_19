@@ -6,35 +6,25 @@
 //
 
 
-package megatravel.backend.model;
+package megatravel.agentservice.soap;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import lombok.Data;
-
 
 /**
- * <p>Java class for location complex type.
+ * <p>Java class for anonymous complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="location">
+ * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="city" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="state" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="address" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -43,26 +33,29 @@ import lombok.Data;
  * 
  * 
  */
-@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "location", propOrder = {
-    "id",
-    "city",
-    "state",
-    "address"
+@XmlType(name = "", propOrder = {
+    "id"
 })
-@Entity
-@Data
-public class Location {
+@XmlRootElement(name = "deleteAccommodationUnitRequest")
+public class DeleteAccommodationUnitRequest {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected long id;
-    @XmlElement(required = true)
-    protected String city;
-    @XmlElement(required = true)
-    protected String state;
-    @XmlElement(required = true)
-    protected String address;
+    protected long id;
+
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
+    }
 
 }

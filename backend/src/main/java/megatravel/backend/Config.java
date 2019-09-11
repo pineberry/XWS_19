@@ -11,7 +11,8 @@ public class Config {
 		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
 		// this is the package name specified in the <generatePackage> specified in
 		// pom.xml
-		marshaller.setContextPath("megatravel.schemas");
+		marshaller.setPackagesToScan("megatravel.backend.soap");
+		//marshaller.setContextPath("megatravel.backend.soap");
 		return marshaller;
 	}
 

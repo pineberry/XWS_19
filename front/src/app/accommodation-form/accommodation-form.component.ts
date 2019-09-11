@@ -156,7 +156,7 @@ export class AccommodationFormComponent implements OnInit {
   
   makeRequest() {
     console.log(this.accommodation);
-    this.http.post('http://localhost:8081/agent/accommodations/post', this.accommodation)
+    this.http.post('http://localhost:8083/accommodations/add', this.accommodation)
       .subscribe((res) => 
       {
         console.log(res);

@@ -39,7 +39,7 @@ public class ReservationService {
 	public List<Reservation> readAllFromHost(Long hostId)
 	{
 		List<Reservation> reservations = new ArrayList<Reservation>();
-		List<AccommodationUnit> accommodations = accommodationUnitService.findAll();
+		/*List<AccommodationUnit> accommodations = accommodationUnitService.findAll();
 
 		for (Reservation reservation : reservationRepository.findAll()) {
 			for (AccommodationUnit accommodationUnit : accommodations) {
@@ -48,7 +48,7 @@ public class ReservationService {
 					reservations.add(reservation);
 				}
 			}
-		}
+		}*/
 
 		return reservations;
 	}
@@ -58,7 +58,7 @@ public class ReservationService {
 		Optional<Reservation> r = reservationRepository.findById(id);
 
 		Reservation reservation = new Reservation(r.get().getAccommodationUnitId(), r.get().getGuestId(), r.get().getCheckInDate(),
-				r.get().getCheckOutDate(), r.get().getTotalPrice(), r.get().getChat(), r.get().getStatus(), r.get().isConfirmed());
+				r.get().getCheckOutDate(), r.get().getTotalPrice(), r.get().getStatus(), r.get().isConfirmed());
 
 		return reservation;
 	}
@@ -68,7 +68,7 @@ public class ReservationService {
 		Optional<Reservation> r = reservationRepository.findById(reservationID);
 
 		Reservation reservation = new Reservation(r.get().getId(), r.get().getAccommodationUnitId(), r.get().getGuestId(), r.get().getCheckInDate(),
-				r.get().getCheckOutDate(), r.get().getTotalPrice(), r.get().getChat(), "confirmed", true);
+				r.get().getCheckOutDate(), r.get().getTotalPrice(), "confirmed", true);
 
 		return reservationRepository.save(reservation);
 	}
@@ -78,7 +78,7 @@ public class ReservationService {
 		Optional<Reservation> r = reservationRepository.findById(reservationID);
 
 		Reservation reservation = new Reservation(r.get().getId(), r.get().getAccommodationUnitId(), r.get().getGuestId(), r.get().getCheckInDate(),
-				r.get().getCheckOutDate(), r.get().getTotalPrice(), r.get().getChat(), "canceled", false);
+				r.get().getCheckOutDate(), r.get().getTotalPrice(), "canceled", false);
 
 		return reservationRepository.save(reservation);
 	}

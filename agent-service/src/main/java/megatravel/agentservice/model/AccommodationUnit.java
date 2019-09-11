@@ -8,7 +8,6 @@
 
 package megatravel.agentservice.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -128,7 +127,7 @@ public class AccommodationUnit {
 	@XmlElement(required = true)
 	protected long hostId;
     @XmlElement(required = true)
-    @OneToOne(targetEntity = Location.class, cascade = CascadeType.MERGE)
+    @OneToOne(targetEntity = Location.class, cascade = CascadeType.ALL)
     protected Location location;
     @XmlElement(required = true)
     protected String type;

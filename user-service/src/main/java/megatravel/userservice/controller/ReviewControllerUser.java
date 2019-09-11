@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import megatravel.backend.model.Review;
-import megatravel.backend.service.ReviewService;
-
 @RestController
 @RequestMapping("/user-review")
 public class ReviewControllerUser {

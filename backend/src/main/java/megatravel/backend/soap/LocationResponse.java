@@ -6,35 +6,28 @@
 //
 
 
-package megatravel.backend.model;
+package megatravel.backend.soap;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import lombok.Data;
+import megatravel.backend.model.Location;
 
 
 /**
- * <p>Java class for location complex type.
+ * <p>Java class for anonymous complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="location">
+ * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="city" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="state" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="address" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="location" type="{http://megatravel.com/schemas}location"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -43,26 +36,38 @@ import lombok.Data;
  * 
  * 
  */
-@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "location", propOrder = {
-    "id",
-    "city",
-    "state",
-    "address"
+@XmlType(name = "", propOrder = {
+    "location"
 })
-@Entity
-@Data
-public class Location {
+@XmlRootElement(name = "locationResponse")
+public class LocationResponse {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected long id;
     @XmlElement(required = true)
-    protected String city;
-    @XmlElement(required = true)
-    protected String state;
-    @XmlElement(required = true)
-    protected String address;
+    protected Location location;
+
+    /**
+     * Gets the value of the location property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Location }
+     *     
+     */
+    public Location getLocation() {
+        return location;
+    }
+
+    /**
+     * Sets the value of the location property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Location }
+     *     
+     */
+    public void setLocation(Location value) {
+        this.location = value;
+    }
 
 }
