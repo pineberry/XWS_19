@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import megatravel.backend.SOAPConnector;
@@ -27,13 +28,6 @@ public class AccommodationUnitController {
 	
 	@Autowired
 	SOAPConnector soapConnector;
-	
-	/*
-	 *   "/accommodations" -> all
-	 *   "/accommodations/{id}"
-	 *   "/accommodations/add"
-	 *   "/accommodations/remove"
-	 */
 
 	@Autowired
 	private AccommodationUnitService accommodationUnitService;
@@ -45,7 +39,7 @@ public class AccommodationUnitController {
 	public ResponseEntity<AccommodationUnitListDTO> getAllAccommodationUnits() 
 	{
 		AccommodationUnitListDTO temp = new AccommodationUnitListDTO();
-		//temp.setAccommodationUnits(accommodationUnitService.readAll());
+		temp.setAccommodationUnits(accommodationUnitService.readAll());
 		
 		return new ResponseEntity<AccommodationUnitListDTO>(temp, HttpStatus.OK);
 	}
@@ -69,12 +63,18 @@ public class AccommodationUnitController {
 		return new ResponseEntity<AccommodationUnit>(resAccommodation.getAccommodationUnit(), HttpStatus.CREATED);
 	}
 
+	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	public ResponseEntity<AccommodationUnitListDTO> getAllAccommodationUnitsAgent(@RequestParam("id") String id) {
+		AccommodationUnitListDTO temp = new AccommodationUnitListDTO();
+		temp.setAccommodationUnits(accommodationUnitService.readAll(Integer.parseInt(id)));
+		return new ResponseEntity<AccommodationUnitListDTO>(temp, HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<AccommodationUnitDTO> getAccommodationUnitById(@PathVariable("id") Long id) 
 	{
 		AccommodationUnitDTO temp = new AccommodationUnitDTO();
-		//temp.setAccommodationUnit(accommodationUnitService.readById(id));
+		temp.setAccommodationUnit(accommodationUnitService.readById(id));
 		
 		return new ResponseEntity<AccommodationUnitDTO>(temp, HttpStatus.OK);
 	}

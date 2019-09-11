@@ -1,5 +1,6 @@
 package megatravel.backend.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,10 +28,20 @@ public class AccommodationUnitService {
 		return accommodationUnitRepository.findById(id);
 	}
 	
-	//read all
-	public List<AccommodationUnit> readAll() 
+	//read all from one agent
+	public List<AccommodationUnit> readAll(int id) 
 	{
-		return accommodationUnitRepository.findAll();
+		List<AccommodationUnit> allAccommodations = accommodationUnitRepository.findAll();
+		List<AccommodationUnit> agentAccommodations = new ArrayList<AccommodationUnit>();
+		 
+		for (AccommodationUnit accommodationUnit : allAccommodations) {
+			if(accommodationUnit.getHostId() == id)
+			{
+				agentAccommodations.add(accommodationUnit);
+			}
+		}
+		
+		return agentAccommodations;
 	}
 	
 	//update - by ID

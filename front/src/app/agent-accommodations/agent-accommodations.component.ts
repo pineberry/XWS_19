@@ -22,7 +22,7 @@ export class AgentAccommodationsComponent implements OnInit {
     let hostInfoParts = hostInfo.split('&');
     this.agentId = +hostInfoParts[0];
 
-  	this.http.get('http://localhost:8081/agent/accommodations/all?id=' + this.agentId)
+  	this.http.get('http://localhost:8083/accommodations/all?id=' + this.agentId)
   		.subscribe((response) => 
   			{
   				this.response = response;

@@ -27,24 +27,6 @@ public class AccommodationUnitControllerAgent {
 	@Autowired
 	private LocationServiceAgent locationService;
 
-	//@Autowired
-	//private RestTemplate restTemplate;
-	
-	@RequestMapping(value = "/post", method = RequestMethod.POST)
-	public ResponseEntity<AccommodationUnit> postAccommodationUnit(@RequestBody AccommodationUnit accUnit){
-		locationService.create(accUnit.getLocation());
-		System.out.println(accUnit);
-		accommodationUnitService.create(accUnit);
-		//Location location = new Location(accUnit.getLocation().getId(), accUnit.getLocation().getState(), accUnit.getLocation().getCity(), accUnit.getLocation().getAddress());
-		/*AccommodationUnit accommodation = new AccommodationUnit(accUnit.getHostId(), location, accUnit.getType(),
-				accUnit.getCategory(), accUnit.getDescription(), accUnit.getUnitCapacity(), null,
-				accUnit.getAmenities(), accUnit.getCancelationPeriod(), accUnit.getDefaultPrice(), accUnit.getPricePlan(), 
-				accUnit.getBookedDates());*/
-		//sync with main backend db ↓↓↓↓↓↓
-		//restTemplate.postForObject("http://backend/locations/add", location, Location.class);
-		//restTemplate.postForObject("http://backend/accommodations/add", accommodation, AccommodationUnit.class);
-		return new ResponseEntity<AccommodationUnit>(accUnit, HttpStatus.OK);
-	}
 
 	// get Accommodation by ID
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
