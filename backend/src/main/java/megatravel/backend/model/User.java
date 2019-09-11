@@ -56,13 +56,15 @@ public class User {
     @ElementCollection
     @CollectionTable(joinColumns = @JoinColumn(name = "guest_id"))
     private List<Long> reservations;
+    @XmlElement(required = true)
+    private String confirmed;
 	
     public User() {
 	
 	}
 
 	public User(long id, String typeOfUser, String firstName, String lastName, String username, String password,
-			String address, Long pib, List<Long> reservations) {
+			String address, Long pib, List<Long> reservations, String confirmed) {
 		super();
 		this.id = id;
 		this.typeOfUser = typeOfUser;
@@ -73,10 +75,11 @@ public class User {
 		this.address = address;
 		this.pib = pib;
 		this.reservations = reservations;
+		this.confirmed = confirmed;
 	}
 
 	public User(String typeOfUser, String firstName, String lastName, String username, String password, String address,
-			Long pib, List<Long> reservations) {
+			Long pib, List<Long> reservations, String confirmed) {
 		super();
 		this.typeOfUser = typeOfUser;
 		this.firstName = firstName;
@@ -86,7 +89,9 @@ public class User {
 		this.address = address;
 		this.pib = pib;
 		this.reservations = reservations;
+		this.confirmed = confirmed;
 	}
     
+	
     
 }

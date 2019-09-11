@@ -58,6 +58,10 @@ export class LoginComponent implements OnInit {
         {
             this.router.navigate(['/user-home']);
         }
+        else if (typeOfUser == 'admin') 
+        {
+            this.router.navigate(['/admin-home']);
+        }
     }
 
     register()

@@ -18,6 +18,10 @@ import { AccommodationFormComponent } from './accommodation-form/accommodation-f
 import { AmenityFormComponent } from './amenity-form/amenity-form.component';
 import { AgentAccommodationsComponent } from './agent-accommodations/agent-accommodations.component';
 import { AgentReservationsComponent } from './agent-reservations/agent-reservations.component';
+import { AdminHomeComponent } from './admin-home/admin-home.component';
+import { AdminUsersComponent } from './admin-users/admin-users.component';
+import { AdminAgentsComponent } from './admin-agents/admin-agents.component';
+import { SifrarnikComponent } from './sifrarnik/sifrarnik.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,11 @@ import { AgentReservationsComponent } from './agent-reservations/agent-reservati
 	AccommodationFormComponent,
 	AmenityFormComponent,
 	AgentAccommodationsComponent,
-	AgentReservationsComponent
+	AgentReservationsComponent,
+	AdminHomeComponent,
+	AdminUsersComponent,
+	AdminAgentsComponent,
+	SifrarnikComponent
   ],
   imports: [
 	BrowserModule,

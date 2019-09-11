@@ -23,6 +23,10 @@ import megatravel.backend.service.UserService;
 @RequestMapping("/user")
 public class UserController {
 
+	private static final int User = 0;
+
+	private static final int ResponseEntity = 0;
+
 	@Autowired
 	private UserService userService;
 	
@@ -42,6 +46,9 @@ public class UserController {
 		String auth = user.getUsername() + "&" + user.getPassword();
 		//("Set-Cookie", "test=somevalue; Domain=.mydomain.org; Expires=" + cookieLifeTime + "; Path=/; HTTPOnly")
 		headers.add("Set-Cookie","Authorization=" + "Basic " + Base64.getEncoder().encodeToString(auth.getBytes()) + ";Domain=http://localhost:4200");
+		
+		user.setConfirmed("waiting");
+		
 		UserDTO u = new UserDTO();
 		u.setUser(user);
 		
@@ -69,10 +76,27 @@ public class UserController {
 	
 	//read by ID
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<UserDTO> getUserById(@PathVariable("id") Long id)
+	public ResponseEntity<User> getUserById(@PathVariable("id") Long id)
 	{
-		UserDTO temp = new UserDTO();
-		temp.setUser(userService.readById(id));
-		return new ResponseEntity<UserDTO>(temp, HttpStatus.OK);
+		return new ResponseEntity<User>(userService.readById(id), HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/activate", method = RequestMethod.POST)
+	public ResponseEntity<User> activateUser(@RequestBody User user) {
+		user.setConfirmed("activated");
+		return new ResponseEntity<User>(userService.save(user), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/block", method = RequestMethod.POST)
+	public ResponseEntity<User> blockUser(@RequestBody User user) {
+		user.setConfirmed("blocked");
+		return new ResponseEntity<User>(userService.save(user), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public ResponseEntity<String> deleteUser(@RequestBody User user) {
+		userService.delete(user);
+		return new ResponseEntity<String>("obrisan",HttpStatus.OK);
+	}
+	
 }

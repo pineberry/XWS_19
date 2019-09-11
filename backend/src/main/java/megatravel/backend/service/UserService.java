@@ -23,12 +23,14 @@ public class UserService {
 	//create
 	public User create(User user) 
 	{
-		System.out.println(user);
+		
 		if(!userAlreadyRegistered(user)){
 			if (user.getTypeOfUser().equals("user") && user.getAddress() == null && user.getPib() == null){
 				return userRepository.save(user); 
 			} else if (user.getTypeOfUser().equals("agent") && (user.getAddress() != null && !user.getAddress().isEmpty()) && user.getPib() != null) {
 				return userRepository.save(user); 
+			} else if (user.getTypeOfUser().equals("admin")) {
+				return userRepository.save(user);
 			}
 		} 
 		else 
@@ -42,17 +44,7 @@ public class UserService {
 	//read by ID
 	public User readById(Long id)
 	{
-		Optional<User> u = userRepository.findById(id);
-		User user = new User();
-		user.setAddress(u.get().getAddress());
-		user.setFirstName(u.get().getFirstName());
-		user.setLastName(u.get().getLastName());
-		user.setId(u.get().getId());
-		user.setPassword(u.get().getPassword());
-		user.setUsername(u.get().getUsername());
-		user.setPib(u.get().getPib());
-		user.setTypeOfUser(u.get().getTypeOfUser());
-		user.setReservations(u.get().getReservations());
+		User user = userRepository.findById(id).get();
 		return user;
 	}
 
@@ -92,6 +84,14 @@ public class UserService {
 		user.setReservations(reservations); 
 		userRepository.save(user);
 
+	}
+
+	public User save(User user) {
+		return userRepository.save(user);
+	}
+
+	public void delete(User user) {
+		userRepository.delete(user);
 	}
 
 }

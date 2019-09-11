@@ -1,8 +1,10 @@
 <app-header></app-header>
-<div class="column">
+<div *ngIf="activated == 'activated'" class="column">
 	<button [routerLink]="['/']">Pretrazi smestajeve</button>
 </div>
-<div>
+<h1 *ngIf="activated == 'waiting'">Aktivacija naloga u toku!</h1>
+<h1 *ngIf="activated == 'blocked'">Nalog je blokiran!</h1>
+<div *ngIf="activated == 'activated' &&  reservations.length>0">
 	<h1>Rezervacije:</h1>
 	<table>
 		<tr>

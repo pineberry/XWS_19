@@ -1,0 +1,40 @@
+<app-header></app-header>
+<p>Ovde su korisnici koje admin moze blokirati, obrisati ili aktivirati</p>
+
+<table>
+	<tr>
+		<th>Ime</th>
+		<th>Prezime</th>
+		<th>Korisnicko ime</th>
+		<th>Uloga</th>
+		<th>Status</th>
+	</tr>
+	<tr *ngFor="let object of users">
+		<td>{{object.user.firstName}}</td>		
+		<td>{{object.user.lastName}}</td>
+		<td>{{object.user.username}}</td>
+		<td>{{object.user.typeOfUser}}</td>
+		<td *ngIf="object.user.confirmed == 'waiting'">
+			Ceka na aktivaciju
+		</td>
+		<td *ngIf="object.user.confirmed == 'activated'">
+			Aktivan
+		</td>
+		<td *ngIf="object.user.confirmed == 'blocked'">
+			Blokiran
+		</td>
+		<td *ngIf="object.user.confirmed == 'activated'">
+			<button (click)="block(object.user.id)">Blokiraj</button>
+			<button (click)="delete(object.user.id)">Obrisi</button>
+		</td>
+		<td *ngIf="object.user.confirmed == 'blocked'">
+			<button (click)="activate(object.user.id)">Aktiviraj</button>
+			<button (click)="delete(object.user.id)">Obrisi</button>
+		</td>
+		<td *ngIf="object.user.confirmed == 'waiting'">
+			<button (click)="activate(object.user.id)">Aktiviraj</button>
+			<button (click)="block(object.user.id)">Blokiraj</button>
+			<button (click)="delete(object.user.id)">Obrisi</button>
+		</td>
+	</tr>
+</table>

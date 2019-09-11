@@ -12,6 +12,7 @@ export class User implements Deserializable {
 	address: string;
 	pib: number;
 	reservations: Reservation[];
+	confirmed: string;
 
 	deserialize(input: any): this {
 		Object.assign(this, input);

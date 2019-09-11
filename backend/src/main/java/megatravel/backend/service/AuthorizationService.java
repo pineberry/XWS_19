@@ -61,7 +61,7 @@ public class AuthorizationService {
 				if(u.getPassword().equals(credentials[1]))
 				{
 					user = new User(u.getId(), u.getTypeOfUser(), u.getFirstName(), u.getLastName(), u.getUsername(),
-							u.getPassword(), u.getAddress(), u.getPib(), u.getReservations());
+							u.getPassword(), u.getAddress(), u.getPib(), u.getReservations(), u.getConfirmed());
 					break;
 				}	
 			}
