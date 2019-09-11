@@ -27,7 +27,7 @@ export class AgentReservationsComponent implements OnInit {
     confirm(reservationId: number) {
         console.log(reservationId);
         if(this.userId != null) {
-            this.http.post('http://localhost:8081/reservation-agent/'+ this.userId + '/confirm', reservationId)
+            this.http.post('http://localhost:8083/reservation/'+ this.userId + '/confirm', reservationId)
             .subscribe((response) =>
             {
                 this.collect();
@@ -37,7 +37,7 @@ export class AgentReservationsComponent implements OnInit {
 
     cancel(reservationId: number) {
         if(this.userId != null) {
-            this.http.post('http://localhost:8081/reservation-agent/'+ this.userId + '/deny', reservationId)
+            this.http.post('http://localhost:8083/reservation/'+ this.userId + '/deny', reservationId)
             .subscribe((response) =>
             {
                 this.collect();

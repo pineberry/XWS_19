@@ -27,7 +27,7 @@ export class AgentAccommodationsComponent implements OnInit {
   			{
   				this.response = response;
   				this.accommodations = this.response.accommodationUnits;
-  				console.log(this.accommodations);
+  				console.log(this.response);
   			});
   }
 

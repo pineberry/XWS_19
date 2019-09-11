@@ -67,28 +67,6 @@ public class UserController {
 		return new ResponseEntity<ReservationListDTO>(restTemplate.getForObject("http://user-service/reservation/" + id.toString() + "/all", ReservationListDTO.class), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/reservation/{id}/confirm", method = RequestMethod.POST)
-	public ResponseEntity<ReservationListDTO> confirmReservation(@RequestBody Long reservationID, @PathVariable(name = "id") Long id)
-	{
-		reservationService.confirm(reservationID);
-		
-		ReservationListDTO reservations = new ReservationListDTO();
-		reservations.setReservations(reservationService.readAllFromHost(reservationID));
-		
-		return new ResponseEntity<ReservationListDTO>(reservations, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/reservation/{id}/deny", method = RequestMethod.POST)
-	public ResponseEntity<ReservationListDTO> denyReservation(@RequestBody Long reservationID, @PathVariable(name = "id") Long id)
-	{
-		reservationService.cancel(reservationID);
-		
-		ReservationListDTO reservations = new ReservationListDTO();
-		reservations.setReservations(reservationService.readAllFromHost(reservationID));
-		
-		return new ResponseEntity<ReservationListDTO>(reservations, HttpStatus.OK);
-	}
-	
 	//read by ID
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<UserDTO> getUserById(@PathVariable("id") Long id)

@@ -151,7 +151,8 @@ public class AccommodationUnit {
     @ElementCollection
     @CollectionTable(joinColumns = @JoinColumn(name = "accommodation_unit_id"))
 	private Map<String, Double> pricePlan;
-    @XmlElement(required = true)@ElementCollection
+    @XmlElement(required = true)
+    @ElementCollection
     @CollectionTable(joinColumns = @JoinColumn(name = "accommodation_unit_id"))
     protected List<String> bookedDates;
 

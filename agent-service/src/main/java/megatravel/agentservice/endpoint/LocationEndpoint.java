@@ -14,6 +14,8 @@ import megatravel.agentservice.soap.AddAccommodationUnitRequest;
 import megatravel.agentservice.soap.AddAccommodationUnitResponse;
 import megatravel.agentservice.soap.AddLocationRequest;
 import megatravel.agentservice.soap.AddLocationResponse;
+import megatravel.agentservice.soap.UpdateAccommodationUnitRequest;
+import megatravel.agentservice.soap.UpdateAccommodationUnitResponse;
 
 
 
@@ -41,6 +43,15 @@ public class LocationEndpoint {
 	@ResponsePayload
 	public AddAccommodationUnitResponse addAccommodationUnit(@RequestPayload AddAccommodationUnitRequest request) {
 		AddAccommodationUnitResponse response = new AddAccommodationUnitResponse();
+		AccommodationUnit accommodation = accommodationRepository.save(request.getAccommodationUnit());
+		response.setAccommodationUnit(accommodation);
+		return response;
+	}
+	
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "updateAccommodationUnitRequest")
+	@ResponsePayload
+	public UpdateAccommodationUnitResponse updateAccommodationUnit(@RequestPayload UpdateAccommodationUnitRequest request) {
+		UpdateAccommodationUnitResponse response = new UpdateAccommodationUnitResponse();
 		AccommodationUnit accommodation = accommodationRepository.save(request.getAccommodationUnit());
 		response.setAccommodationUnit(accommodation);
 		return response;

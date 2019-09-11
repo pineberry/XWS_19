@@ -25,7 +25,7 @@ public class LocationController {
 	public ResponseEntity<LocationListDTO> getAllLocations()
 	{
 		LocationListDTO locations = new LocationListDTO();
-		//locations.setLocations(locationService.readAll());
+		locations.setLocations(locationService.readAll());
 		
 		return new ResponseEntity<LocationListDTO>(locations, HttpStatus.OK);
 	}
@@ -41,7 +41,7 @@ public class LocationController {
 	public ResponseEntity<LocationDTO> getLocationById(@PathVariable("id")Long id)
 	{
 		LocationDTO location = new LocationDTO();
-		//location.setLocation(locationService.readById(id));
+		location.setLocation(locationService.readById(id));
 		
 		return new ResponseEntity<LocationDTO>(location, HttpStatus.OK);
 	}

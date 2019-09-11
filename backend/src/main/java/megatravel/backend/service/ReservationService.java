@@ -1,5 +1,7 @@
 package megatravel.backend.service;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -75,10 +77,27 @@ public class ReservationService {
 
 	public Reservation cancel(Long reservationID) {
 
-		Optional<Reservation> r = reservationRepository.findById(reservationID);
-
-		Reservation reservation = new Reservation(r.get().getId(), r.get().getAccommodationUnitId(), r.get().getGuestId(), r.get().getCheckInDate(),
-				r.get().getCheckOutDate(), r.get().getTotalPrice(), "canceled", false);
+		Reservation reservation = reservationRepository.findById(reservationID).get();
+		reservation.setId(reservationID);
+		reservation.setStatus("canceled");
+		reservation.setConfirmed(false);		
+		
+		AccommodationUnit accommodation = accommodationUnitService.findById(reservation.getAccommodationUnitId()).get();
+		List<String> dates = accommodation.getBookedDates();
+		List<String> datesToRemove = new ArrayList<String>();
+		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
+		
+		for (String datePair : dates) {
+			String date = sdf.format(reservation.getCheckInDate())+"-"+sdf.format(reservation.getCheckOutDate());
+			if(datePair.equals(date)) {
+				datesToRemove.add(datePair);
+				break;
+			}
+		}
+		dates.removeAll(datesToRemove);
+		accommodation.setBookedDates(dates);
+		
+		accommodationUnitService.save(accommodation);
 
 		return reservationRepository.save(reservation);
 	}

@@ -14,6 +14,7 @@ import megatravel.backend.SOAPConnector;
 import megatravel.backend.dto.AccommodationUnitDTO;
 import megatravel.backend.dto.AccommodationUnitListDTO;
 import megatravel.backend.model.AccommodationUnit;
+import megatravel.backend.repository.AccommodationUnitRepository;
 import megatravel.backend.service.AccommodationUnitService;
 import megatravel.backend.service.LocationService;
 import megatravel.backend.soap.AddAccommodationUnitRequest;
@@ -33,13 +34,16 @@ public class AccommodationUnitController {
 	private AccommodationUnitService accommodationUnitService;
 	
 	@Autowired
+	private AccommodationUnitRepository accommodationUnitRepository;
+	
+	@Autowired
 	private LocationService locationService;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<AccommodationUnitListDTO> getAllAccommodationUnits() 
 	{
 		AccommodationUnitListDTO temp = new AccommodationUnitListDTO();
-		temp.setAccommodationUnits(accommodationUnitService.readAll());
+		temp.setAccommodationUnits(accommodationUnitRepository.findAll());
 		
 		return new ResponseEntity<AccommodationUnitListDTO>(temp, HttpStatus.OK);
 	}
